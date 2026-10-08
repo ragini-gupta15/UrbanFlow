@@ -1,62 +1,48 @@
 # UrbanFlow
 
-## Spatiotemporal Traffic Forecasting with GNNs, Transformers & Weather
+UrbanFlow is a traffic forecasting system built to predict vehicle speeds across a network of 207 traffic sensors.
 
-UrbanFlow is an end-to-end traffic forecasting system that predicts traffic speed across a network of 207 road sensors using historical traffic patterns, learned spatial relationships, and weather context.
+The project combines historical traffic data, the spatial relationships between sensors, and weather information to produce forecasts for the next 15, 30, 45 and 60 minutes.
 
-## Final System
-
-- Graph Neural Network (GNN) for spatial relationships
-- Transformer for temporal dependencies
-- 6 weather features
-- Multi-horizon forecasting
-- FastAPI inference backend
-- React + MapLibre interactive dashboard
+The repository contains the model development notebooks, trained model, evaluation results, FastAPI inference service and the React dashboard.
 
 ## Final Model
 
-```text
-Historical Traffic
-12 Timesteps × 207 Sensors
-        │
-        ├── Graph Structure ──► GNN
-        │
-        └── Temporal Sequence ► Transformer
-                    │
-              Spatial-Temporal
-                  Fusion
-                    │
-              + Weather Context
-                    │
-             Multi-Horizon Head
-                    │
-       ┌────────────┼────────────┐
-       ▼            ▼            ▼
-     +15          +30          +45          +60 min
+The final UrbanFlow model combines:
 
-## Final Test Performance
+- Graph Neural Network for spatial relationships between sensors
+- Transformer for temporal traffic patterns
+- Weather features for additional context
+- Multi-horizon prediction for four future time intervals
+
+Input configuration:
+
+- Sensors: 207
+- Historical timesteps: 12
+- Historical window: 60 minutes
+- Weather features: 6
+- Forecast horizons: 15, 30, 45 and 60 minutes
+
+The traffic graph contains 1,722 directed connections between the 207 sensors.
+
+## Test Results
+
+The final model was evaluated on an untouched test set.
 
 | Horizon | MAE | RMSE |
-|---|---:|---:|
+| --- | ---: | ---: |
 | 15 min | 3.4828 mph | 6.3331 mph |
 | 30 min | 3.9262 mph | 7.2986 mph |
 | 45 min | 4.3006 mph | 8.0625 mph |
 | 60 min | 4.6240 mph | 8.6722 mph |
 
-These metrics come from the final untouched test evaluation.
-
-## Traffic Network
-
-UrbanFlow models:
-
-- 207 traffic sensors
-- 1,722 directed graph connections
-- Real sensor coordinates
-- Historical traffic-speed observations
+These results are taken from the final multi-horizon test evaluation.
 
 ## Model Development
 
-The project was developed through:
+UrbanFlow was developed progressively rather than starting directly with the final architecture.
+
+The notebooks cover:
 
 1. Data understanding
 2. Data preprocessing
@@ -65,107 +51,80 @@ The project was developed through:
 5. Graph construction
 6. GNN modelling
 7. Transformer modelling
-8. UrbanFlow architecture experiments
+8. Spatial-temporal experiments
 9. Congestion classification
-10. Transformer and spatial-temporal optimization
-11. Final GNN + Transformer + Weather multi-horizon model
+10. Weather integration
+11. Final GNN + Transformer multi-horizon model
 
-Experiments include Transformer optimization, spatial-temporal fusion, graph-aware modelling, Huber loss, weather integration, weather ablation, and multi-horizon forecasting.
+The baseline and experimental models are retained in the repository results so that the development process can be inspected rather than only showing the final model.
 
-Experimental results are preserved under `results/experiments/`.
+## Traffic Network
+
+The model works with an actual sensor network rather than treating every sensor as an independent time series.
+
+The graph was constructed from the sensor locations and contains:
+
+- 207 sensors
+- 1,722 directed model connections
+- Real sensor coordinates
+- Historical traffic-speed observations
+
+The same sensor locations and network structure are also used by the dashboard.
 
 ## Dashboard
 
-UrbanFlow includes five interactive views:
+UrbanFlow includes an interactive dashboard for exploring the model and the traffic network.
 
-- **Command Center** — operational traffic overview
-- **Forecasts** — future traffic predictions
-- **Network** — sensor and graph relationships
-- **Hotspots** — locations requiring attention
-- **Model Intelligence** — model architecture, performance and limitations
+The dashboard is divided into five views:
 
-## Technology Stack
+### Command Center
 
-### Machine Learning
+A high-level view of the current traffic situation and key network metrics.
 
-Python, PyTorch, NumPy, Pandas, Scikit-learn, Jupyter
+### Forecasts
 
-### Backend
+Shows predicted traffic conditions across the available forecast horizons.
 
-FastAPI, Uvicorn, PyTorch
+### Network
 
-### Frontend
+Displays the sensor network and the relationships between locations.
 
-React, Vite, MapLibre GL, Recharts, Framer Motion, Lucide React, Tailwind CSS
+### Hotspots
+
+Highlights locations where traffic conditions require closer attention.
+
+### Model Intelligence
+
+Provides information about the model architecture, performance and limitations.
+
+The frontend uses the real sensor coordinates and a visual representation of the traffic graph.
+
+## Technology
+
+Python, PyTorch, NumPy, Pandas, Scikit-learn, Jupyter, FastAPI, Uvicorn, React, Vite, MapLibre GL, Recharts, Framer Motion, Lucide React and Tailwind CSS.
+
 
 ## Project Structure
 
 ```text
-Urbanflow/
+UrbanFlow/
 ├── data/
 ├── models/
 │   └── urbanflow_final_gnn_transformer_weather_multihorizon.pth
 ├── notebooks/
+│   ├── 01_data_understanding.ipynb
+│   ├── 02_data_preprocessing.ipynb
+│   ├── 03_baseline_models.ipynb
+│   ├── ...
+│   └── 11_urbanflow_final_model.ipynb
 ├── results/
+│   └── experiments/
 ├── src/
 │   ├── api.py
 │   ├── inference.py
 │   └── model.py
 ├── frontend/
+├── requirements.txt
+├── requirements-notebooks.txt
 ├── .gitignore
 └── README.md
-## Quick Setup
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/ragini-gupta15/UrbanFlow.git
-cd UrbanFlow
-```
-
-### 2. Create Python environment
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-```
-
-### 3. Install backend dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Start the FastAPI backend
-
-```bash
-uvicorn api:app --app-dir src --reload
-```
-
-The API will be available at:
-
-`http://127.0.0.1:8000`
-
-### 5. Run the dashboard
-
-Open a second terminal:
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Then open the local Vite URL shown in the terminal.
-
-### Notebook Environment
-
-For reproducing the ML notebooks:
-
-```bash
-pip install -r requirements-notebooks.txt
-```
-
-The final trained model is included at:
-
-`models/urbanflow_final_gnn_transformer_weather_multihorizon.pth`

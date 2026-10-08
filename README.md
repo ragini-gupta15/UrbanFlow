@@ -114,3 +114,58 @@ Urbanflow/
 ├── frontend/
 ├── .gitignore
 └── README.md
+## Quick Setup
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/ragini-gupta15/UrbanFlow.git
+cd UrbanFlow
+```
+
+### 2. Create Python environment
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+### 3. Install backend dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Start the FastAPI backend
+
+```bash
+uvicorn api:app --app-dir src --reload
+```
+
+The API will be available at:
+
+`http://127.0.0.1:8000`
+
+### 5. Run the dashboard
+
+Open a second terminal:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Then open the local Vite URL shown in the terminal.
+
+### Notebook Environment
+
+For reproducing the ML notebooks:
+
+```bash
+pip install -r requirements-notebooks.txt
+```
+
+The final trained model is included at:
+
+`models/urbanflow_final_gnn_transformer_weather_multihorizon.pth`

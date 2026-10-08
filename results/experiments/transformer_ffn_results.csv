@@ -1,0 +1,4 @@
+experiment,dim_feedforward,d_model,num_layers,n_heads,learning_rate,dropout,val_mae,val_rmse
+Transformer FFN 128,128,128,2,4,0.0005,0.1,3.4265899658203125,6.02333426974609
+Transformer FFN 256,256,128,2,4,0.0005,0.1,3.377603,6.07985
+Transformer FFN 512,512,128,2,4,0.0005,0.1,3.4072234630584717,6.028953945341499

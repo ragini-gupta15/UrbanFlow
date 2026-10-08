@@ -1,0 +1,4 @@
+experiment,num_layers,d_model,learning_rate,dropout,n_heads,dim_feedforward,val_mae,val_rmse
+Transformer Layers 1,1,128,0.0005,0.1,4,256,3.429508686065674,6.001111563397059
+Transformer Layers 2,2,128,0.0005,0.1,4,256,3.377603,6.07985
+Transformer Layers 3,3,128,0.0005,0.1,4,256,3.468191146850586,6.066661546865685

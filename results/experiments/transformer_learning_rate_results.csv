@@ -1,0 +1,4 @@
+experiment,learning_rate,dropout,validation_mae,validation_rmse
+Original Transformer,0.001,0.2,3.4215071201324463,6.177782230390839
+Transformer LR 0.0005,0.0005,0.2,3.398540496826172,6.111852119294527
+Transformer LR 0.002,0.002,0.2,3.4685444831848145,6.188177514793014

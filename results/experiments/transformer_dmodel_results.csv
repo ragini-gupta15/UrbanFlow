@@ -1,0 +1,4 @@
+experiment,d_model,learning_rate,dropout,n_heads,num_layers,dim_feedforward,val_mae,val_rmse
+Transformer D_MODEL 64,64,0.0005,0.1,4,2,256,3.4308552742004395,6.024501048594936
+Transformer D_MODEL 128,128,0.0005,0.1,4,2,256,3.377603,6.07985
+Transformer D_MODEL 256,256,0.0005,0.1,4,2,256,3.4585556983947754,6.013258907142297

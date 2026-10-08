@@ -1,0 +1,4 @@
+experiment,weather_used,MAE,RMSE,valid_observations,weather_representation,MAE_change_vs_weather_free,RMSE_change_vs_weather_free
+Weather-Free Graph-Aware UrbanFlow + Huber,False,3.177278,6.316968,664844,,0.0,0.0
+Weather-Aware UrbanFlow v1,True,3.351608,6.588709,664844,last_timestep_only,0.17433000000000032,0.27174099999999957
+Weather-Aware UrbanFlow v2,True,3.361279,6.591718,664844,temporal_weather_encoder,0.1840010000000003,0.27475000000000005

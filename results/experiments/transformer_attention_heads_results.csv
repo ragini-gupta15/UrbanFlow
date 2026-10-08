@@ -1,0 +1,4 @@
+experiment,n_heads,d_model,num_layers,learning_rate,dropout,dim_feedforward,val_mae,val_rmse
+Transformer Heads 2,2,128,2,0.0005,0.1,256,3.407120704650879,5.990688410002011
+Transformer Heads 4,4,128,2,0.0005,0.1,256,3.377603,6.07985
+Transformer Heads 8,8,128,2,0.0005,0.1,256,3.414733409881592,5.993238772168568

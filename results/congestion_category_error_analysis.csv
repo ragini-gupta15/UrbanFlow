@@ -1,0 +1,5 @@
+metric,value
+exact_category_accuracy,0.8189229353051242
+one_category_error,0.16712191130550927
+two_or_more_category_error,0.013955153389366528
+mean_category_distance,0.1964851905108567

@@ -1,0 +1,18 @@
+{
+    "features": [
+        "temp",
+        "rhum",
+        "prcp",
+        "wspd",
+        "pres",
+        "cldc"
+    ],
+    "input_steps": 12,
+    "sampling_interval_minutes": 5,
+    "source_resolution": "hourly",
+    "aligned_resolution": "5-minute",
+    "forecast_horizon_steps": 6,
+    "forecast_horizon_minutes": 30,
+    "timezone": "UTC",
+    "future_weather_used": false
+}

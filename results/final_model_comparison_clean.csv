@@ -1,0 +1,9 @@
+Model,Validation_MAE,Validation_RMSE
+Persistence,3.804962,7.481793
+Linear Regression,3.92041,6.400667
+Random Forest,3.743304,6.796092
+LSTM,3.59516,6.476273
+GNN,4.71528,7.856983
+Transformer,3.421507,6.177782
+UrbanFlow v1,4.305187,7.423078
+UrbanFlow v2,3.514186,6.688337

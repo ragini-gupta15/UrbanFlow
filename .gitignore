@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Node / Vite
+frontend/node_modules/
+frontend/dist/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Large raw / processed datasets
+data/raw/*.h5
+data/processed/*.npz
+
+# Generated prediction artifacts
+results/*.npy
+
+# Experimental model checkpoints
+models/*_best.pth
+
+# Keep the final deployed model
+!models/urbanflow_final_gnn_transformer_weather_multihorizon.pth
+
+# Python build/cache
+*.egg-info/
+.pytest_cache/
+.mypy_cache/

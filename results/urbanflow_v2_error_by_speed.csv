@@ -1,0 +1,5 @@
+speed_range,samples,mean_absolute_error
+0-20 mph,20467,12.692064
+20-40 mph,48895,9.347245
+40-60 mph,138884,4.5504284
+60-70 mph,456598,2.1629565

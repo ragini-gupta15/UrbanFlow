@@ -1,0 +1,8 @@
+experiment,mae_mph,rmse_mph,valid_observations
+Initial Spatial-Temporal Fusion,3.668593,6.719655,664844
+Corrected Spatial-Temporal Fusion,4.220636,7.165104,664844
+Sensor-Specific Spatial-Temporal,3.559492,6.67852,664844
+Spatial Residual Correction,3.377559,6.076365,664844
+Improved UrbanFlow,3.682885,6.69986,664844
+Graph-Aware UrbanFlow + MSE,3.34206,6.286065,664844
+Graph-Aware UrbanFlow + Huber,3.177278,6.316968,664844

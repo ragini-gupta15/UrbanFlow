@@ -1,0 +1,3 @@
+experiment,weather_features,weather_representation,loss,learning_rate,dropout,best_epoch,validation_mae,validation_rmse,valid_observations,baseline_mae,baseline_rmse,mae_change,rmse_change,mae_change_percent,rmse_change_percent
+Weather-Aware UrbanFlow v1,"temp,rhum,prcp,wspd,pres,cldc",last_timestep_only,Huber,0.001,0.1,19,3.3516080379486084,6.588709346361401,664844,3.177278,6.316968,0.1743300379486085,0.2717413463614004,-5.486773204881933,-4.301768607366705
+Weather-Aware UrbanFlow v2,"temp,rhum,prcp,wspd,pres,cldc",temporal_encoder_12_steps,Huber,0.001,0.1,18,3.361279010772705,6.591717592115804,664844,3.177278,6.316968,0.18400101077270525,0.2747495921158043,5.7911523880725975,4.349390278940851

@@ -4,8 +4,7 @@ import joblib
 import numpy as np
 import torch
 
-from model import UrbanFlowFinalModel
-
+from src.model import UrbanFlowFinalModel
 
 class UrbanFlowPredictor:
 
@@ -97,27 +96,17 @@ class UrbanFlowPredictor:
 
         self.horizons = [15, 30, 45, 60]
 
-    def predict(self, traffic, weather):
 
-        traffic = np.asarray(
-            traffic,
-            dtype=np.float32
-        )
+    def predict(self, traffic, weather, blend_30min=False):
 
-        weather = np.asarray(
-            weather,
-            dtype=np.float32
-        )
+        traffic = np.asarray(traffic, dtype=np.float32)
+        weather = np.asarray(weather, dtype=np.float32)
 
         if traffic.shape != (12, 207):
-            raise ValueError(
-                "traffic must have shape (12, 207)"
-            )
+            raise ValueError("traffic must have shape (12, 207)")
 
         if weather.shape != (12, 6):
-            raise ValueError(
-                "weather must have shape (12, 6)"
-            )
+            raise ValueError("weather must have shape (12, 6)")
 
         traffic_tensor = torch.tensor(
             traffic,
@@ -132,7 +121,6 @@ class UrbanFlowPredictor:
         ).unsqueeze(0)
 
         with torch.no_grad():
-
             predictions = self.model(
                 traffic_tensor,
                 weather_tensor,
@@ -142,7 +130,6 @@ class UrbanFlowPredictor:
         results = {}
 
         for horizon in self.horizons:
-
             prediction = (
                 predictions[horizon]
                 .squeeze(0)
@@ -154,6 +141,13 @@ class UrbanFlowPredictor:
             prediction = self.traffic_scaler.inverse_transform(
                 prediction.reshape(1, -1)
             )[0]
+
+            if horizon == 30 and blend_30min:
+                persistence = self.traffic_scaler.inverse_transform(
+                    traffic[-1].reshape(1, -1)
+                )[0]
+
+                prediction = 0.5 * prediction + 0.5 * persistence
 
             results[horizon] = prediction
 

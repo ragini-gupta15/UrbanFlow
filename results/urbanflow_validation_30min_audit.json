@@ -1,0 +1,27 @@
+{
+  "split": "validation",
+  "device": "mps",
+  "checkpoint": "models/urbanflow_final_gnn_transformer_weather_multihorizon.pth",
+  "checkpoint_best_epoch": 20,
+  "validation_start_raw_row": 23990,
+  "target_alignment_max_abs_scaled_difference": 0.0,
+  "weather_shape": [
+    3410,
+    12,
+    6
+  ],
+  "metrics": {
+    "horizon_min": 30,
+    "samples_scored": 3410,
+    "observed_sensor_targets": 656538,
+    "observed_fraction": 0.9301117769560967,
+    "MAE_mph": 3.81939959526062,
+    "RMSE_mph": 7.036845684051514,
+    "persistence_MAE_mph": 3.797450065612793,
+    "persistence_RMSE_mph": 7.464542388916016,
+    "MAE_improvement_vs_persistence_pct": -0.5780070644400997,
+    "mask": "raw METR-LA finite, non-zero observations"
+  },
+  "test_files_modified": false,
+  "checkpoint_modified": false
+}

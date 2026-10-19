@@ -1,0 +1,2 @@
+horizon_min,samples_scored,observed_sensor_targets,observed_fraction,MAE_mph,RMSE_mph,persistence_MAE_mph,persistence_RMSE_mph,MAE_improvement_vs_persistence_pct,mask
+30,3410,656538,0.9301117769560967,3.81939959526062,7.036845684051514,3.797450065612793,7.464542388916016,-0.5780070644400997,"raw METR-LA finite, non-zero observations"

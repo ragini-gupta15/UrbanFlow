@@ -1,0 +1,5 @@
+horizon_min,target_rows_available,samples_scored,observed_sensor_targets,observed_fraction,MAE_mph,RMSE_mph,persistence_MAE_mph,persistence_RMSE_mph,MAE_improvement_vs_persistence_pct,mask_semantics
+15,6835,6835,1243168,0.8786602065950687,3.731445074081421,6.582824230194092,3.483513832092285,6.374143123626709,-7.1172745090040905,raw METR-LA observation (finite and non-zero); interpolated values excluded
+30,6838,6838,1243750,0.8786858886048835,4.210024356842041,7.594175338745117,4.175889015197754,7.983382701873779,-0.8174389098957074,raw METR-LA observation (finite and non-zero); interpolated values excluded
+45,6829,6829,1241932,0.8785578412043551,4.625481128692627,8.41618537902832,4.778860569000244,9.222697257995605,3.209539974917175,raw METR-LA observation (finite and non-zero); interpolated values excluded
+60,6826,6826,1241314,0.8785065910252219,4.988356113433838,9.074850082397461,5.331636905670166,10.263739585876465,6.438562833700303,raw METR-LA observation (finite and non-zero); interpolated values excluded

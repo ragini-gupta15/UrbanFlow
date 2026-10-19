@@ -1,0 +1,53 @@
+{
+  "split": "held-out test",
+  "horizon_min": 30,
+  "blend_alpha_model": 0.5,
+  "blend_alpha_persistence": 0.5,
+  "blend_weight_selected_on": "validation split only",
+  "device": "mps",
+  "checkpoint": "models/urbanflow_final_gnn_transformer_weather_multihorizon.pth",
+  "checkpoint_best_epoch": 20,
+  "test_start_raw_row": 27417,
+  "target_alignment_max_abs_scaled_difference": 0.0,
+  "mask": "raw METR-LA finite and non-zero observations",
+  "test_weather_shape": [
+    6838,
+    12,
+    6
+  ],
+  "metrics": [
+    {
+      "method": "model",
+      "horizon_min": 30,
+      "samples_scored": 6838,
+      "observed_fraction": 0.8786858886048835,
+      "MAE_mph": 4.210024356842041,
+      "RMSE_mph": 7.594175338745117,
+      "observed_sensor_targets": 1243750,
+      "MAE_improvement_vs_persistence_pct": -0.8174389098957074
+    },
+    {
+      "method": "persistence",
+      "horizon_min": 30,
+      "samples_scored": 6838,
+      "observed_fraction": 0.8786858886048835,
+      "MAE_mph": 4.175889015197754,
+      "RMSE_mph": 7.983382701873779,
+      "observed_sensor_targets": 1243750,
+      "MAE_improvement_vs_persistence_pct": 0.0
+    },
+    {
+      "method": "validation_selected_50_50_blend",
+      "horizon_min": 30,
+      "samples_scored": 6838,
+      "observed_fraction": 0.8786858886048835,
+      "MAE_mph": 3.918877601623535,
+      "RMSE_mph": 7.303983211517334,
+      "observed_sensor_targets": 1243750,
+      "MAE_improvement_vs_persistence_pct": 6.154651444012281
+    }
+  ],
+  "checkpoint_modified": false,
+  "input_data_modified": false,
+  "previous_results_overwritten": false
+}

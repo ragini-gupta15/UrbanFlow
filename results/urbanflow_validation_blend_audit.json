@@ -1,0 +1,16 @@
+{
+  "split": "validation",
+  "horizon_min": 30,
+  "device": "mps",
+  "checkpoint_best_epoch": 20,
+  "alignment_max_abs_scaled_difference": 0.0,
+  "mask": "raw METR-LA finite and non-zero observations",
+  "validation_weather_shape": [
+    3410,
+    12,
+    6
+  ],
+  "selection_rule": "lowest validation MAE; RMSE reported alongside",
+  "test_set_used_for_selection": false,
+  "checkpoint_modified": false
+}

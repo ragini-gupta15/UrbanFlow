@@ -1,0 +1,43 @@
+{
+  "project": "UrbanFlow",
+  "diagnostic": "per-sensor test errors by forecast horizon",
+  "device": "mps",
+  "checkpoint": "models/urbanflow_final_gnn_transformer_weather_multihorizon.pth",
+  "checkpoint_best_epoch": 20,
+  "test_start_raw_row": 27417,
+  "input_steps": 12,
+  "sampling_interval_minutes": 5,
+  "mask": "raw METR-LA target finite and non-zero; interpolated values excluded",
+  "alignment_checks": [
+    {
+      "horizon_min": 15,
+      "target_rows": 6835,
+      "scored_rows": 6835,
+      "verified_prefix_rows": 6835,
+      "max_abs_scaled_difference": 0.0
+    },
+    {
+      "horizon_min": 30,
+      "target_rows": 6838,
+      "scored_rows": 6838,
+      "verified_prefix_rows": 6832,
+      "max_abs_scaled_difference": 0.0
+    },
+    {
+      "horizon_min": 45,
+      "target_rows": 6829,
+      "scored_rows": 6829,
+      "verified_prefix_rows": 6829,
+      "max_abs_scaled_difference": 0.0
+    },
+    {
+      "horizon_min": 60,
+      "target_rows": 6826,
+      "scored_rows": 6826,
+      "verified_prefix_rows": 6826,
+      "max_abs_scaled_difference": 0.0
+    }
+  ],
+  "output_csv": "results/urbanflow_per_sensor_errors.csv",
+  "note": "MAE/RMSE/bias are in mph. Bias = prediction minus observed speed. Existing checkpoints, notebooks, targets, masks, and historical results were not modified."
+}

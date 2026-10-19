@@ -33,56 +33,88 @@ export default function UrbanFlowWorkspace() {
 
   
   
-  async function loadReplay(showRefresh = false, selectedIndex = null) {
-    if (showRefresh) setRefreshing(true);
+  
+async function loadReplay(showRefresh = false, selectedIndex = null) {
+  if (showRefresh) setRefreshing(true);
+  setError("");
+
+  const requestedIndex = selectedIndex !== null
+    ? Math.max(0, Math.min(6837, Number(selectedIndex) || 0))
+    : showRefresh
+      ? (sampleIndex + 1) % 6838
+      : sampleIndex;
+
+  try {
+    const response = await fetch(
+      `${API_URL}/demo-replay?sample_index=${requestedIndex}`
+    );
+
+    if (!response.ok) {
+      throw new Error(`Historical replay request failed (${response.status})`);
+    }
+
+    const replay = await response.json();
+    setPredictions(replay.predictions);
+    setWeather(replay.weather);
+    setSampleIndex(replay.sample_index);
+    setSampleInput(String(replay.sample_index));
     setError("");
-
-    const requestedIndex = selectedIndex !== null
-      ? Math.max(0, Math.min(6837, Number(selectedIndex) || 0))
-      : showRefresh
-        ? (sampleIndex + 1) % 6838
-        : sampleIndex;
-
+  } catch {
     try {
-      const response = await fetch(
-        `${API_URL}/demo-replay?sample_index=${requestedIndex}`
-      );
+      const response = await fetch("/demo-replay-samples.json");
 
       if (!response.ok) {
-        throw new Error(`Historical replay request failed (${response.status})`);
+        throw new Error("Saved historical samples could not be loaded.");
       }
 
-      const replay = await response.json();
+      const data = await response.json();
+      const samples = data.samples;
+
+      if (!Array.isArray(samples) || samples.length === 0) {
+        throw new Error("No saved historical samples are available.");
+      }
+
+      // Match the requested index to a saved historical sample.
+      let position;
+
+      if (selectedIndex !== null) {
+        position = samples.reduce((best, sample, i) =>
+          Math.abs(sample.sample_index - requestedIndex) <
+          Math.abs(samples[best].sample_index - requestedIndex)
+            ? i
+            : best, 0);
+      } else if (showRefresh) {
+        const currentPosition = samples.findIndex(
+          sample => sample.sample_index === sampleIndex
+        );
+        position = (currentPosition + 1) % samples.length;
+      } else {
+        position = samples.findIndex(
+          sample => sample.sample_index === sampleIndex
+        );
+        if (position < 0) position = 0;
+      }
+
+      const replay = samples[position];
+
       setPredictions(replay.predictions);
       setWeather(replay.weather);
       setSampleIndex(replay.sample_index);
       setSampleInput(String(replay.sample_index));
-      setError("");
-    } catch {
-      try {
-        const response = await fetch("/demo-replay.json");
-        if (!response.ok) {
-          throw new Error("Saved demo data could not be loaded.");
-        }
-
-        const replay = await response.json();
-        setPredictions(replay.predictions);
-        setWeather(replay.weather);
-        setSampleIndex(replay.sample_index ?? 0);
-        setSampleInput(String(replay.sample_index ?? 0));
-        setError(
-          "Showing a saved historical demonstration. Live API data is unavailable."
-        );
-      } catch (fallbackError) {
-        setError(
-          fallbackError.message || "Unable to load historical demonstration data."
-        );
-      }
-    } finally {
-      setLoading(false);
-      setRefreshing(false);
+      setError(
+        "Historical Demo Mode: showing saved forecasts. Live API data is unavailable."
+      );
+    } catch (fallbackError) {
+      setError(
+        fallbackError.message ||
+        "Unable to load historical demonstration data."
+      );
     }
+  } finally {
+    setLoading(false);
+    setRefreshing(false);
   }
+}
 
   
 

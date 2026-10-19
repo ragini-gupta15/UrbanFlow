@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Activity,
   ArrowDown,
@@ -21,6 +21,8 @@ import PageHeader from "../components/PageHeader";
 export default function Forecasts({ predictions, loading }) {
   const [active, setActive] = useState(30);
   const [selectedSensor, setSelectedSensor] = useState(0);
+  const [sensorSearch, setSensorSearch] = useState("");
+  const [trafficFilter, setTrafficFilter] = useState("all");
 
   const rows = useMemo(
     () =>
@@ -73,7 +75,10 @@ export default function Forecasts({ predictions, loading }) {
     rows.find((row) => row.horizon === active - 15)?.average ||
     baseline;
 
-  const delta = current.average - previous;
+  // Keep the delta consistent with the one-decimal speeds shown in the UI.
+  const delta =
+    Number(current.average.toFixed(1)) -
+    Number(previous.toFixed(1));
 
   const pressure =
     current.values.length > 0
@@ -97,6 +102,52 @@ export default function Forecasts({ predictions, loading }) {
 
   const sensorField = current.values.slice(0, 207);
 
+  const visibleSensors = sensorField
+    .map((speed, index) => ({ speed: Number(speed), index }))
+    .filter(({ speed, index }) => {
+      const id = `S-${String(index + 1).padStart(3, "0")}`;
+      const query = sensorSearch.trim().toLowerCase();
+      const matchesSearch = !query || id.toLowerCase().includes(query);
+
+      let matchesState = true;
+      if (trafficFilter === "pressure") matchesState = speed < 30;
+      else if (trafficFilter === "moderate") matchesState = speed >= 30 && speed < 45;
+      else if (trafficFilter === "moving") matchesState = speed >= 45 && speed < 55;
+      else if (trafficFilter === "free") matchesState = speed >= 55;
+
+      return matchesSearch && matchesState;
+    });
+
+  const visibleSensorIndexes = new Set(
+    visibleSensors.map(({ index }) => index)
+  );
+
+  // FORECAST SENSOR SELECTION SYNC V1
+  useEffect(() => {
+    const query = sensorSearch.trim().toLowerCase();
+
+    const matches = (index) => {
+      const speed = Number(sensorField[index] ?? 0);
+      const id = `S-${String(index + 1).padStart(3, "0")}`;
+
+      const matchesSearch = !query || id.toLowerCase().includes(query);
+
+      let matchesState = true;
+      if (trafficFilter === "pressure") matchesState = speed < 30;
+      else if (trafficFilter === "moderate") matchesState = speed >= 30 && speed < 45;
+      else if (trafficFilter === "moving") matchesState = speed >= 45 && speed < 55;
+      else if (trafficFilter === "free") matchesState = speed >= 55;
+
+      return matchesSearch && matchesState;
+    };
+
+    if (sensorField.length && !matches(selectedSensor)) {
+      const firstMatch = sensorField.findIndex((_, index) => matches(index));
+      if (firstMatch >= 0) setSelectedSensor(firstMatch);
+    }
+  }, [active, sensorSearch, trafficFilter, predictions]);
+
+
   if (loading) {
     return (
       <section className="page">
@@ -119,7 +170,7 @@ export default function Forecasts({ predictions, loading }) {
         action={
           <div className="forecast-mode">
             <Clock3 size={15} />
-            Live prediction engine
+            Historical test replay
           </div>
         }
       />
@@ -152,7 +203,7 @@ export default function Forecasts({ predictions, loading }) {
               </strong>
 
               <span>
-                vs current network
+                vs +15 min forecast
               </span>
             </div>
           </div>
@@ -220,6 +271,44 @@ export default function Forecasts({ predictions, loading }) {
             </div>
           </div>
 
+          <div className="forecast-explorer-controls">
+            <label className="forecast-explorer-search">
+              <span>FIND SENSOR</span>
+              <input
+                type="search"
+                value={sensorSearch}
+                onChange={(event) => setSensorSearch(event.target.value)}
+                placeholder="Search S-001…"
+                aria-label="Search forecast sensors by ID"
+              />
+            </label>
+
+            <div className="forecast-explorer-filters" role="group" aria-label="Filter sensors by predicted speed">
+              <span>TRAFFIC STATE</span>
+              {[
+                { id: "all", label: "All" },
+                { id: "pressure", label: "Pressure" },
+                { id: "moderate", label: "Moderate" },
+                { id: "moving", label: "Moving" },
+                { id: "free", label: "Free flow" },
+              ].map((item) => (
+                <button
+                  type="button"
+                  key={item.id}
+                  className={trafficFilter === item.id ? "is-active" : ""}
+                  aria-pressed={trafficFilter === item.id}
+                  onClick={() => setTrafficFilter(item.id)}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+
+            <div className="forecast-explorer-count" aria-live="polite">
+              <strong>{visibleSensors.length}</strong> / {sensorField.length}
+            </div>
+          </div>
+
           <div key={active} className={`sensor-field sensor-field--horizon-${active}`}>
 
             <svg
@@ -280,13 +369,13 @@ export default function Forecasts({ predictions, loading }) {
                 <button
                   key={index}
                   className={`sensor-field__dot is-${state} ${
-                    selectedSensor === index
-                      ? "is-selected"
-                      : ""
+                    selectedSensor === index ? "is-selected" : ""
                   }`}
                   style={{
                     "--speed": normalized,
                     "--delay": `${(index % 30) * 0.025}s`,
+                    opacity: visibleSensorIndexes.has(index) ? 1 : 0.12,
+                    pointerEvents: visibleSensorIndexes.has(index) ? "auto" : "none",
                   }}
                   title={`Sensor ${String(index + 1).padStart(
                     3,
@@ -476,7 +565,7 @@ export default function Forecasts({ predictions, loading }) {
                   >
                     <stop offset="0%" stopColor="#45e6a8" />
                     <stop offset="55%" stopColor="#6fe7ff" />
-                    <stop offset="100%" stopColor="#ffb347" />
+                    <stop offset="100%" stopColor="#20b8a4" />
                   </linearGradient>
 
                   <filter id="forecastTrajectoryGlow">
@@ -525,9 +614,16 @@ export default function Forecasts({ predictions, loading }) {
 
             <div className="forecast-trajectory-horizons">
               {selectedTrajectory.map((point) => (
-                <span key={point.horizon}>
+                <button
+                  type="button"
+                  key={point.horizon}
+                  className={active === point.horizon ? "is-active" : ""}
+                  aria-pressed={active === point.horizon}
+                  onClick={() => setActive(point.horizon)}
+                  title={`Inspect ${point.speed.toFixed(1)} mph at +${point.horizon} minutes`}
+                >
                   +{point.horizon}m
-                </span>
+                </button>
               ))}
             </div>
 

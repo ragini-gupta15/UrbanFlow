@@ -1,0 +1,4921 @@
+.uf-workspace {
+  --uf-ink: #202a2c;
+  --uf-muted: #778384;
+  --uf-line: #e2e7e3;
+  --uf-paper: #f5f6f1;
+  --uf-white: #fffefa;
+  --uf-teal: #167c73;
+  --uf-teal-dark: #155b56;
+  --uf-mint: #dcefe8;
+  --uf-amber: #c58a35;
+  --uf-red: #c9574d;
+  min-height: 100vh;
+  background: var(--uf-paper);
+  color: var(--uf-ink);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-size: 13px;
+}
+.uf-workspace * { box-sizing: border-box; }
+.uf-workspace button { font: inherit; cursor: pointer; }
+.uf-rail {
+  position: fixed; inset: 0 auto 0 0; z-index: 30;
+  width: 246px; padding: 27px 17px 18px;
+  display: flex; flex-direction: column;
+  background: #202b2c; color: #e8efea;
+}
+.uf-brand { display: flex; align-items: center; gap: 11px; padding: 0 8px 35px; }
+.uf-brand-mark { width: 39px; height: 39px; display: grid; place-items: center; border-radius: 12px; background: #c8e8dc; color: #1d6259; }
+.uf-brand strong { display: block; font-size: 19px; letter-spacing: -.8px; font-weight: 750; }
+.uf-brand strong span { color: #73c8b1; }
+.uf-brand small { display: block; margin-top: 4px; color: #9aadaa; font-size: 8px; letter-spacing: 1.5px; }
+.uf-mobile-close, .uf-menu-button { display: none; }
+.uf-rail-label { padding: 0 11px 12px; color: #82918e; font-size: 9px; font-weight: 700; letter-spacing: 1.6px; }
+.uf-nav { display: grid; gap: 5px; }
+.uf-nav-item { min-height: 45px; display: flex; align-items: center; gap: 12px; padding: 0 11px; border: 1px solid transparent; border-radius: 8px; text-align: left; color: #b5c1bd; background: transparent; transition: .18s ease; }
+.uf-nav-item span { flex: 1; font-size: 12px; }
+.uf-nav-item small { color: #71827e; font-size: 9px; font-variant-numeric: tabular-nums; }
+.uf-nav-item:hover { color: #fff; background: #2b3939; }
+.uf-nav-item.is-active { color: #f5fffb; border-color: #3b5550; background: #2c4642; }
+.uf-nav-item.is-active svg { color: #83d3bd; }
+.uf-nav-item.is-active small { color: #83d3bd; }
+.uf-rail-bottom { margin-top: auto; }
+.uf-rail-status { display: flex; align-items: flex-start; gap: 10px; padding: 14px 11px; border: 1px solid #3a4947; border-radius: 9px; background: #263433; }
+.uf-status-dot, .uf-eyebrow span { width: 7px; height: 7px; flex: 0 0 7px; margin-top: 4px; border-radius: 50%; background: #7bc8ad; }
+.uf-rail-status strong, .uf-rail-status small { display: block; }
+.uf-rail-status strong { font-size: 11px; font-weight: 600; }
+.uf-rail-status small { margin-top: 5px; color: #a3b3ae; font-size: 10px; }
+.uf-rail-foot { padding: 18px 10px 0; color: #71817e; font-size: 8px; line-height: 1.9; letter-spacing: .9px; }
+.uf-main { min-height: 100vh; margin-left: 246px; }
+.uf-topbar { height: 65px; display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 0 34px; border-bottom: 1px solid var(--uf-line); background: rgba(255,254,250,.9); }
+.uf-breadcrumb { display: flex; align-items: center; gap: 10px; color: #4e5d5d; font-size: 10px; font-weight: 700; letter-spacing: 1px; }
+.uf-breadcrumb span { color: #84918c; }
+.uf-breadcrumb b { color: #bdc6c0; }
+.uf-topbar-right { display: flex; align-items: center; gap: 16px; }
+.uf-replay-pill { display: inline-flex; align-items: center; gap: 7px; padding: 7px 9px; border: 1px solid #e3e7dd; border-radius: 5px; color: #5c6a65; background: #f8f9f4; font-size: 9px; font-weight: 700; letter-spacing: .55px; }
+.uf-replay-pill i { width: 6px; height: 6px; border-radius: 50%; background: #c38b3c; }
+.uf-refresh { display: flex; align-items: center; gap: 8px; padding: 8px 11px; border: 1px solid #dce3dd; border-radius: 6px; color: #315a53; background: white; font-size: 11px; font-weight: 600; }
+.uf-refresh:hover { border-color: #8db9ab; background: #f3faf6; }
+.uf-refresh:disabled { opacity: .65; cursor: wait; }
+.uf-refresh.is-refreshing svg { animation: uf-spin 1s linear infinite; }
+@keyframes uf-spin { to { transform: rotate(360deg); } }
+.uf-content { max-width: 1700px; margin: 0 auto; padding: 30px 34px 24px; }
+.uf-page-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 25px; margin-bottom: 23px; }
+.uf-eyebrow, .uf-section-label { display: flex; align-items: center; gap: 8px; color: #73827d; font-size: 9px; font-weight: 750; letter-spacing: 1.25px; }
+.uf-eyebrow span { width: 6px; height: 6px; margin: 0; background: var(--uf-teal); }
+.uf-page-heading h1 { margin: 13px 0 8px; font-size: clamp(29px, 3vw, 43px); font-weight: 570; letter-spacing: -1.9px; line-height: 1.1; }
+.uf-page-heading h1 em { color: var(--uf-teal); font-family: Georgia, "Times New Roman", serif; font-weight: 400; }
+.uf-page-heading p { margin: 0; color: var(--uf-muted); font-size: 12px; line-height: 1.7; }
+.uf-heading-note { min-width: 185px; padding: 13px 16px; border-left: 2px solid #8fc7b3; background: #eaf2e9; }
+.uf-heading-note span, .uf-heading-note strong, .uf-heading-note small { display: block; }
+.uf-heading-note span { color: #6c8278; font-size: 8px; font-weight: 700; letter-spacing: 1.1px; }
+.uf-heading-note strong { margin-top: 6px; color: #2d5148; font-size: 12px; }
+.uf-heading-note small { margin-top: 4px; color: #73877e; font-size: 10px; }
+.uf-stat-row { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; margin-bottom: 17px; }
+.uf-stat { min-width: 0; padding: 15px 17px 14px; border: 1px solid var(--uf-line); border-radius: 8px; background: var(--uf-white); }
+.uf-stat > span { display: block; color: #7d8983; font-size: 8px; font-weight: 750; letter-spacing: 1px; }
+.uf-stat > strong { display: block; margin-top: 10px; font-size: 26px; font-weight: 620; letter-spacing: -.8px; font-variant-numeric: tabular-nums; }
+.uf-stat > strong small { font-size: 12px; font-weight: 500; letter-spacing: 0; }
+.uf-stat > small { display: block; margin-top: 5px; color: #929b94; font-size: 10px; }
+.uf-map-panel { overflow: hidden; border: 1px solid #dfe5df; border-radius: 10px; background: var(--uf-white); }
+.uf-map-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 20px 16px; }
+.uf-section-label span { color: #a8b3ac; }
+.uf-map-heading h2, .uf-detail-card h2 { margin: 7px 0 0; font-size: 16px; font-weight: 650; letter-spacing: -.35px; }
+.uf-map-heading p { margin: 5px 0 0; color: #89938d; font-size: 11px; }
+.uf-horizon-control { display: flex; gap: 4px; padding: 4px; border: 1px solid #e5e9e2; border-radius: 7px; background: #f2f4ef; }
+.uf-horizon-control button { min-width: 47px; padding: 8px 9px; border: 1px solid transparent; border-radius: 5px; color: #65746d; background: transparent; font-size: 12px; font-weight: 700; }
+.uf-horizon-control button small { margin-left: 2px; color: inherit; font-size: 9px; font-weight: 500; }
+.uf-horizon-control button.is-active { border-color: #d4e5db; color: #155e54; background: white; box-shadow: 0 1px 3px #263a3010; }
+.uf-map-frame { position: relative; height: clamp(340px, 43vw, 515px); min-height: 340px; overflow: hidden; background: #e8ede7; }
+.uf-map-frame .urban-map { position: absolute; inset: 0; width: 100%; height: 100%; }
+.uf-map-tag { position: absolute; top: 14px; left: 14px; display: flex; align-items: center; gap: 9px; padding: 9px 12px; border: 1px solid #e3e8e0; border-radius: 7px; background: rgba(255,254,250,.94); box-shadow: 0 3px 12px #263a3010; pointer-events: none; }
+.uf-map-tag > span { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 6px; color: #28665b; background: #e1f0e7; font-size: 10px; font-weight: 800; }
+.uf-map-tag strong, .uf-map-tag small { display: block; }
+.uf-map-tag strong { font-size: 10px; letter-spacing: .4px; }
+.uf-map-tag small { margin-top: 3px; color: #84918a; font-size: 9px; }
+.uf-map-horizon { position: absolute; right: 14px; bottom: 14px; padding: 8px 11px; border: 1px solid #e1e6dd; border-radius: 5px; color: #31584f; background: rgba(255,254,250,.94); font-size: 10px; font-weight: 750; letter-spacing: .8px; pointer-events: none; }
+.uf-map-legend { display: flex; align-items: center; flex-wrap: wrap; gap: 15px; min-height: 47px; padding: 10px 18px; border-top: 1px solid #e7ebe5; }
+.uf-map-legend > span { display: inline-flex; align-items: center; gap: 6px; color: #65746c; font-size: 10px; }
+.uf-map-legend > span i { width: 7px; height: 7px; border-radius: 50%; }
+.uf-legend-green { background: #22a779; }.uf-legend-cyan { background: #18b6d9; }.uf-legend-amber { background: #e4a343; }.uf-legend-red { background: #df5d55; }
+.uf-map-legend button, .uf-text-link { display: inline-flex; align-items: center; gap: 6px; margin-left: auto; padding: 5px 0; border: 0; color: var(--uf-teal); background: transparent; font-size: 10px; font-weight: 700; }
+.uf-map-legend button:hover, .uf-text-link:hover { color: #0a5148; }
+.uf-detail-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; margin-top: 14px; }
+.uf-detail-card { min-width: 0; padding: 17px; border: 1px solid var(--uf-line); border-radius: 8px; background: var(--uf-white); }
+.uf-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.uf-card-top > svg { color: #73968b; }
+.uf-detail-card h2 { font-size: 14px; }
+.uf-state { padding: 5px 7px; border-radius: 4px; font-size: 9px; font-weight: 700; }
+.uf-state--green { color: #207553; background: #e2f2e7; }.uf-state--amber { color: #926221; background: #f8edda; }.uf-state--red { color: #a6423b; background: #fae5e1; }
+.uf-sensor-speed { display: flex; align-items: baseline; gap: 9px; margin: 17px 0 13px; }
+.uf-sensor-speed > strong { font-size: 37px; font-weight: 620; letter-spacing: -1.6px; font-variant-numeric: tabular-nums; }
+.uf-sensor-speed > span { color: #5e7068; font-size: 11px; }.uf-sensor-speed > span small { color: #8b9790; }
+.uf-sensor-horizons { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 5px; }
+.uf-sensor-horizons button { display: grid; gap: 5px; padding: 8px 4px; border: 1px solid #e5e9e3; border-radius: 5px; color: #67766f; background: #f7f8f3; text-align: left; }
+.uf-sensor-horizons button.is-active { border-color: #9bc9b8; color: #155f54; background: #eaf4ed; }
+.uf-sensor-horizons button span { font-size: 9px; }.uf-sensor-horizons button strong { font-size: 11px; font-variant-numeric: tabular-nums; }
+.uf-text-link { margin-top: 13px; margin-left: 0; }
+.uf-compare { display: flex; align-items: center; justify-content: space-between; gap: 9px; margin: 26px 0 17px; }
+.uf-compare > div:not(.uf-compare-arrow) { min-width: 0; }
+.uf-compare span, .uf-compare strong { display: block; }
+.uf-compare span { color: #829088; font-size: 8px; font-weight: 750; letter-spacing: .9px; }
+.uf-compare strong { margin-top: 7px; font-size: 22px; font-weight: 620; letter-spacing: -.6px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.uf-compare strong small { color: #7d8983; font-size: 10px; font-weight: 500; }
+.uf-compare-arrow { color: #85a59a; font-size: 18px; }
+.uf-muted { color: #8b9690; font-size: 10px; line-height: 1.6; }
+.uf-weather-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 13px 10px; margin-top: 22px; }
+.uf-weather-grid span, .uf-weather-grid strong { display: block; }
+.uf-weather-grid span { color: #8a958f; font-size: 10px; }
+.uf-weather-grid strong { margin-top: 4px; font-size: 14px; font-weight: 650; }
+.uf-page-foot { display: flex; justify-content: space-between; gap: 10px; margin-top: 21px; color: #9aa39c; font-size: 8px; letter-spacing: .65px; }
+.uf-error { display: flex; align-items: center; gap: 12px; margin: 20px 34px 0; padding: 13px 15px; border: 1px solid #efc9c3; border-radius: 7px; color: #8b3d36; background: #fff2ef; }
+.uf-error strong { font-size: 11px; }.uf-error span { flex: 1; font-size: 11px; }
+.uf-error button { padding: 6px 9px; border: 1px solid #e6bcb5; border-radius: 4px; color: #8b3d36; background: white; }
+.uf-loading { display: grid; min-height: 65vh; place-content: center; justify-items: center; gap: 14px; color: #64756c; }
+.uf-loader { width: 32px; height: 32px; border: 3px solid #dce7de; border-top-color: var(--uf-teal); border-radius: 50%; animation: uf-spin .8s linear infinite; }
+.uf-scrim { display: none; }
+
+@media (min-width: 1500px) {
+  .uf-content { padding-right: 42px; padding-left: 42px; }
+  .uf-stat { padding: 18px 20px; }
+}
+@media (max-width: 1150px) {
+  .uf-rail { width: 218px; }
+  .uf-main { margin-left: 218px; }
+  .uf-topbar { padding: 0 23px; }
+  .uf-content { padding: 25px 23px; }
+  .uf-detail-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .uf-detail-card:last-child { grid-column: 1 / -1; }
+  .uf-stat { padding: 13px; }
+}
+@media (max-width: 800px) {
+  .uf-rail { z-index: 50; width: 270px; transform: translateX(-102%); transition: transform .22s ease; }
+  .uf-rail.uf-rail--open { transform: translateX(0); }
+  .uf-mobile-close { display: grid; place-items: center; margin-left: auto; border: 0; color: #dce8e1; background: transparent; }
+  .uf-menu-button { display: grid; place-items: center; width: 33px; height: 33px; border: 1px solid var(--uf-line); border-radius: 6px; color: var(--uf-ink); background: white; }
+  .uf-scrim { position: fixed; z-index: 40; inset: 0; display: block; border: 0; background: #15242378; }
+  .uf-main { margin-left: 0; }
+  .uf-topbar { height: 59px; padding: 0 15px; }
+  .uf-topbar-left { display: flex; align-items: center; gap: 11px; }
+  .uf-topbar-right { gap: 8px; }
+  .uf-replay-pill { font-size: 8px; }
+  .uf-refresh { padding: 8px; }.uf-refresh span { display: none; }
+  .uf-content { padding: 23px 15px; }
+  .uf-page-heading { align-items: flex-start; }
+  .uf-heading-note { display: none; }
+  .uf-stat-row { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .uf-map-frame { height: 390px; }
+  .uf-detail-grid { grid-template-columns: 1fr; }
+  .uf-detail-card:last-child { grid-column: auto; }
+}
+@media (max-width: 480px) {
+  .uf-breadcrumb { gap: 6px; font-size: 9px; }
+  .uf-replay-pill { max-width: 132px; padding: 7px; font-size: 7px; }
+  .uf-page-heading h1 { font-size: 32px; letter-spacing: -1.3px; }
+  .uf-page-heading p { max-width: 300px; }
+  .uf-stat { padding: 12px 10px; }
+  .uf-stat > span { font-size: 7px; letter-spacing: .5px; }
+  .uf-stat > strong { font-size: 23px; }
+  .uf-map-heading { align-items: flex-start; flex-direction: column; padding: 16px 13px; }
+  .uf-horizon-control { width: 100%; }
+  .uf-horizon-control button { flex: 1; }
+  .uf-map-frame { height: 350px; min-height: 350px; }
+  .uf-map-legend { gap: 10px; padding: 10px; }
+  .uf-map-legend > span { font-size: 9px; }
+  .uf-map-legend button { width: 100%; margin-left: 0; }
+  .uf-page-foot { flex-direction: column; line-height: 1.5; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .uf-workspace *, .uf-workspace *::before, .uf-workspace *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+/* Verified 30-minute benchmark */
+.mi-benchmark {
+  margin: 24px 0;
+  padding: 24px;
+  border: 1px solid #dce5df;
+  border-radius: 16px;
+  background: #fffefa;
+  color: #243431;
+}
+
+.mi-benchmark-intro,
+.mi-benchmark-footnote {
+  max-width: 900px;
+  color: #687773;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.mi-benchmark-table {
+  overflow: hidden;
+  margin-top: 18px;
+  border: 1px solid #e1e8e3;
+  border-radius: 10px;
+}
+
+.mi-benchmark-row {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.7fr) minmax(100px, 0.7fr) minmax(100px, 0.7fr);
+  gap: 16px;
+  align-items: center;
+  padding: 15px 18px;
+  border-bottom: 1px solid #e8ede9;
+  font-size: 13px;
+}
+
+.mi-benchmark-row:last-child {
+  border-bottom: 0;
+}
+
+.mi-benchmark-row--head {
+  background: #f2f5f1;
+  color: #667670;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.mi-benchmark-row--highlight {
+  background: #eaf5ef;
+}
+
+.mi-benchmark-row--highlight strong {
+  color: #16745d;
+}
+
+.mi-benchmark-footnote {
+  margin-bottom: 0;
+  font-size: 12px;
+}
+
+@media (max-width: 640px) {
+  .mi-benchmark {
+    padding: 16px;
+  }
+
+  .mi-benchmark-row {
+    grid-template-columns: minmax(0, 1.5fr) minmax(68px, 0.7fr) minmax(68px, 0.7fr);
+    gap: 8px;
+    padding: 12px 10px;
+    font-size: 11px;
+    overflow-wrap: anywhere;
+  }
+
+  .mi-benchmark-row--head {
+    font-size: 9px;
+  }
+}
+
+/* =========================================================
+   URBANFLOW — NETWORK WORKSPACE REDESIGN
+   Scoped to Network page; preserves graph behavior.
+   ========================================================= */
+
+.page.network-page {
+  --network-accent: #087f78;
+  --network-accent-dark: #06645f;
+  --network-ink: #182b2b;
+  --network-muted: #758381;
+  --network-line: #e2e9e6;
+  --network-surface: #ffffff;
+  --network-canvas: #f5f7f5;
+
+  width: 100%;
+  max-width: 1600px;
+  margin-inline: auto;
+  padding: 30px clamp(18px, 2.4vw, 38px) 40px;
+  color: var(--network-ink);
+}
+
+/* Header */
+.network-page .network-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 28px;
+  padding: 0 0 26px;
+  border-bottom: 1px solid var(--network-line);
+  background: transparent;
+}
+
+.network-page .network-hero > div:first-child {
+  max-width: 720px;
+}
+
+.network-page .network-hero > div:first-child > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+  color: var(--network-accent) !important;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.network-page .network-hero h1 {
+  max-width: 680px;
+  margin: 0;
+  color: var(--network-ink);
+  font-size: clamp(27px, 2.6vw, 38px);
+  font-weight: 720;
+  line-height: 1.14;
+  letter-spacing: -0.045em;
+}
+
+.network-page .network-hero p {
+  max-width: 630px;
+  margin: 13px 0 0;
+  color: #687774;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.network-page .network-hero__metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(100px, 1fr));
+  gap: 10px;
+  min-width: min(390px, 100%);
+}
+
+.network-page .network-hero__metrics > div {
+  min-width: 0;
+  padding: 15px 14px;
+  border: 1px solid var(--network-line);
+  border-radius: 13px;
+  background: var(--network-surface);
+}
+
+.network-page .network-hero__metrics svg {
+  color: var(--network-accent) !important;
+}
+
+.network-page .network-hero__metrics strong {
+  display: block;
+  margin-top: 10px;
+  color: var(--network-ink);
+  font-size: 23px;
+  font-weight: 750;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.network-page .network-hero__metrics span {
+  display: block;
+  margin-top: 4px;
+  color: var(--network-muted);
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+/* Forecast controls and summary */
+.network-page .network-controlbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 22px 0;
+  padding: 16px 18px;
+  border: 1px solid var(--network-line);
+  border-radius: 15px;
+  background: var(--network-surface);
+  box-shadow: 0 4px 18px rgb(25 49 42 / 3%);
+}
+
+.network-page .network-controlbar__title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 15px;
+}
+
+.network-page .network-controlbar__title > span,
+.network-page .network-controlbar__context > div > span {
+  color: var(--network-muted);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+}
+
+.network-page .network-horizons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 4px;
+  border: 1px solid var(--network-line);
+  border-radius: 10px;
+  background: var(--network-canvas);
+}
+
+.network-page .network-controlbar .network-horizons button {
+  min-width: 52px;
+  padding: 9px 12px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+  color: #657571;
+  font-size: 12px;
+  font-weight: 750;
+  transition: background 160ms ease, color 160ms ease,
+    border-color 160ms ease, transform 160ms ease;
+}
+
+.network-page .network-controlbar .network-horizons button:hover {
+  border-color: #c5e1dc;
+  background: #eaf5f2;
+  color: var(--network-accent-dark);
+}
+
+.network-page .network-controlbar .network-horizons button.is-active {
+  border-color: var(--network-accent);
+  background: var(--network-accent);
+  color: #ffffff;
+  box-shadow: 0 2px 7px rgb(8 127 120 / 20%);
+}
+
+.network-page .network-controlbar__context {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.network-page .network-controlbar__context > div {
+  display: grid;
+  gap: 6px;
+}
+
+.network-page .network-controlbar__context b {
+  color: var(--network-ink);
+  font-size: 16px;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Main graph + inspector */
+.network-page .network-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(285px, 330px);
+  align-items: start;
+  gap: 18px;
+}
+
+.network-page .network-graph-card,
+.network-page .network-inspector {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--network-line);
+  border-radius: 16px;
+  background: var(--network-surface);
+  box-shadow: 0 6px 24px rgb(25 49 42 / 4%);
+}
+
+.network-page .network-graph-card__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 21px 22px;
+  border-bottom: 1px solid var(--network-line);
+}
+
+.network-page .network-graph-card__head > div:first-child > span {
+  color: var(--network-accent);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.network-page .network-graph-card__head h2 {
+  margin: 7px 0 0;
+  color: var(--network-ink);
+  font-size: 19px;
+  font-weight: 720;
+  letter-spacing: -0.025em;
+}
+
+.network-page .network-graph-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.network-page .network-graph-card__meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #536560;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.network-page .network-graph-card__meta span i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--network-accent);
+  box-shadow: 0 0 0 4px #e7f4f1;
+}
+
+.network-page .network-graph-card__meta small {
+  padding: 6px 9px;
+  border: 1px solid var(--network-line);
+  border-radius: 7px;
+  background: var(--network-canvas);
+  color: #64736f;
+  font-size: 10px;
+  font-weight: 650;
+}
+
+/* Inspector hierarchy */
+.network-page .network-inspector {
+  padding: 20px;
+}
+
+.network-page .network-inspector__top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.network-page .network-inspector__icon {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid #cde8e2;
+  border-radius: 10px;
+  background: #eaf6f3;
+  color: var(--network-accent);
+}
+
+.network-page .network-inspector__top > span,
+.network-page .network-section-label,
+.network-page .network-trajectory__head > span {
+  color: var(--network-muted);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+}
+
+.network-page .network-inspector__identity {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 9px;
+  margin-top: 21px;
+}
+
+.network-page .network-inspector__identity h2 {
+  margin: 0;
+  color: var(--network-ink);
+  font-size: 28px;
+  font-weight: 760;
+  letter-spacing: -0.04em;
+}
+
+.network-page .network-inspector__speed {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 9px;
+  margin: 15px 0 20px;
+  padding: 16px;
+  border: 1px solid #d7eae5;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #edf7f4, #f8faf8);
+}
+
+.network-page .network-inspector__speed strong {
+  color: var(--network-accent-dark);
+  font-size: 39px;
+  font-weight: 760;
+  line-height: 1;
+  letter-spacing: -0.055em;
+  font-variant-numeric: tabular-nums;
+}
+
+.network-page .network-inspector__speed span {
+  color: #657672;
+  font-size: 11px;
+}
+
+.network-page .network-trajectory {
+  padding: 16px 0 19px;
+  border-top: 1px solid var(--network-line);
+  border-bottom: 1px solid var(--network-line);
+}
+
+.network-page .network-trajectory__head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.network-page .network-trajectory__head b {
+  color: #465a55;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.network-page .network-trajectory__bars {
+  gap: 9px;
+  margin-top: 15px;
+}
+
+.network-page .network-trajectory__bar {
+  overflow: hidden;
+  border-radius: 5px;
+  background: #edf1ef;
+}
+
+.network-page .network-trajectory__bar i {
+  display: block;
+  border-radius: 5px;
+  background: linear-gradient(180deg, #36a99a, #087f78);
+  transition: height 200ms ease;
+}
+
+.network-page .network-trajectory__item b {
+  color: var(--network-ink);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.network-page .network-trajectory__item span {
+  color: var(--network-muted);
+  font-size: 10px;
+}
+
+.network-page .network-inspector__section {
+  margin-top: 19px;
+}
+
+.network-page .network-section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.network-page .network-section-label svg {
+  color: var(--network-accent);
+}
+
+.network-page .network-neighbors {
+  margin-top: 12px;
+}
+
+.network-page .network-neighbors > * {
+  transition: background 150ms ease, border-color 150ms ease;
+}
+
+/* Keep status colors meaningful, not decorative */
+.network-page .network-state {
+  font-size: 10px;
+  font-weight: 750;
+}
+
+/* Responsive layout */
+@media (max-width: 1120px) {
+  .page.network-page {
+    padding-inline: 20px;
+  }
+
+  .network-page .network-hero {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .network-page .network-hero__metrics {
+    max-width: 560px;
+  }
+
+  .network-page .network-main {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .network-page .network-inspector {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: 16px 22px;
+  }
+
+  .network-page .network-inspector__top,
+  .network-page .network-inspector__identity,
+  .network-page .network-inspector__speed {
+    margin-top: 0;
+  }
+
+  .network-page .network-trajectory {
+    grid-column: 1 / -1;
+  }
+
+  .network-page .network-inspector__section,
+  .network-page .network-neighbors {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 640px) {
+  .page.network-page {
+    padding: 20px 12px 28px;
+  }
+
+  .network-page .network-hero__metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+  }
+
+  .network-page .network-hero__metrics > div {
+    padding: 11px 9px;
+  }
+
+  .network-page .network-hero__metrics strong {
+    font-size: 19px;
+  }
+
+  .network-page .network-controlbar {
+    align-items: stretch;
+    padding: 13px;
+  }
+
+  .network-page .network-controlbar__title {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .network-page .network-controlbar__context {
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .network-page .network-graph-card__head {
+    padding: 16px;
+  }
+
+  .network-page .network-inspector {
+    display: block;
+    padding: 16px;
+  }
+
+  .network-page .network-inspector__identity {
+    margin-top: 18px;
+  }
+
+  .network-page .network-inspector__speed {
+    margin-top: 14px;
+  }
+}
+
+/* Network page — final accent and hierarchy pass */
+.network-page .network-controlbar button.is-active {
+  background: #087f78 !important;
+  border-color: #087f78 !important;
+  color: #ffffff !important;
+}
+
+.network-page .network-controlbar button:hover {
+  background: #eaf5f2 !important;
+  border-color: #c5e1dc !important;
+  color: #06645f !important;
+}
+
+.network-page .network-graph-card__head > div:first-child > span,
+.network-page .network-inspector__top > span,
+.network-page .network-section-label,
+.network-page .network-trajectory__head > span {
+  color: #087f78 !important;
+}
+
+.network-page .network-inspector__icon {
+  background: #eaf6f3 !important;
+  border-color: #cde8e2 !important;
+  color: #087f78 !important;
+}
+
+.network-page .network-inspector__speed strong {
+  color: #06645f !important;
+}
+
+.network-page .network-trajectory__bar i {
+  background: linear-gradient(180deg, #36a99a, #087f78) !important;
+}
+
+/* Preserve meaningful status colors in the graph and sensor states. */
+.network-page .network-state {
+  color: inherit;
+}
+
+.network-page button:focus-visible {
+  outline: 2px solid #087f78;
+  outline-offset: 3px;
+}
+
+/* URBANFLOW — spatial exploration workspace */
+.page.network-page {
+  --spatial-bg: #101b1b;
+  --spatial-panel: #172424;
+  --spatial-line: #2a3b3a;
+  --spatial-text: #e5efec;
+  --spatial-muted: #92a8a3;
+  --spatial-teal: #28d5bd;
+
+  max-width: 1800px;
+  padding: 22px clamp(16px, 2vw, 30px) 30px;
+  background: #f3f6f4;
+}
+
+.network-page .network-hero {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  padding-bottom: 18px;
+}
+
+.network-page .network-hero h1 {
+  font-size: clamp(25px, 2.2vw, 32px);
+  letter-spacing: -0.04em;
+}
+
+.network-page .network-hero p {
+  max-width: 580px;
+  font-size: 13px;
+}
+
+.network-page .network-hero__metrics {
+  min-width: 330px;
+  gap: 7px;
+}
+
+.network-page .network-hero__metrics > div {
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
+.network-page .network-hero__metrics strong {
+  margin-top: 6px;
+  font-size: 19px;
+}
+
+/* Keep the horizon controls, but visually attach them to the graph */
+.network-page .network-controlbar {
+  margin: 14px 0;
+  padding: 11px 14px;
+  border-radius: 11px;
+  box-shadow: none;
+}
+
+.network-page .network-main {
+  grid-template-columns: minmax(0, 1fr) 310px;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.network-page .network-graph-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 660px;
+  border-color: var(--spatial-line);
+  border-radius: 14px;
+  background: var(--spatial-bg);
+  box-shadow: 0 12px 34px rgb(14 31 29 / 13%);
+}
+
+.network-page .network-graph-card__head {
+  flex: 0 0 auto;
+  padding: 16px 19px;
+  border-bottom-color: var(--spatial-line);
+  background: var(--spatial-panel);
+}
+
+.network-page .network-graph-card__head h2 {
+  color: var(--spatial-text);
+  font-size: 17px;
+}
+
+.network-page .network-graph-card__head > div:first-child > span {
+  color: var(--spatial-teal) !important;
+}
+
+.network-page .network-graph-card__meta span {
+  color: #c4d7d2;
+}
+
+.network-page .network-graph-card__meta small {
+  border-color: var(--spatial-line);
+  background: #203331;
+  color: #c4d7d2;
+}
+
+/* The graph visualization remains interactive; only its surrounding
+   workspace is restyled here. */
+.network-page .network-inspector {
+  border-color: var(--spatial-line);
+  border-radius: 14px;
+  background: var(--spatial-panel);
+  color: var(--spatial-text);
+  box-shadow: 0 12px 34px rgb(14 31 29 / 10%);
+}
+
+.network-page .network-inspector__top > span,
+.network-page .network-section-label,
+.network-page .network-trajectory__head > span {
+  color: var(--spatial-teal) !important;
+}
+
+.network-page .network-inspector__identity h2,
+.network-page .network-inspector__speed strong,
+.network-page .network-trajectory__head b,
+.network-page .network-trajectory__item b {
+  color: var(--spatial-text) !important;
+}
+
+.network-page .network-inspector__speed {
+  border-color: #28514b;
+  background: #1c3532;
+}
+
+.network-page .network-inspector__speed span,
+.network-page .network-trajectory__item span {
+  color: var(--spatial-muted);
+}
+
+.network-page .network-trajectory,
+.network-page .network-inspector__section {
+  border-color: var(--spatial-line);
+}
+
+.network-page .network-trajectory__bar {
+  background: #263735;
+}
+
+.network-page .network-trajectory__bar i {
+  background: linear-gradient(180deg, #4ce2c9, #0d9e8c) !important;
+}
+
+.network-page .network-neighbors button {
+  border-color: var(--spatial-line);
+  background: #1c2d2c;
+  color: var(--spatial-text);
+}
+
+.network-page .network-neighbors button:hover {
+  border-color: #347e73;
+  background: #223b37;
+}
+
+.network-page .network-neighbor-id b {
+  color: var(--spatial-text);
+}
+
+.network-page .network-neighbor-id small {
+  color: var(--spatial-muted);
+}
+
+.network-page .network-inspector__footer {
+  border-color: #294b46;
+  background: #1b3431;
+  color: #c6e4dc;
+}
+
+@media (max-width: 1120px) {
+  .network-page .network-main {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .network-page .network-graph-card {
+    min-height: 540px;
+  }
+
+  .network-page .network-inspector {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .network-page .network-trajectory,
+  .network-page .network-inspector__section,
+  .network-page .network-neighbors,
+  .network-page .network-inspector__footer {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 640px) {
+  .network-page .network-hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .network-page .network-hero__metrics {
+    min-width: 0;
+  }
+
+  .network-page .network-graph-card {
+    min-height: 440px;
+  }
+
+  .network-page .network-inspector {
+    display: block;
+  }
+}
+
+/* =========================================================
+   URBANFLOW NETWORK EXPLORER — GRAPH VISUAL REDESIGN
+   Warm white + sage + muted teal
+   ========================================================= */
+
+.network-page .network-graph {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #f7faf8 !important;
+  border-radius: 0 0 13px 13px;
+}
+
+/* Soft, map-like plotting surface */
+.network-page .network-graph__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 560px;
+  background-color: #f7faf8;
+}
+
+.network-page .network-graph__background {
+  fill: #f7faf8 !important;
+}
+
+.network-page .network-graph__grid line {
+  stroke: #e5eee9 !important;
+  stroke-width: 1;
+  opacity: 0.8;
+}
+
+/* Connections: quiet by default, stronger around selection */
+.network-page .network-edge {
+  fill: none !important;
+  stroke: #a8c9bc !important;
+  stroke-width: 1.15;
+  opacity: 0.52;
+  transition: stroke 180ms ease, opacity 180ms ease,
+    stroke-width 180ms ease;
+}
+
+.network-page .network-edge.is-connected {
+  stroke: #218d7c !important;
+  stroke-width: 2;
+  opacity: 0.95;
+}
+
+.network-page .network-edge.is-dimmed {
+  opacity: 0.16;
+}
+
+.network-page .network-edge__pulse {
+  fill: #087f78 !important;
+  stroke: #ffffff;
+  stroke-width: 1;
+}
+
+/* Sensor nodes retain their real traffic-state classes */
+.network-page .network-node {
+  cursor: pointer;
+  outline: none;
+}
+
+.network-page .network-node__dot {
+  stroke: #f7faf8 !important;
+  stroke-width: 1.5;
+  transition: r 160ms ease, opacity 160ms ease;
+}
+
+.network-page .network-node__dot.is-free {
+  fill: #63ad86 !important;
+}
+
+.network-page .network-node__dot.is-moderate {
+  fill: #d8ad53 !important;
+}
+
+.network-page .network-node__dot.is-moving {
+  fill: #218d7c !important;
+}
+
+.network-page .network-node__dot.is-pressure {
+  fill: #d96c64 !important;
+}
+
+.network-page .network-node.is-neighbor .network-node__dot {
+  stroke: #087f78 !important;
+  stroke-width: 1.8;
+}
+
+.network-page .network-node.is-dimmed {
+  opacity: 0.38;
+}
+
+.network-page .network-node:hover {
+  opacity: 1;
+}
+
+.network-page .network-node__halo {
+  fill: #83cbbb !important;
+  opacity: 0.28;
+}
+
+.network-page .network-node__selection-ring {
+  fill: none !important;
+  stroke: #087f78 !important;
+  stroke-width: 2;
+}
+
+.network-page .network-node.is-selected .network-node__dot {
+  stroke: #ffffff !important;
+  stroke-width: 2.5;
+}
+
+/* Floating graph controls */
+.network-page .network-graph__zoom {
+  overflow: hidden;
+  border: 1px solid #dce8e2;
+  border-radius: 10px;
+  background: rgb(255 255 255 / 94%);
+  box-shadow: 0 4px 16px rgb(32 65 52 / 9%);
+}
+
+.network-page .network-graph__zoom button {
+  color: #35534a;
+}
+
+.network-page .network-graph__zoom button:hover:not(:disabled) {
+  background: #eaf5f1;
+  color: #087f78;
+}
+
+.network-page .network-graph__legend {
+  border: 1px solid #dce8e2;
+  border-radius: 10px;
+  background: rgb(255 255 255 / 95%);
+  box-shadow: 0 3px 12px rgb(32 65 52 / 7%);
+}
+
+.network-page .network-graph__hint {
+  border: 1px solid #dce8e2;
+  background: rgb(255 255 255 / 94%);
+  color: #49665c;
+  box-shadow: 0 3px 12px rgb(32 65 52 / 7%);
+}
+
+.network-page .network-graph__selected {
+  border: 1px solid #d4e8e0;
+  border-radius: 10px;
+  background: #eaf5f1;
+  color: #087f78;
+}
+
+.network-page .network-graph__selected b {
+  color: #214d43;
+}
+
+.network-page .network-graph__selected small {
+  color: #56766b;
+}
+
+@media (max-width: 640px) {
+  .network-page .network-graph__svg {
+    min-height: 420px;
+  }
+}
+
+/* =========================================================
+   URBANFLOW — NETWORK EXPLORER VISUAL REFINEMENT
+   Additive overrides: preserve legacy styles and graph logic.
+   ========================================================= */
+
+.network-page {
+  --network-teal: #087f76;
+  --network-teal-bright: #20b8a4;
+  --network-ink: #203936;
+  --network-muted: #687b78;
+  --network-border: #dce6e2;
+}
+
+/* Clearer page hierarchy */
+.network-page .network-hero {
+  border-bottom: 1px solid var(--network-border);
+}
+
+.network-page .network-hero h1 {
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+}
+
+.network-page .network-kicker,
+.network-page .network-structure__intro > span {
+  color: var(--network-teal) !important;
+}
+
+/* Forecast horizon controls */
+.network-page .network-horizons button.is-active {
+  background: var(--network-teal) !important;
+  border-color: var(--network-teal) !important;
+  color: #fff !important;
+  box-shadow: 0 3px 10px rgb(8 127 118 / 18%);
+}
+
+.network-page .network-horizons button:not(.is-active):hover {
+  color: var(--network-teal) !important;
+  border-color: #a8d4cd !important;
+  background: #edf8f5 !important;
+}
+
+/* Graph panel */
+.network-page .network-graph-card {
+  overflow: hidden;
+  border: 1px solid var(--network-border);
+  box-shadow: 0 10px 30px rgb(28 57 51 / 6%);
+}
+
+.network-page .network-graph-card__head {
+  border-bottom: 1px solid #e7eeeb;
+}
+
+.network-page .network-graph-card__meta i {
+  background: var(--network-teal-bright) !important;
+  box-shadow: 0 0 0 4px rgb(32 184 164 / 12%);
+}
+
+/* Selected sensor inspector */
+.network-page .network-inspector {
+  border-color: var(--network-border);
+  box-shadow: 0 10px 30px rgb(28 57 51 / 6%);
+}
+
+.network-page .network-inspector__top > span,
+.network-page .network-trajectory__head > span,
+.network-page .network-neighbors__head > span {
+  color: var(--network-teal) !important;
+}
+
+.network-page .network-inspector__identity h2 {
+  color: var(--network-ink) !important;
+  font-weight: 750;
+  letter-spacing: -0.035em;
+}
+
+.network-page .network-inspector__identity .network-state {
+  color: var(--network-muted);
+}
+
+/* Keep the speed display high-contrast */
+.network-page .network-inspector__speed {
+  background: #203936 !important;
+  border-color: #203936 !important;
+}
+
+.network-page .network-inspector__speed strong {
+  color: #f4fbf8 !important;
+}
+
+.network-page .network-inspector__speed span {
+  color: #b8d1ca !important;
+}
+
+/* Nearby sensor rows */
+.network-page .network-neighbors button {
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.network-page .network-neighbors button:hover {
+  border-color: #9bcfc5 !important;
+  background: #f0f8f5 !important;
+  transform: translateY(-1px);
+}
+
+/* Replace legacy blue KPI icons with the shared teal */
+.network-page .network-structure__stats svg {
+  color: var(--network-teal) !important;
+}
+
+.network-page .network-structure__stats > div {
+  border-color: #e3ece8;
+  transition:
+    border-color 160ms ease,
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.network-page .network-structure__stats > div:hover {
+  border-color: #b4d9d1;
+  box-shadow: 0 6px 18px rgb(28 57 51 / 5%);
+  transform: translateY(-2px);
+}
+
+.network-page .network-structure__stats strong {
+  color: var(--network-ink);
+}
+
+.network-page .network-structure__stats span {
+  color: var(--network-muted);
+}
+
+/* Historical replay remains explicit and readable */
+.network-page .network-explorer-status {
+  color: var(--network-muted);
+}
+
+/* Responsive refinement */
+@media (max-width: 760px) {
+  .network-page .network-hero h1 {
+    font-size: clamp(2rem, 8vw, 3.2rem);
+  }
+
+  .network-page .network-structure__stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .network-page .network-graph-card,
+  .network-page .network-inspector {
+    min-width: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .network-page .network-neighbors button,
+  .network-page .network-structure__stats > div {
+    transition: none;
+  }
+}
+
+/* Network Explorer — structural redesign */
+.uf-network-redesign {
+  --un-ink: #182725;
+  --un-muted: #71817d;
+  --un-line: #dce6e1;
+  --un-accent: #087f70;
+  --un-surface: #ffffff;
+  gap: 18px;
+}
+
+.uf-network-redesign .uf-network-header {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) auto;
+  align-items: end;
+  gap: 28px;
+  padding: 8px 0 22px;
+  border-bottom: 1px solid var(--un-line);
+}
+
+.uf-network-redesign .uf-network-eyebrow,
+.uf-network-redesign .uf-network-panel-heading > div > span,
+.uf-network-redesign .uf-network-inspector-heading > div > span,
+.uf-network-redesign .uf-network-section-heading > span,
+.uf-network-redesign .uf-network-neighbor-heading > div > span,
+.uf-network-redesign .uf-network-model-note > div > span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--un-accent);
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: .12em;
+}
+
+.uf-network-redesign .uf-network-heading h1 {
+  margin: 12px 0 7px;
+  color: var(--un-ink);
+  font-size: clamp(28px, 3vw, 42px);
+  line-height: 1.05;
+  letter-spacing: -.045em;
+}
+
+.uf-network-redesign .uf-network-heading p {
+  max-width: 560px;
+  margin: 0;
+  color: var(--un-muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.uf-network-redesign .uf-network-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(110px, 145px));
+  gap: 9px;
+}
+
+.uf-network-redesign .uf-network-kpis > div {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 15px;
+  background: var(--un-surface);
+  border: 1px solid var(--un-line);
+  border-radius: 12px;
+}
+
+.uf-network-redesign .uf-network-kpis span {
+  color: var(--un-muted);
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.uf-network-redesign .uf-network-kpis strong {
+  color: var(--un-ink);
+  font-size: 25px;
+  letter-spacing: -.04em;
+}
+
+.uf-network-redesign .uf-network-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 12px 16px;
+  background: #fff;
+  border: 1px solid var(--un-line);
+  border-radius: 12px;
+}
+
+.uf-network-redesign .uf-network-horizon-control,
+.uf-network-redesign .uf-network-live-stats {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 13px;
+}
+
+.uf-network-redesign .uf-network-horizon-control > span {
+  color: var(--un-muted);
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: .08em;
+}
+
+.uf-network-redesign .network-horizons {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: #f1f5f3;
+  border-radius: 9px;
+}
+
+.uf-network-redesign .network-horizons button {
+  border: 0 !important;
+  border-radius: 7px !important;
+  background: transparent !important;
+  color: #60716c !important;
+  padding: 9px 12px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  cursor: pointer;
+}
+
+.uf-network-redesign .network-horizons button.is-active {
+  background: var(--un-accent) !important;
+  color: #fff !important;
+  box-shadow: 0 2px 6px #087f702b;
+}
+
+.uf-network-redesign .uf-network-live-stats {
+  color: #62736e;
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.uf-network-redesign .uf-network-live-stats > span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.uf-network-redesign .uf-network-live-stats i,
+.uf-network-redesign .uf-network-graph-footnote i {
+  width: 7px;
+  height: 7px;
+  display: inline-block;
+  border-radius: 50%;
+  background: #18a58e;
+  box-shadow: 0 0 0 3px #18a58e1c;
+}
+
+.uf-network-redesign .uf-network-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 310px;
+  align-items: start;
+  gap: 16px;
+}
+
+.uf-network-redesign .uf-network-graph-panel,
+.uf-network-redesign .uf-network-inspector {
+  min-width: 0;
+  background: var(--un-surface);
+  border: 1px solid var(--un-line);
+  border-radius: 16px;
+  box-shadow: 0 8px 28px #1d38300a;
+  overflow: hidden;
+}
+
+.uf-network-redesign .uf-network-panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 20px 15px;
+  border-bottom: 1px solid #edf1ef;
+}
+
+.uf-network-redesign .uf-network-panel-heading h2 {
+  margin: 6px 0 4px;
+  color: var(--un-ink);
+  font-size: 19px;
+  letter-spacing: -.025em;
+}
+
+.uf-network-redesign .uf-network-panel-heading p {
+  margin: 0;
+  color: var(--un-muted);
+  font-size: 11px;
+}
+
+.uf-network-redesign .uf-network-layer {
+  flex: 0 0 auto;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #edf6f2;
+  color: #286b5d;
+  font-size: 10px;
+  font-weight: 750;
+}
+
+.uf-network-redesign .network-graph {
+  height: 560px !important;
+  min-height: 560px !important;
+  background: #f7faf8;
+}
+
+.uf-network-redesign .network-graph__svg {
+  height: 560px !important;
+  min-height: 560px !important;
+}
+
+.uf-network-redesign .uf-network-graph-footnote {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px 18px;
+  border-top: 1px solid #edf1ef;
+  color: var(--un-muted);
+  font-size: 10px;
+}
+
+.uf-network-redesign .uf-network-graph-footnote > span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #42665d;
+  font-weight: 700;
+}
+
+.uf-network-redesign .uf-network-inspector {
+  padding: 18px;
+}
+
+.uf-network-redesign .uf-network-inspector-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.uf-network-redesign .uf-network-inspector-heading h2 {
+  margin: 8px 0 0;
+  color: var(--un-ink);
+  font-size: 27px;
+  letter-spacing: -.045em;
+}
+
+.uf-network-redesign .uf-network-speed {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 17px 0;
+  padding: 18px;
+  border-radius: 12px;
+  background: #193a34;
+  color: #fff;
+}
+
+.uf-network-redesign .uf-network-speed strong {
+  font-size: 42px;
+  line-height: 1;
+  letter-spacing: -.05em;
+}
+
+.uf-network-redesign .uf-network-speed > span {
+  font-size: 12px;
+  color: #b5d6cc;
+}
+
+.uf-network-redesign .uf-network-speed small {
+  flex-basis: 100%;
+  margin-top: 4px;
+  color: #b5d6cc;
+  font-size: 10px;
+}
+
+.uf-network-redesign .uf-network-trajectory {
+  padding: 13px;
+  border: 1px solid var(--un-line);
+  border-radius: 12px;
+  background: #f8faf9;
+}
+
+.uf-network-redesign .uf-network-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.uf-network-redesign .uf-network-section-heading small {
+  color: var(--un-muted);
+  font-size: 10px;
+}
+
+.uf-network-redesign .network-trajectory__bars {
+  height: 92px !important;
+  margin-top: 13px !important;
+}
+
+.uf-network-redesign .network-trajectory__bar {
+  border-radius: 5px !important;
+  background: #dfe9e4 !important;
+}
+
+.uf-network-redesign .network-trajectory__bar i {
+  border-radius: 4px !important;
+  background: linear-gradient(180deg, #4ccbb2, #087f70) !important;
+}
+
+.uf-network-redesign .uf-network-neighbor-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin: 22px 0 12px;
+}
+
+.uf-network-redesign .uf-network-neighbor-heading h3 {
+  margin: 5px 0 0;
+  color: var(--un-ink);
+  font-size: 16px;
+}
+
+.uf-network-redesign .uf-network-neighbor-heading > span {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: #edf6f2;
+  color: var(--un-accent);
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.uf-network-redesign .network-neighbors {
+  display: grid;
+  gap: 7px !important;
+}
+
+.uf-network-redesign .network-neighbors > button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  min-height: 54px !important;
+  padding: 9px 10px !important;
+  border: 1px solid #e6eeea !important;
+  border-radius: 10px !important;
+  background: #fff !important;
+  text-align: left;
+  cursor: pointer;
+}
+
+.uf-network-redesign .network-neighbors > button:hover,
+.uf-network-redesign .network-neighbors > button.is-selected {
+  border-color: #8bcdbd !important;
+  background: #f0f8f5 !important;
+}
+
+.uf-network-redesign .network-neighbor-rank {
+  color: #91a29c !important;
+  font-size: 10px !important;
+}
+
+.uf-network-redesign .network-neighbor-id {
+  flex: 1;
+  min-width: 0;
+}
+
+.uf-network-redesign .network-neighbor-id b {
+  color: var(--un-ink) !important;
+}
+
+.uf-network-redesign .network-neighbor-id small {
+  color: var(--un-muted) !important;
+}
+
+.uf-network-redesign .network-neighbor-speed {
+  font-variant-numeric: tabular-nums;
+}
+
+.uf-network-redesign .uf-network-insight {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin-top: 15px;
+  padding: 12px;
+  border: 1px solid #d7eae3;
+  border-radius: 10px;
+  background: #f1f8f5;
+  color: #397366;
+}
+
+.uf-network-redesign .uf-network-insight svg {
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+
+.uf-network-redesign .uf-network-insight p {
+  margin: 0;
+  color: #42685e;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.uf-network-redesign .uf-network-model-note {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 20px;
+  border: 1px solid var(--un-line);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.uf-network-redesign .uf-network-model-note > div {
+  display: grid;
+  gap: 6px;
+}
+
+.uf-network-redesign .uf-network-model-note strong {
+  color: var(--un-ink);
+  font-size: 14px;
+}
+
+.uf-network-redesign .uf-network-model-note p {
+  max-width: 500px;
+  margin: 0;
+  color: var(--un-muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+@media (max-width: 1100px) {
+  .uf-network-redesign .uf-network-header {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .uf-network-redesign .uf-network-kpis {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .uf-network-redesign .uf-network-workspace {
+    grid-template-columns: minmax(0, 1fr) 280px;
+  }
+}
+
+@media (max-width: 780px) {
+  .uf-network-redesign .uf-network-workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .uf-network-redesign .network-graph,
+  .uf-network-redesign .network-graph__svg {
+    height: 420px !important;
+    min-height: 420px !important;
+  }
+
+  .uf-network-redesign .uf-network-model-note {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 520px) {
+  .uf-network-redesign .uf-network-kpis {
+    grid-template-columns: 1fr;
+  }
+
+  .uf-network-redesign .uf-network-kpis > div {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .uf-network-redesign .uf-network-toolbar,
+  .uf-network-redesign .uf-network-live-stats {
+    align-items: flex-start;
+  }
+
+  .uf-network-redesign .uf-network-live-stats {
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .uf-network-redesign .uf-network-panel-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+/* URBANFLOW — Network spatial canvas v2 */
+.uf-network-redesign .uf-network-graph-panel {
+  background: #142622;
+  border-color: #29443c;
+  box-shadow: 0 18px 45px rgba(17, 43, 35, 0.12);
+}
+
+.uf-network-redesign .uf-network-panel-heading {
+  background: #142622;
+  border-bottom-color: #29443c;
+}
+
+.uf-network-redesign .uf-network-panel-heading h2 {
+  color: #f0f7f3;
+  font-size: 20px;
+  letter-spacing: -0.035em;
+}
+
+.uf-network-redesign .uf-network-panel-heading p {
+  color: #9bb5aa;
+}
+
+.uf-network-redesign .uf-network-panel-heading > div > span {
+  color: #65d9be;
+}
+
+.uf-network-redesign .uf-network-layer {
+  background: #24483e;
+  color: #9be9d5;
+  border: 1px solid #35685a;
+}
+
+/* Canvas and grid */
+.uf-network-redesign .network-graph,
+.uf-network-redesign .network-graph__svg {
+  background: #10201d !important;
+}
+
+.uf-network-redesign .network-graph__background {
+  fill: #10201d !important;
+}
+
+.uf-network-redesign .network-graph__grid line {
+  stroke: #294139 !important;
+  stroke-opacity: 0.72 !important;
+}
+
+/* Graph links: subdued until a sensor is selected */
+.uf-network-redesign .network-graph__edges .network-edge {
+  fill: none !important;
+  stroke: #52786a !important;
+  stroke-width: 1.1px !important;
+  stroke-opacity: 0.48 !important;
+  transition: stroke 180ms ease, stroke-opacity 180ms ease;
+}
+
+.uf-network-redesign .network-graph__edges .network-edge.is-dimmed {
+  stroke: #345047 !important;
+  stroke-opacity: 0.16 !important;
+}
+
+.uf-network-redesign .network-graph__edges .network-edge.is-connected {
+  stroke: #4ee4c0 !important;
+  stroke-width: 2px !important;
+  stroke-opacity: 0.96 !important;
+}
+
+.uf-network-redesign .network-edge__pulse {
+  fill: #b5ffec !important;
+  filter: drop-shadow(0 0 4px #42edc5);
+}
+
+/* Traffic-state nodes */
+.uf-network-redesign .network-node {
+  cursor: pointer;
+}
+
+.uf-network-redesign .network-node__dot.is-free {
+  fill: #55d6a0 !important;
+}
+
+.uf-network-redesign .network-node__dot.is-moving {
+  fill: #49bfae !important;
+}
+
+.uf-network-redesign .network-node__dot.is-moderate {
+  fill: #f1c66d !important;
+}
+
+.uf-network-redesign .network-node__dot.is-pressure {
+  fill: #ff776f !important;
+}
+
+.uf-network-redesign .network-node:not(.is-dimmed) .network-node__dot {
+  stroke: #10201d !important;
+  stroke-width: 1.5px !important;
+}
+
+.uf-network-redesign .network-node.is-dimmed {
+  opacity: 0.38 !important;
+}
+
+.uf-network-redesign .network-node.is-neighbor .network-node__dot {
+  stroke: #b5ffec !important;
+  stroke-width: 2px !important;
+}
+
+.uf-network-redesign .network-node.is-selected .network-node__dot {
+  fill: #f2fffb !important;
+  stroke: #40e0bd !important;
+  stroke-width: 3px !important;
+  filter: drop-shadow(0 0 6px #42edc5);
+}
+
+.uf-network-redesign .network-node__halo {
+  fill: #40e0bd !important;
+  fill-opacity: 0.14 !important;
+  stroke: #40e0bd !important;
+  stroke-opacity: 0.8 !important;
+}
+
+/* Legend and graph footer */
+.uf-network-redesign .network-graph__legend {
+  background: #1b302a !important;
+  border: 1px solid #355449 !important;
+  box-shadow: 0 4px 14px #07130f38 !important;
+  color: #d5e9e0 !important;
+}
+
+.uf-network-redesign .network-graph__legend span {
+  color: #d5e9e0 !important;
+}
+
+.uf-network-redesign .uf-network-graph-footnote {
+  background: #142622;
+  border-top-color: #29443c;
+  color: #a5bcb2;
+}
+
+.uf-network-redesign .uf-network-graph-footnote > span:first-child {
+  color: #85e4cb;
+}
+
+.uf-network-redesign .uf-network-graph-footnote i {
+  background: #4ee4c0;
+  box-shadow: 0 0 0 3px #4ee4c01c;
+}
+
+/* Keep graph controls legible on the dark canvas */
+.uf-network-redesign .network-graph__zoom {
+  border: 1px solid #355449 !important;
+  border-radius: 10px !important;
+  overflow: hidden;
+  box-shadow: 0 5px 18px #07130f45 !important;
+}
+
+.uf-network-redesign .network-graph__zoom button {
+  background: #1b302a !important;
+  border-color: #355449 !important;
+  color: #e4f4ed !important;
+}
+
+.uf-network-redesign .network-graph__zoom button:hover:not(:disabled) {
+  background: #285044 !important;
+  color: #ffffff !important;
+}
+
+.uf-network-redesign .network-graph__zoom button:disabled {
+  color: #69857a !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .uf-network-redesign .network-edge__pulse,
+  .uf-network-redesign .network-node__halo {
+    animation: none !important;
+  }
+}
+
+
+/* UrbanFlow Network — lighter graph treatment */
+.network-page .network-graph__background {
+  fill: #eaf3f0 !important;
+}
+
+.network-page .network-graph__grid line {
+  stroke: #d2e3dd !important;
+  stroke-opacity: 0.8 !important;
+}
+
+.network-page .network-graph-card,
+.network-page .network-graph-card__head {
+  background: #ffffff !important;
+}
+
+.network-page .network-graph__zoom button {
+  background: rgba(255, 255, 255, 0.96) !important;
+  color: #294a42 !important;
+  border-color: #d4e4de !important;
+}
+
+.network-page .network-graph__legend {
+  background: rgba(255, 255, 255, 0.94) !important;
+  border-color: #d4e4de !important;
+  color: #294a42 !important;
+}
+
+.network-page .network-edge.is-dimmed {
+  opacity: 0.12 !important;
+}
+
+.network-page .network-edge.is-connected {
+  opacity: 0.8 !important;
+  stroke: #168f7c !important;
+}
+
+
+/* UrbanFlow Network — balanced teal graph palette */
+.network-page .network-graph-card,
+.network-page .network-graph-card__head {
+  background: #e7f2ee !important;
+  color: #173c35 !important;
+}
+
+.network-page .network-graph-card__head {
+  border-bottom: 1px solid #cfe3dc !important;
+}
+
+.network-page .network-graph__background {
+  fill: #dceee8 !important;
+}
+
+.network-page .network-graph__grid line {
+  stroke: #bfd9d0 !important;
+  stroke-opacity: 0.72 !important;
+}
+
+.network-page .network-edge.is-dimmed {
+  opacity: 0.2 !important;
+}
+
+.network-page .network-edge.is-connected {
+  opacity: 0.9 !important;
+  stroke: #138f7b !important;
+}
+
+.network-page .network-node.is-dimmed {
+  opacity: 0.48 !important;
+}
+
+.network-page .network-graph__zoom button {
+  background: rgba(255, 255, 255, 0.97) !important;
+  color: #234d43 !important;
+  border-color: #c7dfd5 !important;
+}
+
+.network-page .network-graph__legend {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: #c7dfd5 !important;
+  color: #234d43 !important;
+}
+/* UrbanFlow Network — subtle lift from the original dark teal */
+.network-page .network-graph__background {
+  fill: #173d35 !important;
+}
+
+.network-page .network-graph-card,
+.network-page .network-graph-card__head {
+  background: #19473e !important;
+  color: #effaf6 !important;
+}
+
+.network-page .network-graph__grid line {
+  stroke: #47786c !important;
+  stroke-opacity: 0.48 !important;
+}
+
+.network-page .network-edge.is-dimmed {
+  opacity: 0.25 !important;
+}
+
+.network-page .network-edge.is-connected {
+  stroke: #43d9ba !important;
+  opacity: 0.95 !important;
+}
+
+.network-page .network-node.is-dimmed {
+  opacity: 0.58 !important;
+}
+/* Improve contrast of the four traffic-state legend labels */
+.network-page .network-graph__legend {
+  background: #ffffff !important;
+  color: #294a42 !important;
+  border-color: #c7dfd5 !important;
+}
+
+.network-page .network-graph__legend span {
+  color: #294a42 !important;
+  opacity: 1 !important;
+}
+
+.network-page .network-graph__legend i {
+  opacity: 1 !important;
+}
+
+/* URBANFLOW FORECASTS — TEAL VISUAL REFINEMENT */
+.forecast-machine {
+  --forecast-accent: #087f76;
+  --forecast-accent-bright: #20b8a4;
+  --forecast-ink: #203936;
+  --forecast-muted: #687b78;
+  --forecast-border: #dce6e2;
+}
+
+.forecast-machine > .page-header .eyebrow {
+  color: var(--forecast-accent) !important;
+}
+
+.forecast-machine > .page-header h1 {
+  color: var(--forecast-ink) !important;
+  letter-spacing: -0.045em;
+}
+
+.forecast-machine > .page-header p {
+  color: var(--forecast-muted) !important;
+}
+
+.forecast-machine .forecast-mode {
+  border-color: var(--forecast-border);
+  color: var(--forecast-accent);
+  background: #edf7f4;
+}
+
+.forecast-machine .forecast-machine__hero,
+.forecast-machine .forecast-speed-panel,
+.forecast-machine .forecast-speed-card,
+.forecast-machine .forecast-sensor-trajectory {
+  border-color: var(--forecast-border);
+  box-shadow: 0 8px 24px rgb(28 57 51 / 5%);
+}
+
+.forecast-machine .forecast-kicker,
+.forecast-machine .forecast-panel-heading > div > span {
+  color: var(--forecast-accent) !important;
+}
+
+.forecast-machine .forecast-time-node.is-active {
+  color: var(--forecast-accent) !important;
+}
+
+.forecast-machine .forecast-time-node.is-active
+.forecast-time-node__dot {
+  border-color: var(--forecast-accent) !important;
+  background: var(--forecast-accent) !important;
+  box-shadow: 0 0 0 4px rgb(8 127 118 / 12%);
+}
+
+.forecast-machine .forecast-timeline__progress {
+  background: var(--forecast-accent) !important;
+}
+
+.forecast-machine .forecast-live-badge {
+  color: var(--forecast-accent) !important;
+  background: #edf7f4 !important;
+  border-color: #d5e9e2 !important;
+}
+
+.forecast-machine .forecast-live-badge i {
+  background: var(--forecast-accent-bright) !important;
+  box-shadow: 0 0 0 4px rgb(32 184 164 / 12%);
+}
+
+/* A light, readable speed field with distinct traffic-state markers. */
+.forecast-machine .sensor-field {
+  background-color: #e8f2ee !important;
+  border: 1px solid #d6e5df;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.forecast-machine .sensor-field__flow {
+  opacity: 0.55;
+}
+
+.forecast-machine .forecast-flow-lanes path {
+  stroke: #83b9aa;
+  stroke-width: 1.1;
+  opacity: 0.5;
+}
+
+.forecast-machine .forecast-flow-packets circle {
+  fill: #087f76;
+}
+
+.forecast-machine .sensor-field__dot.is-free {
+  background: #34a853 !important;
+}
+
+.forecast-machine .sensor-field__dot.is-moderate {
+  background: #fbbc04 !important;
+}
+
+.forecast-machine .sensor-field__dot.is-moving {
+  background: #4285f4 !important;
+}
+
+.forecast-machine .sensor-field__dot.is-pressure {
+  background: #ea4335 !important;
+}
+
+.forecast-machine .sensor-field__dot.is-selected {
+  outline: 2px solid #087f76 !important;
+  box-shadow: 0 0 0 4px rgb(8 127 118 / 16%) !important;
+}
+
+.forecast-machine .forecast-speed-value {
+  color: var(--forecast-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.forecast-machine .forecast-gauge__fill {
+  background: linear-gradient(
+    90deg,
+    #087f76,
+    #20b8a4
+  ) !important;
+}
+
+.forecast-machine .forecast-sensor-trajectory__state {
+  border-color: var(--forecast-border);
+}
+
+.forecast-machine .forecast-trajectory-path {
+  opacity: 0.95;
+}
+
+.forecast-machine .forecast-trajectory-point span {
+  background: var(--forecast-accent-bright);
+}
+
+.forecast-machine .forecast-sensor-trajectory__chart {
+  border-color: var(--forecast-border);
+}
+
+@media (max-width: 760px) {
+  .forecast-machine .forecast-machine__topline {
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .forecast-machine .forecast-timeline {
+    gap: 8px;
+  }
+
+  .forecast-machine .sensor-field {
+    min-height: 240px;
+  }
+}
+
+ 
+/* URBANFLOW FORECASTS — FINAL TIMELINE OVERRIDE */
+.forecast-machine .forecast-timeline__progress {
+  background: #087f76 !important;
+}
+
+.forecast-machine .forecast-time-node.is-active,
+.forecast-machine .forecast-time-node.is-active * {
+  color: #087f76 !important;
+}
+
+.forecast-machine .forecast-time-node.is-active .forecast-time-node__dot {
+  background: #087f76 !important;
+  border-color: #087f76 !important;
+  box-shadow: 0 0 0 5px rgb(8 127 118 / 14%) !important;
+}
+
+
+/* URBANFLOW FORECASTS — HISTORICAL REPLAY POLISH */
+
+/* Hide the legacy LIVE pseudo-label on the historical replay page. */
+.forecast-machine .forecast-sensor-trajectory::before {
+  content: none !important;
+  display: none !important;
+}
+
+/* Teal comparison tile, replacing the legacy blue treatment. */
+.forecast-machine .forecast-direction {
+  color: #087f76 !important;
+  background: #edf7f4 !important;
+  border-color: #d5e9e2 !important;
+  box-shadow: none !important;
+}
+
+.forecast-machine .forecast-direction svg,
+.forecast-machine .forecast-direction strong {
+  color: #087f76 !important;
+}
+
+/* Teal trajectory line and markers; traffic-state colours stay unchanged. */
+.forecast-machine .forecast-trajectory-path {
+  stroke: #087f76 !important;
+  filter: none !important;
+}
+
+.forecast-machine .forecast-trajectory-point span {
+  background: #20b8a4 !important;
+  border-color: #087f76 !important;
+  box-shadow: 0 0 0 3px rgb(8 127 118 / 12%) !important;
+}
+
+.forecast-machine .forecast-trajectory-point label {
+  border-color: #d5e9e2 !important;
+}\n
+
+/* URBANFLOW FORECASTS — REMOVE MISLEADING LIVE BADGE */
+.forecast-machine .forecast-mode::after {
+  content: none !important;
+  display: none !important;
+}
+
+
+/* URBANFLOW NETWORK — GRAPH HEADER CONTRAST */
+.uf-network-graph-panel .uf-network-panel-heading p {
+  color: #a8c1b9 !important;
+  opacity: 1 !important;
+}
+
+
+/* URBANFLOW HOTSPOTS — STRUCTURAL REDESIGN */
+.hotspots-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  padding-bottom: 28px;
+}
+
+/* Compact title area aligned with Forecasts and Network. */
+.hotspots-page .hotspots-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 22px 24px;
+  background: #ffffff;
+  border: 1px solid #e0e8e4;
+  border-radius: 16px;
+}
+
+.hotspots-page .hotspots-hero__copy {
+  min-width: 0;
+  max-width: 780px;
+}
+
+.hotspots-page .hotspots-hero h1 {
+  max-width: 760px;
+  margin: 10px 0 8px;
+  color: #20332f !important;
+  font-size: clamp(28px, 2.5vw, 38px) !important;
+  line-height: 1.12 !important;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+
+.hotspots-page .hotspots-hero p {
+  max-width: 700px;
+  margin: 0;
+  color: #71817b !important;
+  line-height: 1.6;
+}
+
+.hotspots-page .hotspots-kicker {
+  color: #087f76 !important;
+}
+
+.hotspots-page .hotspots-hero__status {
+  flex: 0 0 auto;
+  min-width: 180px;
+  padding: 14px 16px;
+  border: 1px solid #dce9e3;
+  border-radius: 12px;
+  background: #f5faf7;
+  color: #087f76;
+}
+
+/* Neutral metric cards with restrained teal accents. */
+.hotspots-page .hotspots-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+}
+
+.hotspots-page .hotspots-summary__item,
+.hotspots-page .hotspots-summary__item.is-below45,
+.hotspots-page .hotspots-summary__item.is-moving,
+.hotspots-page .hotspots-summary__item.is-free {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-content: center;
+  gap: 5px 12px;
+  min-width: 0;
+  min-height: 96px;
+  padding: 17px 19px;
+  border: 1px solid #e0e8e4 !important;
+  border-radius: 14px;
+  background: #ffffff !important;
+  box-shadow: 0 2px 8px rgb(26 54 45 / 3%);
+}
+
+.hotspots-page .hotspots-summary__item::before,
+.hotspots-page .hotspots-summary__item::after {
+  content: none !important;
+  display: none !important;
+}
+
+.hotspots-page .hotspots-summary__item span {
+  grid-column: 1 / -1;
+  color: #74827d !important;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: .09em;
+}
+
+.hotspots-page .hotspots-summary__item strong {
+  color: #20332f !important;
+  font-size: 29px;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.hotspots-page .hotspots-summary__item small {
+  align-self: center;
+  color: #7c8984 !important;
+  font-size: 11px;
+}
+
+.hotspots-page .hotspots-summary__item:hover {
+  transform: translateY(-1px);
+  border-color: #c7ded6 !important;
+  box-shadow: 0 5px 14px rgb(26 54 45 / 5%);
+}
+
+/* One clear, compact forecast toolbar. */
+.hotspots-page .hotspots-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 4px 0 14px;
+  border-bottom: 1px solid #dfe7e3;
+}
+
+.hotspots-page .hotspots-toolbar > div:first-child span {
+  color: #087f76 !important;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: .1em;
+}
+
+.hotspots-page .hotspots-toolbar > div:first-child b {
+  display: block;
+  margin-top: 5px;
+  color: #52645e !important;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.hotspots-page .hotspots-tabs {
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid #e0e8e4;
+  border-radius: 11px;
+  background: #f0f5f2;
+}
+
+.hotspots-page .hotspots-tabs button {
+  min-width: 54px;
+  padding: 9px 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: #64756e !important;
+  font-size: 12px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: background .18s ease, color .18s ease;
+}
+
+.hotspots-page .hotspots-tabs button.is-active {
+  border-color: #087f76 !important;
+  background: #087f76 !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 5px rgb(8 127 118 / 15%);
+}
+
+/* Balanced queue and context columns. */
+.hotspots-page .hotspots-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 270px;
+  align-items: start;
+  gap: 16px;
+  min-width: 0;
+}
+
+.hotspots-page .hotspots-queue,
+.hotspots-page .hotspots-explainer {
+  min-width: 0;
+  border: 1px solid #dfe7e3 !important;
+  border-radius: 16px;
+  background: #ffffff !important;
+  box-shadow: 0 3px 12px rgb(26 54 45 / 4%);
+}
+
+.hotspots-page .hotspots-queue {
+  overflow: hidden;
+}
+
+.hotspots-page .hotspots-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 19px 20px;
+  border-bottom: 1px solid #e7edea;
+}
+
+.hotspots-page .hotspots-section-head h2 {
+  margin: 5px 0 0;
+  color: #253833 !important;
+  font-size: 20px;
+  letter-spacing: -.025em;
+}
+
+.hotspots-page .hotspots-section-head > div > span {
+  color: #087f76 !important;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: .1em;
+}
+
+.hotspots-page .hotspots-section-head > small {
+  color: #7b8983 !important;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.hotspots-page .hotspots-priority,
+.hotspots-page .hotspots-list {
+  min-width: 0;
+}
+
+.hotspots-page .hotspot-priority {
+  display: grid;
+  grid-template-columns: 26px 8px minmax(150px, 1fr) minmax(116px, 160px) 94px;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 15px 18px;
+  border-bottom: 1px solid #edf1ef;
+  background: #ffffff;
+  transition: background .16s ease;
+}
+
+.hotspots-page .hotspot-priority:last-child {
+  border-bottom: 0;
+}
+
+.hotspots-page .hotspot-priority:hover {
+  background: #f6faf8;
+}
+
+.hotspots-page .hotspot-priority__rank {
+  color: #9aa7a1 !important;
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.hotspots-page .hotspot-priority__identity {
+  min-width: 0;
+}
+
+.hotspots-page .hotspot-priority__identity > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px 10px;
+}
+
+.hotspots-page .hotspot-priority__identity strong {
+  color: #253833 !important;
+  font-size: 14px;
+}
+
+.hotspots-page .hotspot-priority__identity > small {
+  display: block;
+  margin-top: 6px;
+  color: #77857f !important;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.hotspots-page .hotspot-behavior {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.hotspots-page .hotspot-priority__delta {
+  display: grid;
+  grid-template-columns: 14px 1fr;
+  align-items: center;
+  justify-content: end;
+  gap: 2px 5px;
+}
+
+.hotspots-page .hotspot-priority__delta strong {
+  color: #253833 !important;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+
+.hotspots-page .hotspot-priority__delta small {
+  grid-column: 1 / -1;
+  color: #87938d !important;
+  font-size: 9px;
+  text-align: right;
+}
+
+.hotspots-page .hotspot-trajectory {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  gap: 9px;
+  min-width: 0;
+  padding: 0 3px;
+}
+
+.hotspots-page .hotspot-trajectory__point {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+}
+
+.hotspots-page .hotspot-trajectory__point small {
+  color: #8b9791 !important;
+  font-size: 9px;
+}
+
+.hotspots-page .hotspot-trajectory__bar {
+  width: 6px;
+  max-height: 62px;
+  border-radius: 5px 5px 2px 2px;
+}
+
+/* Keep the explanation useful without letting it dominate the page. */
+.hotspots-page .hotspots-explainer {
+  padding: 18px;
+}
+
+.hotspots-page .hotspots-explainer__icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin-bottom: 14px;
+  border: 1px solid #d8eae3;
+  border-radius: 10px;
+  background: #edf7f3;
+  color: #087f76;
+}
+
+.hotspots-page .hotspots-explainer > span {
+  color: #087f76 !important;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: .1em;
+}
+
+.hotspots-page .hotspots-explainer h2 {
+  margin: 8px 0 10px;
+  color: #253833 !important;
+  font-size: 20px;
+  line-height: 1.3;
+  letter-spacing: -.025em;
+}
+
+.hotspots-page .hotspots-explainer p {
+  color: #718079 !important;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.hotspots-page .hotspots-legend {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid #e8eeeb;
+}
+
+.hotspots-page .hotspots-legend > div {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.hotspots-page .hotspots-legend > div > span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hotspots-page .hotspots-legend b {
+  color: #354640 !important;
+  font-size: 11px;
+}
+
+.hotspots-page .hotspots-legend small {
+  color: #87938d !important;
+  font-size: 10px;
+}
+
+.hotspots-page .hotspots-explainer__footer {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 17px;
+  padding: 11px;
+  border: 1px solid #e4ebe7;
+  border-radius: 10px;
+  background: #f6f9f7;
+}
+
+.hotspots-page .hotspots-explainer__footer svg {
+  flex: 0 0 auto;
+  color: #b88731 !important;
+}
+
+.hotspots-page .hotspots-explainer__footer span {
+  color: #74817b !important;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+/* Responsive layouts: stack without squeezing the queue. */
+@media (max-width: 1100px) {
+  .hotspots-page .hotspots-content {
+    grid-template-columns: minmax(0, 1fr) 240px;
+  }
+
+  .hotspots-page .hotspot-priority {
+    grid-template-columns: 22px 8px minmax(130px, 1fr) 112px 78px;
+    gap: 9px;
+    padding: 14px 12px;
+  }
+
+  .hotspots-page .hotspot-trajectory {
+    gap: 6px;
+  }
+}
+
+@media (max-width: 820px) {
+  .hotspots-page .hotspots-hero {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .hotspots-page .hotspots-hero__status {
+    min-width: 0;
+  }
+
+  .hotspots-page .hotspots-content {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hotspots-page .hotspots-explainer {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    column-gap: 12px;
+  }
+
+  .hotspots-page .hotspots-explainer__icon {
+    grid-row: 1 / span 2;
+  }
+
+  .hotspots-page .hotspots-explainer > span,
+  .hotspots-page .hotspots-explainer h2,
+  .hotspots-page .hotspots-explainer p,
+  .hotspots-page .hotspots-legend,
+  .hotspots-page .hotspots-explainer__footer {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .hotspots-page .hotspots-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .hotspots-page .hotspots-summary__item,
+  .hotspots-page .hotspots-summary__item.is-below45,
+  .hotspots-page .hotspots-summary__item.is-moving,
+  .hotspots-page .hotspots-summary__item.is-free {
+    min-height: 78px;
+  }
+
+  .hotspots-page .hotspots-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .hotspots-page .hotspots-tabs {
+    width: 100%;
+  }
+
+  .hotspots-page .hotspots-tabs button {
+    flex: 1;
+    min-width: 0;
+    padding-inline: 6px;
+  }
+
+  .hotspots-page .hotspots-section-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .hotspots-page .hotspot-priority {
+    grid-template-columns: 22px 8px minmax(0, 1fr) 70px;
+    gap: 8px;
+  }
+
+  .hotspots-page .hotspot-trajectory {
+    grid-column: 3 / -1;
+    justify-content: flex-start;
+    padding-top: 5px;
+  }
+
+  .hotspots-page .hotspot-priority__delta {
+    grid-column: 4;
+    grid-row: 1;
+  }
+}
+
+
+/* URBANFLOW HOTSPOTS — INTERACTIVE TRAJECTORY */
+.hotspots-page .hotspot-trajectory-chart {
+  width: 180px;
+  min-width: 150px;
+  padding: 5px 0;
+}
+
+.hotspots-page .hotspot-trajectory-chart svg {
+  display: block;
+  width: 100%;
+  height: 52px;
+  overflow: visible;
+}
+
+.hotspots-page .hotspot-trajectory-chart__grid {
+  stroke: #e8efec;
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+}
+
+.hotspots-page .hotspot-trajectory-chart__line {
+  fill: none;
+  stroke: #13877b;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.hotspots-page .hotspot-trajectory-chart__dot {
+  stroke: #fff;
+  stroke-width: 1.5;
+  cursor: help;
+  transition: r .16s ease;
+}
+
+.hotspots-page .hotspot-trajectory-chart__dot:hover {
+  r: 5;
+}
+
+.hotspots-page .hotspot-trajectory-chart__dot.is-red { fill: #df6268; }
+.hotspots-page .hotspot-trajectory-chart__dot.is-amber { fill: #e3a52e; }
+.hotspots-page .hotspot-trajectory-chart__dot.is-cyan,
+.hotspots-page .hotspot-trajectory-chart__dot.is-blue { fill: #4c9ca2; }
+.hotspots-page .hotspot-trajectory-chart__dot.is-green { fill: #159a73; }
+
+.hotspots-page .hotspot-trajectory-chart__labels {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  margin-top: 1px;
+}
+
+.hotspots-page .hotspot-trajectory-chart__labels span {
+  display: grid;
+  gap: 2px;
+  text-align: center;
+}
+
+.hotspots-page .hotspot-trajectory-chart__labels b {
+  color: #38544e;
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.hotspots-page .hotspot-trajectory-chart__labels small {
+  color: #8a9a94;
+  font-size: 8px;
+}
+
+@media (max-width: 800px) {
+  .hotspots-page .hotspot-trajectory-chart {
+    width: min(100%, 280px);
+  }
+}
+
+/* URBANFLOW HOTSPOTS — SENSOR EXPLORER */
+
+
+/* URBANFLOW HOTSPOTS — SENSOR EXPLORER */
+.hotspots-page .uf-sensor-explorer {
+  margin-top: 24px;
+  padding: 24px;
+  border: 1px solid #e1eae6;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 5px 22px rgb(26 61 52 / 3%);
+}
+.hotspots-page .uf-explorer-heading,
+.hotspots-page .uf-explorer-controls,
+.hotspots-page .uf-sensor-card__top,
+.hotspots-page .uf-sensor-card__bottom,
+.hotspots-page .uf-sensor-card__identity,
+.hotspots-page .uf-inspector-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.hotspots-page .uf-explorer-heading { margin-bottom: 22px; }
+.hotspots-page .uf-explorer-heading h2,
+.hotspots-page .uf-sensor-inspector h2 {
+  margin: 5px 0;
+  color: #243b36;
+  font-size: 23px;
+  letter-spacing: -.045em;
+}
+.hotspots-page .uf-explorer-heading p,
+.hotspots-page .uf-inspector-description {
+  margin: 0;
+  color: #7a8c85;
+  font-size: 12px;
+}
+.hotspots-page .uf-explorer-eyebrow {
+  color: #168b80;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .13em;
+}
+.hotspots-page .uf-explorer-total {
+  color: #71857d;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.hotspots-page .uf-explorer-controls { margin-bottom: 15px; }
+.hotspots-page .uf-sensor-search,
+.hotspots-page .uf-sensor-sort {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 12px;
+  border: 1px solid #e1eae6;
+  border-radius: 11px;
+  color: #7b9189;
+  background: #fbfcfb;
+}
+.hotspots-page .uf-sensor-search { flex: 1; }
+.hotspots-page .uf-sensor-search input,
+.hotspots-page .uf-sensor-sort select {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #344b44;
+  font: inherit;
+  font-size: 12px;
+}
+.hotspots-page .uf-sensor-search button {
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: #7b9189;
+  cursor: pointer;
+}
+.hotspots-page .uf-sensor-sort select { cursor: pointer; }
+.hotspots-page .uf-sensor-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.hotspots-page .uf-sensor-filters button {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 11px;
+  border: 1px solid #e2eae6;
+  border-radius: 9px;
+  background: #fff;
+  color: #687e75;
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  transition: background .16s ease, border-color .16s ease, color .16s ease;
+}
+.hotspots-page .uf-sensor-filters button span {
+  padding: 2px 5px;
+  border-radius: 5px;
+  background: #f0f5f2;
+  color: #6b8177;
+  font-size: 10px;
+}
+.hotspots-page .uf-sensor-filters button.is-active {
+  color: #087f76;
+  border-color: #a8d8cd;
+  background: #edf8f4;
+}
+.hotspots-page .uf-explorer-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 270px;
+  align-items: start;
+  gap: 18px;
+}
+.hotspots-page .uf-sensor-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.hotspots-page .uf-sensor-card {
+  display: block;
+  min-width: 0;
+  padding: 15px;
+  text-align: left;
+  border: 1px solid #e3ebe7;
+  border-radius: 14px;
+  background: #fff;
+  color: #30453e;
+  cursor: pointer;
+  transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease, background .16s ease;
+}
+.hotspots-page .uf-sensor-card:hover {
+  transform: translateY(-2px);
+  border-color: #b6d8cf;
+  box-shadow: 0 7px 18px rgb(26 80 66 / 7%);
+}
+.hotspots-page .uf-sensor-card.is-selected {
+  border-color: #148a7d;
+  background: #f5fbf8;
+  box-shadow: 0 0 0 2px rgb(20 138 125 / 10%);
+}
+.hotspots-page .uf-sensor-card__rank { color: #9aaba4; font-size: 10px; font-weight: 700; }
+.hotspots-page .uf-sensor-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 7px;
+  border-radius: 6px;
+  font-size: 9px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+.hotspots-page .uf-sensor-pill.is-pressure { color: #bd4447; background: #fff0ef; }
+.hotspots-page .uf-sensor-pill.is-moderate { color: #a66c0b; background: #fff6e5; }
+.hotspots-page .uf-sensor-pill.is-moving { color: #2775ca; background: #edf5ff; }
+.hotspots-page .uf-sensor-pill.is-free { color: #21865c; background: #eaf7ef; }
+.hotspots-page .uf-sensor-card__chevron { color: #a2b1aa; }
+.hotspots-page .uf-sensor-card__identity { margin: 14px 0 7px; }
+.hotspots-page .uf-sensor-card__identity > strong { font-size: 14px; }
+.hotspots-page .uf-sensor-card__identity > span { color: #253d36; font-size: 21px; font-weight: 800; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.hotspots-page .uf-sensor-card__identity small { color: #8b9c95; font-size: 10px; font-weight: 500; letter-spacing: 0; }
+.hotspots-page .uf-sensor-card .hotspot-trajectory-chart { width: 100%; max-width: 230px; margin: 0 auto 5px; }
+.hotspots-page .uf-sensor-card__bottom { padding-top: 10px; border-top: 1px solid #edf1ee; }
+.hotspots-page .uf-sensor-trend { display: inline-flex; align-items: center; gap: 4px; color: #73857d; font-size: 9px; font-weight: 650; }
+.hotspots-page .uf-sensor-trend.is-red,
+.hotspots-page .uf-sensor-trend.is-amber { color: #b87522; }
+.hotspots-page .uf-sensor-trend.is-green { color: #208b64; }
+.hotspots-page .uf-sensor-card__horizon { color: #9aaba4; font-size: 9px; }
+.hotspots-page .uf-sensor-inspector {
+  position: sticky;
+  top: 18px;
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid #deebe5;
+  border-radius: 15px;
+  background: linear-gradient(160deg, #f5fbf8 0%, #fff 45%);
+}
+.hotspots-page .uf-inspector-top { align-items: flex-start; flex-wrap: wrap; }
+.hotspots-page .uf-sensor-inspector h2 { margin-top: 18px; font-size: 25px; }
+.hotspots-page .uf-inspector-speed { display: flex; align-items: baseline; gap: 7px; margin: 9px 0; }
+.hotspots-page .uf-inspector-speed strong { color: #1f3c34; font-size: 43px; line-height: 1; letter-spacing: -.06em; font-variant-numeric: tabular-nums; }
+.hotspots-page .uf-inspector-speed span { color: #7f938a; font-size: 12px; }
+.hotspots-page .uf-inspector-trend { display: flex; align-items: center; gap: 6px; color: #b87522; font-size: 11px; }
+.hotspots-page .uf-inspector-divider { height: 1px; margin: 18px 0; background: #e3ece7; }
+.hotspots-page .uf-inspector-trajectory { margin: 10px 0 16px; padding: 10px; border: 1px solid #e6efea; border-radius: 10px; background: #fff; }
+.hotspots-page .uf-inspector-trajectory .hotspot-trajectory-chart { width: 100%; }
+.hotspots-page .uf-inspector-horizon-list { display: grid; gap: 0; }
+.hotspots-page .uf-inspector-horizon-list > div { display: grid; grid-template-columns: 1fr auto 8px; align-items: center; gap: 8px; padding: 9px 0; border-bottom: 1px solid #eaf0ed; font-size: 10px; }
+.hotspots-page .uf-inspector-horizon-list span { color: #83958c; }
+.hotspots-page .uf-inspector-horizon-list b { color: #344b43; font-variant-numeric: tabular-nums; }
+.hotspots-page .uf-inspector-horizon-list i { width: 7px; height: 7px; border-radius: 50%; background: #229f70; }
+.hotspots-page .uf-inspector-horizon-list i.is-red { background: #df6268; }
+.hotspots-page .uf-inspector-horizon-list i.is-amber { background: #e3a52e; }
+.hotspots-page .uf-inspector-horizon-list i.is-blue,
+.hotspots-page .uf-inspector-horizon-list i.is-cyan { background: #4c9ca2; }
+.hotspots-page .uf-inspector-note { display: flex; gap: 8px; margin-top: 17px; padding: 10px; border-radius: 9px; background: #f1f6f3; color: #788d83; font-size: 10px; line-height: 1.5; }
+.hotspots-page .uf-inspector-note svg { flex: 0 0 auto; color: #18877b; }
+.hotspots-page .uf-show-more {
+  display: block;
+  width: 100%;
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid #dce9e3;
+  border-radius: 10px;
+  background: #f7fbf9;
+  color: #087f76;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 750;
+  cursor: pointer;
+}
+.hotspots-page .uf-sensor-empty {
+  display: flex;
+  min-height: 150px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  color: #8b9d95;
+  font-size: 12px;
+}
+.hotspots-page .uf-sensor-empty strong { color: #40584f; }
+.hotspots-page .uf-sensor-empty button { border: 0; background: transparent; color: #087f76; cursor: pointer; font: inherit; font-weight: 700; }
+.hotspots-page .uf-sensor-explorer + .hotspots-explainer { margin-top: 20px; }
+
+@media (max-width: 1150px) {
+  .hotspots-page .uf-explorer-layout { grid-template-columns: minmax(0, 1fr) 240px; gap: 12px; }
+  .hotspots-page .uf-sensor-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 800px) {
+  .hotspots-page .uf-sensor-explorer { padding: 16px; }
+  .hotspots-page .uf-explorer-heading { align-items: flex-start; }
+  .hotspots-page .uf-explorer-layout { grid-template-columns: minmax(0, 1fr); }
+  .hotspots-page .uf-sensor-inspector { position: static; grid-row: 1; }
+  .hotspots-page .uf-sensor-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hotspots-page .uf-explorer-controls { align-items: stretch; flex-direction: column; }
+}
+@media (max-width: 520px) {
+  .hotspots-page .uf-sensor-grid { grid-template-columns: 1fr; }
+  .hotspots-page .uf-explorer-heading { flex-direction: column; }
+  .hotspots-page .uf-explorer-total { white-space: normal; }
+}
+
+
+/* URBANFLOW HOTSPOTS — CARD POLISH V2 */
+.hotspots-page .uf-sensor-card {
+  background: #ffffff !important;
+  color: #30453e !important;
+  border: 1px solid #e1eae5 !important;
+  border-radius: 14px !important;
+  box-shadow: inset 3px 0 0 #d9e8e1 !important;
+  transition: background .18s ease, border-color .18s ease,
+              box-shadow .18s ease, transform .18s ease !important;
+}
+
+.hotspots-page .uf-sensor-card.is-pressure {
+  box-shadow: inset 3px 0 0 #e66b68 !important;
+}
+
+.hotspots-page .uf-sensor-card.is-moderate {
+  box-shadow: inset 3px 0 0 #e6b34d !important;
+}
+
+.hotspots-page .uf-sensor-card.is-moving {
+  box-shadow: inset 3px 0 0 #5795df !important;
+}
+
+.hotspots-page .uf-sensor-card.is-free {
+  box-shadow: inset 3px 0 0 #48a978 !important;
+}
+
+.hotspots-page .uf-sensor-card:hover {
+  background: #fbfdfc !important;
+  border-color: #b9d9cf !important;
+  transform: translateY(-2px);
+  box-shadow: inset 3px 0 0 #13877b,
+              0 8px 20px rgb(30 74 60 / 7%) !important;
+}
+
+.hotspots-page .uf-sensor-card.is-selected {
+  background: #f1faf6 !important;
+  border-color: #13877b !important;
+  box-shadow: inset 3px 0 0 #13877b,
+              0 0 0 2px rgb(19 135 123 / 10%) !important;
+}
+
+.hotspots-page .uf-sensor-card__rank,
+.hotspots-page .uf-sensor-card__horizon {
+  color: #879991 !important;
+}
+
+.hotspots-page .uf-sensor-card__identity > strong {
+  color: #2c453c !important;
+}
+
+.hotspots-page .uf-sensor-card__identity > span {
+  color: #213d34 !important;
+}
+
+.hotspots-page .uf-sensor-card__identity small {
+  color: #84968e !important;
+}
+
+.hotspots-page .uf-sensor-card__bottom {
+  border-top-color: #eaf0ed !important;
+}
+
+.hotspots-page .uf-sensor-trend {
+  color: #74877e !important;
+}
+
+.hotspots-page .uf-sensor-trend.is-red,
+.hotspots-page .uf-sensor-trend.is-amber {
+  color: #a86d18 !important;
+}
+
+.hotspots-page .uf-sensor-trend.is-green {
+  color: #21835d !important;
+}
+
+.hotspots-page .uf-sensor-trend.is-blue,
+.hotspots-page .uf-sensor-trend.is-cyan {
+  color: #3979bb !important;
+}
+
+.hotspots-page .uf-sensor-card__chevron {
+  color: #8b9e95 !important;
+}
+
+.hotspots-page .uf-sensor-inspector {
+  background: linear-gradient(155deg, #f3faf7 0%, #ffffff 52%) !important;
+  border-color: #dceae4 !important;
+}
+
+.hotspots-page .uf-sensor-filters button.is-active {
+  background: #edf8f4 !important;
+  border-color: #b2d9cd !important;
+  color: #087f76 !important;
+}
+
+
+/* URBANFLOW HOTSPOTS — STRUCTURAL REBALANCE V3 */
+
+/* Use the full content width for the card grid and inspector. */
+.hotspots-page .uf-explorer-layout {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  align-items: start !important;
+  gap: 18px !important;
+}
+
+.hotspots-page .uf-sensor-results {
+  min-width: 0;
+  width: 100%;
+}
+
+.hotspots-page .uf-sensor-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 14px !important;
+}
+
+/* Force readable status pills; never use saturated blue fills. */
+.hotspots-page .uf-sensor-pill {
+  border: 1px solid transparent !important;
+  line-height: 1.4 !important;
+  font-weight: 750 !important;
+}
+
+.hotspots-page .uf-sensor-pill.is-pressure {
+  background: #fff0ef !important;
+  color: #a9363c !important;
+  border-color: #f3d2d0 !important;
+}
+
+.hotspots-page .uf-sensor-pill.is-moderate {
+  background: #fff5df !important;
+  color: #89580b !important;
+  border-color: #f0dfb7 !important;
+}
+
+.hotspots-page .uf-sensor-pill.is-moving {
+  background: #edf4ff !important;
+  color: #245b9d !important;
+  border-color: #d4e3fb !important;
+}
+
+.hotspots-page .uf-sensor-pill.is-free {
+  background: #eaf7ef !important;
+  color: #207449 !important;
+  border-color: #d0ead9 !important;
+}
+
+/* Selected sensor becomes a wide, balanced detail workspace. */
+.hotspots-page .uf-sensor-inspector {
+  position: static !important;
+  display: grid !important;
+  grid-template-columns:
+    minmax(180px, .8fr)
+    minmax(260px, 1.15fr)
+    minmax(260px, 1fr) !important;
+  align-items: start !important;
+  gap: 10px 24px !important;
+  width: 100%;
+  padding: 22px 24px !important;
+  background: #fff !important;
+  border: 1px solid #dceae4 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 18px rgb(26 61 52 / 3%);
+}
+
+.hotspots-page .uf-inspector-top {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.hotspots-page .uf-sensor-inspector > h2 {
+  grid-column: 1;
+  grid-row: 2;
+  margin: 0 !important;
+  font-size: 24px !important;
+}
+
+.hotspots-page .uf-inspector-description {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+.hotspots-page .uf-inspector-speed {
+  grid-column: 1;
+  grid-row: 4;
+  margin: 4px 0 !important;
+}
+
+.hotspots-page .uf-inspector-trend {
+  grid-column: 1;
+  grid-row: 5;
+  align-self: start;
+}
+
+.hotspots-page .uf-inspector-divider {
+  display: none !important;
+}
+
+.hotspots-page .uf-sensor-inspector > .uf-explorer-eyebrow {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.hotspots-page .uf-inspector-trajectory {
+  grid-column: 2;
+  grid-row: 2 / span 4;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  min-height: 130px;
+  margin: 0 !important;
+  padding: 18px !important;
+}
+
+.hotspots-page .uf-inspector-trajectory .hotspot-trajectory-chart {
+  max-width: none;
+}
+
+.hotspots-page .uf-inspector-trajectory svg {
+  height: 80px;
+}
+
+.hotspots-page .uf-inspector-horizon-list {
+  grid-column: 3;
+  grid-row: 1 / span 4;
+  width: 100%;
+}
+
+.hotspots-page .uf-inspector-horizon-list > div {
+  padding: 12px 0 !important;
+  font-size: 11px !important;
+}
+
+.hotspots-page .uf-inspector-note {
+  grid-column: 3;
+  grid-row: 5;
+  align-self: end;
+  margin-top: 0 !important;
+}
+
+/* The explanation should span the content width rather than form a half-card. */
+.hotspots-page .uf-sensor-explorer + .hotspots-explainer {
+  width: 100% !important;
+  max-width: none !important;
+  margin-top: 18px !important;
+}
+
+.hotspots-page .hotspots-legend {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+@media (max-width: 1050px) {
+  .hotspots-page .uf-sensor-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .hotspots-page .uf-sensor-inspector {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .hotspots-page .uf-inspector-top,
+  .hotspots-page .uf-sensor-inspector > h2,
+  .hotspots-page .uf-inspector-description,
+  .hotspots-page .uf-inspector-speed,
+  .hotspots-page .uf-inspector-trend {
+    grid-column: 1;
+  }
+
+  .hotspots-page .uf-sensor-inspector > .uf-explorer-eyebrow,
+  .hotspots-page .uf-inspector-trajectory {
+    grid-column: 2;
+  }
+
+  .hotspots-page .uf-inspector-trajectory {
+    grid-row: 2 / span 4;
+  }
+
+  .hotspots-page .uf-inspector-horizon-list {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  .hotspots-page .uf-inspector-note {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 650px) {
+  .hotspots-page .uf-sensor-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .hotspots-page .uf-sensor-inspector {
+    grid-template-columns: minmax(0, 1fr) !important;
+    padding: 18px !important;
+  }
+
+  .hotspots-page .uf-sensor-inspector > * {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+  }
+
+  .hotspots-page .hotspots-legend {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* URBANFLOW HOTSPOTS — SENSOR DETAIL DRAWER V1 */
+.hotspots-page .uf-sensor-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: flex-end;
+  align-items: stretch;
+  padding: 16px;
+  background: rgb(20 39 33 / 32%);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  animation: uf-drawer-backdrop-in .18s ease-out;
+}
+
+.hotspots-page .uf-sensor-drawer-backdrop .uf-sensor-inspector {
+  position: relative !important;
+  display: block !important;
+  width: min(440px, calc(100vw - 32px)) !important;
+  height: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 24px !important;
+  border: 1px solid #dceae4 !important;
+  border-radius: 18px !important;
+  background: #fff !important;
+  box-shadow: 0 18px 65px rgb(18 43 35 / 20%) !important;
+  animation: uf-drawer-panel-in .22s ease-out;
+}
+
+.hotspots-page .uf-sensor-drawer-backdrop .uf-sensor-inspector > * {
+  grid-column: auto !important;
+  grid-row: auto !important;
+}
+
+.hotspots-page .uf-sensor-drawer-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin: 0 0 24px auto;
+  padding: 8px 10px;
+  border: 1px solid #e1eae5;
+  border-radius: 9px;
+  background: #fff;
+  color: #526b60;
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease;
+}
+
+.hotspots-page .uf-sensor-drawer-close:hover {
+  background: #f0f8f4;
+  border-color: #bddbd0;
+}
+
+.hotspots-page .uf-sensor-drawer-backdrop .uf-inspector-top {
+  margin-bottom: 18px;
+}
+
+.hotspots-page .uf-sensor-drawer-backdrop .uf-sensor-inspector > h2 {
+  margin: 0 0 5px !important;
+  font-size: 27px !important;
+}
+
+.hotspots-page .uf-sensor-drawer-backdrop .uf-inspector-speed {
+  margin: 15px 0 10px !important;
+}
+
+.hotspots-page .uf-sensor-drawer-backdrop .uf-inspector-speed strong {
+  font-size: 48px !important;
+}
+
+.hotspots-page .uf-sensor-drawer-backdrop .uf-inspector-divider {
+  display: block !important;
+  margin: 22px 0 !important;
+}
+
+.hotspots-page .uf-sensor-drawer-backdrop .uf-inspector-trajectory {
+  min-height: 0;
+  margin: 12px 0 18px !important;
+  padding: 16px !important;
+}
+
+.hotspots-page .uf-sensor-drawer-backdrop .uf-inspector-trajectory svg {
+  height: 80px;
+}
+
+.hotspots-page .uf-sensor-drawer-backdrop .uf-inspector-horizon-list > div {
+  padding: 13px 0 !important;
+}
+
+.hotspots-page .uf-sensor-drawer-backdrop .uf-inspector-note {
+  margin-top: 20px !important;
+}
+
+.hotspots-page .uf-sensor-pill.is-moving {
+  background: #edf4ff !important;
+  color: #245b9d !important;
+  border-color: #d4e3fb !important;
+}
+
+@keyframes uf-drawer-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes uf-drawer-panel-in {
+  from { transform: translateX(18px); opacity: .8; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@media (max-width: 600px) {
+  .hotspots-page .uf-sensor-drawer-backdrop {
+    padding: 8px;
+  }
+
+  .hotspots-page .uf-sensor-drawer-backdrop .uf-sensor-inspector {
+    width: 100% !important;
+    padding: 20px !important;
+    border-radius: 14px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hotspots-page .uf-sensor-drawer-backdrop,
+  .hotspots-page .uf-sensor-drawer-backdrop .uf-sensor-inspector {
+    animation: none;
+  }
+}
+
+/* URBANFLOW COMMAND CENTER — INTERACTIVE MAP V1 */
+
+/* URBANFLOW COMMAND CENTER — INTERACTIVE MAP V1 */
+.uf-workspace .uf-stat--interactive {
+  width: 100%;
+  min-width: 0;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  transition: border-color .16s ease, background .16s ease,
+              box-shadow .16s ease, transform .16s ease;
+}
+
+.uf-workspace .uf-stat--interactive:hover {
+  background: #f7fbf9;
+  border-color: #b8d9ce;
+  box-shadow: 0 5px 16px rgb(22 94 75 / 6%);
+  transform: translateY(-2px);
+}
+
+.uf-workspace .uf-stat--interactive:focus-visible,
+.uf-workspace .uf-map-filter:focus-visible,
+.uf-workspace .uf-map-filter-reset:focus-visible {
+  outline: 3px solid rgb(19 135 123 / 28%);
+  outline-offset: 3px;
+}
+
+.uf-workspace .uf-map-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 0 0 14px;
+}
+
+.uf-workspace .uf-map-filters > span {
+  margin-right: 3px;
+  color: #81938b;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+
+.uf-workspace .uf-map-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border: 1px solid #e0e9e4;
+  border-radius: 9px;
+  background: #fff;
+  color: #657a70;
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, color .15s ease;
+}
+
+.uf-workspace .uf-map-filter > i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #9baaa3;
+}
+
+.uf-workspace .uf-map-filter.is-congested > i { background: #e45d61; }
+.uf-workspace .uf-map-filter.is-moderate > i { background: #dfa23a; }
+.uf-workspace .uf-map-filter.is-moving > i { background: #4c91d5; }
+.uf-workspace .uf-map-filter.is-free > i { background: #2b9b6a; }
+.uf-workspace .uf-map-filter.is-all > i { background: #14877b; }
+
+.uf-workspace .uf-map-filter.is-active {
+  border-color: #a9d6c9;
+  background: #edf8f4;
+  color: #087f76;
+  font-weight: 750;
+}
+
+.uf-workspace .uf-map-filter-reset {
+  padding: 7px 8px;
+  border: 0;
+  background: transparent;
+  color: #087f76;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (max-width: 650px) {
+  .uf-workspace .uf-map-filters {
+    gap: 6px;
+  }
+  .uf-workspace .uf-map-filter {
+    padding: 7px 8px;
+    font-size: 10px;
+  }
+}
+
+
+
+/* URBANFLOW MAP INSIGHT BAR V1 */
+.uf-map-insight {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  min-height: 76px;
+  padding: 13px 20px;
+  background: #f8faf7;
+  border-top: 1px solid #e8eee8;
+  border-bottom: 1px solid #e8eee8;
+}
+.uf-map-insight-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 150px;
+}
+.uf-map-insight-label {
+  display: block;
+  margin-bottom: 5px;
+  color: #82908b;
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: 1.1px;
+  line-height: 1.3;
+}
+.uf-map-insight strong {
+  display: block;
+  color: #263532;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.uf-map-insight strong small {
+  color: #8a9791;
+  font-size: 10px;
+  font-weight: 550;
+}
+.uf-map-insight-divider {
+  width: 1px;
+  height: 30px;
+  flex: 0 0 1px;
+  background: #e0e8e1;
+}
+.uf-map-insight-dot {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 9px;
+  border-radius: 50%;
+  background: #138c7b;
+  box-shadow: 0 0 0 4px rgba(19, 140, 123, 0.10);
+}
+.uf-map-insight-dot.is-congested {
+  background: #e05b60;
+  box-shadow: 0 0 0 4px rgba(224, 91, 96, 0.11);
+}
+.uf-map-insight-dot.is-moderate {
+  background: #dba53b;
+  box-shadow: 0 0 0 4px rgba(219, 165, 59, 0.12);
+}
+.uf-map-insight-dot.is-moving {
+  background: #279fbd;
+  box-shadow: 0 0 0 4px rgba(39, 159, 189, 0.11);
+}
+.uf-map-insight-dot.is-free {
+  background: #32a46b;
+  box-shadow: 0 0 0 4px rgba(50, 164, 107, 0.11);
+}
+.uf-map-insight-count,
+.uf-map-insight-horizon {
+  min-width: 110px;
+}
+@media (max-width: 680px) {
+  .uf-map-insight {
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 13px;
+  }
+  .uf-map-insight-status {
+    min-width: calc(50% - 12px);
+  }
+  .uf-map-insight-divider {
+    display: none;
+  }
+  .uf-map-insight-count,
+  .uf-map-insight-horizon {
+    min-width: calc(50% - 12px);
+  }
+}
+
+
+/* URBANFLOW INTERACTION POLISH V1 */
+.uf-workspace .uf-map-filter {
+  color: #344740 !important;
+  background: #ffffff !important;
+  border: 1px solid #dce6e0 !important;
+  font-weight: 650 !important;
+  opacity: 1 !important;
+  -webkit-text-fill-color: #344740 !important;
+}
+.uf-workspace .uf-map-filter.is-congested > i { background: #d94c55 !important; }
+.uf-workspace .uf-map-filter.is-moderate > i { background: #b77a12 !important; }
+.uf-workspace .uf-map-filter.is-moving > i { background: #286fae !important; }
+.uf-workspace .uf-map-filter.is-free > i { background: #21804f !important; }
+.uf-workspace .uf-map-filter.is-all > i { background: #087f76 !important; }
+
+.uf-workspace .uf-map-filter.is-congested.is-active {
+  color: #a82e38 !important;
+  background: #fff0f0 !important;
+  border-color: #e7a8ad !important;
+  -webkit-text-fill-color: #a82e38 !important;
+}
+.uf-workspace .uf-map-filter.is-moderate.is-active {
+  color: #80500b !important;
+  background: #fff5df !important;
+  border-color: #e8cb86 !important;
+  -webkit-text-fill-color: #80500b !important;
+}
+.uf-workspace .uf-map-filter.is-moving.is-active {
+  color: #185887 !important;
+  background: #eaf4ff !important;
+  border-color: #a6c9ec !important;
+  -webkit-text-fill-color: #185887 !important;
+}
+.uf-workspace .uf-map-filter.is-free.is-active {
+  color: #17683f !important;
+  background: #eaf7ee !important;
+  border-color: #a5d5b4 !important;
+  -webkit-text-fill-color: #17683f !important;
+}
+.uf-workspace .uf-map-filter.is-all.is-active {
+  color: #086a62 !important;
+  background: #e8f6f2 !important;
+  border-color: #a7d8cb !important;
+  -webkit-text-fill-color: #086a62 !important;
+}
+.uf-workspace .uf-map-filter-reset {
+  color: #08766d !important;
+  -webkit-text-fill-color: #08766d !important;
+  font-weight: 750 !important;
+}
+
+/* Improve selected-marker contrast without changing traffic colors. */
+
+
+/* URBANFLOW EMPTY FILTER MESSAGE V1 */
+.uf-workspace .uf-empty-filter-message {
+  margin: 0 0 12px;
+  padding: 11px 14px;
+  border: 1px solid #ead7ad;
+  border-radius: 9px;
+  background: #fff9eb;
+  color: #6f521a;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+
+
+/* URBANFLOW NETWORK EXPLORER — SEARCH AND FILTER V1 */
+.uf-network-redesign .uf-network-explorer-controls {
+  display: grid;
+  grid-template-columns: minmax(200px, 260px) minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1px solid var(--un-line);
+  border-radius: 12px;
+  background: var(--un-surface);
+}
+.uf-network-redesign .uf-network-search,
+.uf-network-redesign .uf-network-traffic-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+}
+.uf-network-redesign .uf-network-search > span,
+.uf-network-redesign .uf-network-traffic-filters > span {
+  width: 100%;
+  color: var(--un-muted);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .1em;
+}
+.uf-network-redesign .uf-network-search input {
+  width: 100%;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--un-line);
+  border-radius: 8px;
+  background: #fbfdfc;
+  color: var(--un-ink);
+  font: inherit;
+  font-size: 12px;
+  outline: none;
+}
+.uf-network-redesign .uf-network-search input:focus {
+  border-color: var(--un-accent);
+  box-shadow: 0 0 0 3px #087f701c;
+}
+.uf-network-redesign .uf-network-traffic-filters button {
+  padding: 8px 10px;
+  border: 1px solid var(--un-line);
+  border-radius: 8px;
+  background: #fff;
+  color: #344740;
+  font-size: 11px;
+  font-weight: 650;
+  cursor: pointer;
+}
+.uf-network-redesign .uf-network-traffic-filters button.is-active {
+  border-color: var(--un-accent);
+  background: #e8f6f2;
+  color: #086a62;
+}
+.uf-network-redesign .uf-network-filter-count {
+  align-self: center;
+  white-space: nowrap;
+  color: var(--un-muted);
+  font-size: 11px;
+}
+.uf-network-redesign .uf-network-filter-count strong {
+  color: var(--un-ink);
+  font-size: 18px;
+}
+.uf-network-redesign .uf-network-filter-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+  margin: 16px;
+  padding: 18px;
+  border: 1px solid #ead7ad;
+  border-radius: 10px;
+  background: #fff9eb;
+  color: #6f521a;
+  font-size: 12px;
+}
+.uf-network-redesign .uf-network-filter-empty button {
+  margin-top: 4px;
+  padding: 8px 11px;
+  border: 1px solid #d7bf88;
+  border-radius: 7px;
+  background: #fff;
+  color: #6f521a;
+  font-weight: 700;
+  cursor: pointer;
+}
+.uf-network-redesign .network-node {
+  cursor: pointer;
+}
+@media (max-width: 900px) {
+  .uf-network-redesign .uf-network-explorer-controls {
+    grid-template-columns: 1fr;
+  }
+  .uf-network-redesign .uf-network-filter-count {
+    justify-self: start;
+  }
+}
+
+
+
+/* URBANFLOW FORECAST EXPLORER — FILTERS V1 */
+.forecast-machine .forecast-explorer-controls {
+  display: grid;
+  grid-template-columns: minmax(150px, 205px) minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid #d6e5df;
+  border-radius: 10px;
+  background: #fff;
+}
+.forecast-machine .forecast-explorer-search,
+.forecast-machine .forecast-explorer-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.forecast-machine .forecast-explorer-search > span,
+.forecast-machine .forecast-explorer-filters > span {
+  width: 100%;
+  color: #71817d;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .09em;
+}
+.forecast-machine .forecast-explorer-search input {
+  width: 100%;
+  min-width: 0;
+  padding: 9px 10px;
+  border: 1px solid #d6e5df;
+  border-radius: 7px;
+  background: #fbfdfc;
+  color: #182725;
+  font: inherit;
+  font-size: 12px;
+}
+.forecast-machine .forecast-explorer-filters button {
+  padding: 7px 9px;
+  border: 1px solid #d6e5df;
+  border-radius: 7px;
+  background: #fff;
+  color: #344740;
+  font-size: 10px;
+  font-weight: 650;
+  cursor: pointer;
+}
+.forecast-machine .forecast-explorer-filters button.is-active {
+  border-color: #087f76;
+  background: #e8f5f0;
+  color: #086a62;
+}
+.forecast-machine .forecast-explorer-count {
+  align-self: center;
+  color: #71817d;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.forecast-machine .forecast-explorer-count strong {
+  color: #182725;
+  font-size: 18px;
+}
+.forecast-machine .forecast-trajectory-horizons button {
+  border: 0;
+  border-radius: 6px;
+  padding: 5px 7px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.forecast-machine .forecast-trajectory-horizons button.is-active {
+  background: #e8f5f0;
+  color: #087f76;
+  font-weight: 800;
+}
+@media (max-width: 850px) {
+  .forecast-machine .forecast-explorer-controls {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+/* URBANFLOW MODEL INTELLIGENCE — INTERACTIVE ARCHITECTURE V1 */
+.model-intelligence-page .mi-fusion-node--interactive {
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: border-color .18s ease, background .18s ease, transform .18s ease;
+}
+.model-intelligence-page .mi-fusion-node--interactive:hover {
+  border-color: #9dd8ca;
+  transform: translateY(-2px);
+}
+.model-intelligence-page .mi-fusion-node--interactive:focus-visible {
+  outline: 3px solid #20b8a4;
+  outline-offset: 3px;
+}
+.model-intelligence-page .mi-fusion-node--interactive.is-active {
+  border-color: #087f76;
+  background: #eaf7f3;
+  box-shadow: 0 0 0 2px rgb(8 127 118 / 8%);
+}
+.model-intelligence-page .mi-component-detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, .85fr);
+  align-items: center;
+  gap: 22px;
+  margin-top: 18px;
+  padding: 20px;
+  border: 1px solid #d5e8e1;
+  border-radius: 12px;
+  background: linear-gradient(120deg, #f5fbf8, #fff);
+}
+.model-intelligence-page .mi-component-detail__heading h3 {
+  margin: 7px 0;
+  color: #182725;
+  font-size: 18px;
+}
+.model-intelligence-page .mi-component-detail__heading p {
+  max-width: 660px;
+  margin: 0;
+  color: #647670;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.model-intelligence-page .mi-component-detail__facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.model-intelligence-page .mi-component-detail__facts > div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 11px;
+  border: 1px solid #e0ece7;
+  border-radius: 8px;
+  background: #fff;
+}
+.model-intelligence-page .mi-component-detail__facts span {
+  color: #71817d;
+  font-size: 10px;
+}
+.model-intelligence-page .mi-component-detail__facts strong {
+  color: #087f76;
+  font-size: 12px;
+}
+@media (max-width: 760px) {
+  .model-intelligence-page .mi-component-detail {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+/* URBANFLOW MODEL INTELLIGENCE — SAFE INSPECTOR V1 */
+.mi-architecture-inspector {
+  margin: 18px 0 24px;
+  padding: 22px;
+  border: 1px solid #d6e7e0;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ffffff, #f4faf7);
+}
+.mi-architecture-inspector__header > p {
+  margin: 7px 0 15px;
+  color: #71817d;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.mi-architecture-inspector__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.mi-architecture-inspector__tabs button {
+  padding: 9px 13px;
+  border: 1px solid #d6e7e0;
+  border-radius: 8px;
+  background: #fff;
+  color: #344740;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.mi-architecture-inspector__tabs button:hover {
+  border-color: #83b9aa;
+}
+.mi-architecture-inspector__tabs button.is-active {
+  border-color: #087f76;
+  background: #e8f5f0;
+  color: #087f76;
+}
+.mi-architecture-inspector__tabs button:focus-visible {
+  outline: 3px solid #20b8a4;
+  outline-offset: 2px;
+}
+.mi-architecture-inspector__detail {
+  padding: 18px;
+  border: 1px solid #e0ece7;
+  border-radius: 10px;
+  background: #fff;
+}
+.mi-architecture-inspector__detail h3 {
+  margin: 7px 0;
+  color: #182725;
+  font-size: 19px;
+}
+.mi-architecture-inspector__detail > p {
+  max-width: 760px;
+  margin: 0;
+  color: #647670;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.mi-architecture-inspector__facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 17px;
+}
+.mi-architecture-inspector__facts > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  border: 1px solid #e0ece7;
+  border-radius: 8px;
+  background: #f9fcfa;
+}
+.mi-architecture-inspector__facts span {
+  color: #71817d;
+  font-size: 10px;
+}
+.mi-architecture-inspector__facts strong {
+  color: #087f76;
+  font-size: 13px;
+}
+@media (max-width: 650px) {
+  .mi-architecture-inspector__facts {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Model Intelligence — compact, balanced interactive workspace */
+.model-intelligence-page {
+  gap: 16px;
+}
+
+.model-intelligence-page .mi-hero {
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 16px;
+}
+
+.model-intelligence-page .mi-hero__copy h1 {
+  max-width: 760px;
+  line-height: 1.12;
+}
+
+.model-intelligence-page .mi-hero__copy p {
+  max-width: 760px;
+  margin-top: 8px;
+}
+
+.model-intelligence-page .mi-horizon-bar {
+  padding: 14px 18px;
+  gap: 16px;
+}
+
+.model-intelligence-page .mi-architecture,
+.model-intelligence-page .mi-performance,
+.model-intelligence-page .mi-benchmark,
+.model-intelligence-page .mi-output-card,
+.model-intelligence-page .mi-reading-card,
+.model-intelligence-page .mi-context-card,
+.model-intelligence-page .mi-transparency-card {
+  min-width: 0;
+}
+
+.model-intelligence-page .mi-architecture {
+  padding: 18px;
+}
+
+.model-intelligence-page .mi-section-heading {
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.model-intelligence-page .mi-fusion-panel {
+  gap: 16px;
+  padding: 16px;
+}
+
+.model-intelligence-page .mi-fusion-inputs {
+  gap: 10px;
+}
+
+.model-intelligence-page .mi-fusion-node--interactive {
+  transition: border-color 160ms ease, background 160ms ease,
+    transform 160ms ease, box-shadow 160ms ease;
+}
+
+.model-intelligence-page .mi-fusion-node--interactive:hover {
+  transform: translateY(-2px);
+}
+
+.model-intelligence-page .mi-fusion-output {
+  min-width: 0;
+}
+
+.model-intelligence-page .mi-fusion-horizons {
+  gap: 8px;
+}
+
+.model-intelligence-page .mi-fusion-horizon {
+  cursor: pointer;
+  transition: background 160ms ease, border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.model-intelligence-page .mi-fusion-horizon:hover {
+  transform: translateY(-2px);
+}
+
+.model-intelligence-page .mi-performance-layout {
+  grid-template-columns: minmax(0, 1.7fr) minmax(220px, 0.8fr);
+  gap: 16px;
+}
+
+.model-intelligence-page .mi-output-grid {
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: 16px;
+}
+
+.model-intelligence-page .mi-transparency-grid {
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: stretch;
+  gap: 16px;
+}
+
+.model-intelligence-page .mi-weather-context,
+.model-intelligence-page .mi-architecture-inspector {
+  height: 100%;
+  min-width: 0;
+}
+
+.model-intelligence-page .mi-weather-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.model-intelligence-page .mi-weather-signal {
+  min-width: 0;
+  padding: 10px 12px;
+}
+
+.model-intelligence-page .mi-architecture-inspector {
+  padding: 18px;
+}
+
+.model-intelligence-page .mi-architecture-inspector__detail {
+  min-height: 0;
+}
+
+.model-intelligence-page .mi-architecture-inspector__tabs {
+  flex-wrap: wrap;
+}
+
+.model-intelligence-page .mi-transparency-card {
+  grid-column: 1 / -1;
+  padding: 18px;
+}
+
+.model-intelligence-page .mi-transparency-detail-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.model-intelligence-page .mi-transparency-detail {
+  min-width: 0;
+  padding: 14px;
+}
+
+@media (max-width: 1050px) {
+  .model-intelligence-page .mi-performance-layout,
+  .model-intelligence-page .mi-output-grid,
+  .model-intelligence-page .mi-transparency-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .model-intelligence-page .mi-transparency-card {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 650px) {
+  .model-intelligence-page .mi-weather-grid,
+  .model-intelligence-page .mi-transparency-detail-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .model-intelligence-page .mi-architecture,
+  .model-intelligence-page .mi-fusion-panel,
+  .model-intelligence-page .mi-architecture-inspector,
+  .model-intelligence-page .mi-transparency-card {
+    padding: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .model-intelligence-page .mi-fusion-node--interactive,
+  .model-intelligence-page .mi-fusion-horizon {
+    transition: none;
+  }
+}
+
+
+
+/* Model Intelligence compact explorer v1 */
+.model-intelligence-page {
+  gap: 16px;
+}
+
+.model-intelligence-page .mi-hero {
+  padding-bottom: 14px;
+}
+
+.model-intelligence-page .mi-hero__copy h1 {
+  max-width: 780px;
+  font-size: clamp(27px, 3vw, 40px);
+  line-height: 1.12;
+}
+
+.model-intelligence-page .mi-hero__copy p {
+  max-width: 760px;
+}
+
+.model-intelligence-page .mi-horizon-bar {
+  position: sticky;
+  top: 8px;
+  z-index: 5;
+  padding: 12px 16px;
+  border: 1px solid #dce6e1;
+  border-radius: 14px;
+  background: rgb(255 255 255 / 96%);
+  box-shadow: 0 5px 18px rgb(20 50 42 / 5%);
+  backdrop-filter: blur(12px);
+}
+
+.model-intelligence-page .mi-architecture,
+.model-intelligence-page .mi-performance,
+.model-intelligence-page .mi-benchmark,
+.model-intelligence-page .mi-output-card,
+.model-intelligence-page .mi-reading-card,
+.model-intelligence-page .mi-context-card,
+.model-intelligence-page .mi-architecture-inspector,
+.model-intelligence-page .mi-transparency-card {
+  min-width: 0;
+}
+
+.model-intelligence-page .mi-fusion-panel {
+  gap: 14px;
+}
+
+.model-intelligence-page .mi-fusion-node,
+.model-intelligence-page .mi-fusion-core,
+.model-intelligence-page .mi-fusion-horizon {
+  transition: border-color .18s ease, box-shadow .18s ease,
+    transform .18s ease;
+}
+
+.model-intelligence-page .mi-fusion-horizon:hover,
+.model-intelligence-page .mi-fusion-node--interactive:hover {
+  transform: translateY(-2px);
+}
+
+.model-intelligence-page .mi-performance,
+.model-intelligence-page .mi-benchmark {
+  scroll-margin-top: 100px;
+}
+
+.model-intelligence-page .mi-output-grid,
+.model-intelligence-page .mi-transparency-grid {
+  align-items: stretch;
+}
+
+.model-intelligence-page .mi-architecture-inspector {
+  align-self: stretch;
+}
+
+.model-intelligence-page .mi-architecture-inspector__tabs button,
+.model-intelligence-page .mi-metric-row,
+.model-intelligence-page .mi-forecast-column {
+  cursor: pointer;
+}
+
+.model-intelligence-page .mi-metric-row:focus-visible,
+.model-intelligence-page .mi-forecast-column:focus-visible,
+.model-intelligence-page .mi-architecture-inspector__tabs button:focus-visible {
+  outline: 3px solid rgb(8 127 112 / 30%);
+  outline-offset: 3px;
+}
+
+@media (min-width: 1180px) {
+  .model-intelligence-page .mi-output-grid {
+    grid-template-columns: minmax(0, 1.25fr) minmax(300px, .8fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .model-intelligence-page .mi-horizon-bar {
+    position: static;
+  }
+
+  .model-intelligence-page .mi-hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+
+
+/* Model Intelligence benchmark disclosure v1 */
+.model-intelligence-page .mi-compact-panel--benchmark {
+  border: 1px solid #dce6e1;
+  border-radius: 15px;
+  background: #fff;
+  overflow: clip;
+  box-shadow: 0 4px 14px rgb(20 50 42 / 4%);
+}
+
+.model-intelligence-page .mi-compact-panel__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 15px 18px;
+  cursor: pointer;
+  list-style: none;
+  background: linear-gradient(110deg, #fff, #f2faf7);
+}
+
+.model-intelligence-page .mi-compact-panel__summary::-webkit-details-marker {
+  display: none;
+}
+
+.model-intelligence-page .mi-compact-panel__summary::after {
+  content: "+";
+  color: #087f70;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.model-intelligence-page .mi-compact-panel--benchmark[open] > .mi-compact-panel__summary::after {
+  content: "−";
+}
+
+.model-intelligence-page .mi-compact-panel__summary > span:first-child {
+  display: grid;
+  gap: 4px;
+}
+
+.model-intelligence-page .mi-compact-panel__summary small {
+  color: #087f70;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+
+.model-intelligence-page .mi-compact-panel__summary strong {
+  color: #182725;
+  font-size: 14px;
+}
+
+.model-intelligence-page .mi-compact-panel__hint {
+  color: #71817d;
+  font-size: 11px;
+}
+
+.model-intelligence-page .mi-compact-panel--benchmark > .mi-benchmark {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.model-intelligence-page .mi-compact-panel--benchmark[open] > .mi-benchmark {
+  padding-top: 8px;
+}
+
+.model-intelligence-page .mi-compact-panel__summary:focus-visible {
+  outline: 3px solid rgb(8 127 112 / 30%);
+  outline-offset: -3px;
+}
+
+
+
+/* Model Intelligence spacing correction v1 */
+.model-intelligence-page .mi-horizon-bar {
+  position: relative;
+  top: auto;
+  z-index: 1;
+  margin-bottom: 2px;
+}
+
+.model-intelligence-page .mi-compact-panel--benchmark:not([open]) {
+  min-height: 66px;
+}
+
+.model-intelligence-page .mi-compact-panel--benchmark > .mi-benchmark {
+  margin-top: 0;
+}
+
+.model-intelligence-page .mi-compact-panel--benchmark > .mi-compact-panel__summary {
+  min-height: 66px;
+}
+
+@media (max-width: 760px) {
+  .model-intelligence-page .mi-compact-panel__summary {
+    flex-wrap: wrap;
+  }
+}
+
+
+
+/* Model Intelligence tabbed analysis v1 */
+.model-intelligence-page .mi-analysis-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0 0 4px;
+  padding: 8px;
+  border: 1px solid #dce6e1;
+  border-radius: 15px;
+  background: #fff;
+}
+
+.model-intelligence-page .mi-analysis-tabs button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  min-width: 0;
+  padding: 13px 15px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: #f5f8f6;
+  color: #334440;
+  text-align: left;
+  cursor: pointer;
+  transition: background .18s ease, border-color .18s ease, transform .18s ease;
+}
+
+.model-intelligence-page .mi-analysis-tabs button:hover {
+  transform: translateY(-1px);
+  border-color: #b9d9d0;
+}
+
+.model-intelligence-page .mi-analysis-tabs button.is-active {
+  border-color: #80bdb0;
+  background: #eaf6f2;
+  color: #087f70;
+}
+
+.model-intelligence-page .mi-analysis-tabs button strong {
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.model-intelligence-page .mi-analysis-tabs button small {
+  color: #71817d;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.model-intelligence-page .mi-analysis-panel.is-hidden {
+  display: none !important;
+}
+
+.model-intelligence-page .mi-analysis-panel.is-visible {
+  display: block;
+  animation: mi-analysis-enter .18s ease-out;
+}
+
+.model-intelligence-page .mi-output-grid.is-visible {
+  display: grid;
+}
+
+.model-intelligence-page .mi-transparency-grid {
+  display: contents;
+}
+
+.model-intelligence-page .mi-architecture-inspector.is-visible {
+  margin-top: 0;
+}
+
+.model-intelligence-page .mi-transparency-card {
+  margin-top: 0;
+}
+
+@keyframes mi-analysis-enter {
+  from { opacity: .55; transform: translateY(3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 650px) {
+  .model-intelligence-page .mi-analysis-tabs {
+    grid-template-columns: 1fr;
+  }
+
+  .model-intelligence-page .mi-analysis-tabs button {
+    padding: 11px 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .model-intelligence-page .mi-analysis-panel.is-visible {
+    animation: none;
+  }
+}
+
+
+
+/* mi-architecture-card-interaction v1 */
+.model-intelligence-page .mi-fusion-node--interactive {
+  width: 100%;
+  min-width: 0;
+  text-align: left;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  transition: background .18s ease, border-color .18s ease,
+    box-shadow .18s ease, transform .18s ease;
+}
+
+.model-intelligence-page .mi-fusion-node--interactive:hover {
+  transform: translateY(-2px);
+  border-color: #b7d8ce;
+  background: #f5fbf8;
+}
+
+.model-intelligence-page .mi-fusion-node--interactive.is-active {
+  border-color: #72b7a7;
+  background: #eaf6f2;
+  box-shadow: 0 0 0 3px rgb(8 127 112 / 8%);
+}
+
+.model-intelligence-page .mi-fusion-node--interactive:focus-visible {
+  outline: 3px solid rgb(8 127 112 / 35%);
+  outline-offset: 3px;
+}
+
+
+/* mi-architecture-drawer v1 */
+.model-intelligence-page .mi-architecture-drawer-backdrop {
+  position: fixed; inset: 0; z-index: 1200;
+  display: flex; justify-content: flex-end; align-items: stretch;
+  background: rgba(9,24,22,.44);
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  animation: mi-drawer-backdrop-in 180ms ease-out both;
+}
+.model-intelligence-page .mi-architecture-drawer {
+  position: relative; width: min(470px,100%); height: 100%;
+  max-height: 100dvh; overflow-y: auto; margin: 0;
+  padding: 28px 26px 32px;
+  border: 0; border-left: 1px solid rgba(8,127,112,.18);
+  border-radius: 20px 0 0 20px;
+  background: #fff; box-shadow: -24px 0 70px rgba(9,34,29,.2);
+  animation: mi-drawer-slide-in 240ms cubic-bezier(.2,.75,.25,1) both;
+}
+.model-intelligence-page .mi-architecture-drawer .mi-architecture-inspector__header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 18px; margin-bottom: 24px;
+}
+.model-intelligence-page .mi-architecture-drawer .mi-architecture-inspector__header p {
+  max-width: 330px; margin: 8px 0 0;
+}
+.model-intelligence-page .mi-architecture-drawer__close {
+  display: grid; flex: 0 0 auto; place-items: center;
+  width: 38px; height: 38px; border: 1px solid #dce6e1;
+  border-radius: 12px; color: #182725; background: #fff; cursor: pointer;
+}
+.model-intelligence-page .mi-architecture-drawer__close:hover {
+  border-color: #087f70; background: #edf8f5;
+}
+.model-intelligence-page .mi-architecture-drawer__close:focus-visible {
+  outline: 3px solid rgba(8,127,112,.3); outline-offset: 3px;
+}
+.model-intelligence-page .mi-architecture-drawer .mi-architecture-inspector__tabs {
+  display: grid; grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 7px; margin-bottom: 22px;
+}
+.model-intelligence-page .mi-architecture-drawer .mi-architecture-inspector__tabs button {
+  min-width: 0; padding: 10px 7px; font-size: 12px;
+}
+.model-intelligence-page .mi-architecture-drawer .mi-architecture-inspector__detail {
+  padding: 22px; border: 1px solid #dce6e1; border-radius: 16px;
+  background: linear-gradient(145deg,#fff,#f5faf8);
+}
+@keyframes mi-drawer-backdrop-in { from {opacity:0} to {opacity:1} }
+@keyframes mi-drawer-slide-in {
+  from {opacity:.6; transform:translateX(28px)}
+  to {opacity:1; transform:translateX(0)}
+}
+@media (max-width:600px) {
+  .model-intelligence-page .mi-architecture-drawer {
+    width: 100%; padding: 22px 18px 28px; border-radius: 0;
+  }
+  .model-intelligence-page .mi-architecture-drawer .mi-architecture-inspector__tabs button {
+    font-size: 11px;
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  .model-intelligence-page .mi-architecture-drawer-backdrop,
+  .model-intelligence-page .mi-architecture-drawer { animation: none; }
+}
+
+
+/* mi-transparency-spacing-refinement v1 */
+.model-intelligence-page .mi-transparency-card {
+  padding: 16px 18px;
+}
+
+.model-intelligence-page .mi-transparency-card h2 {
+  margin-top: 6px;
+  margin-bottom: 8px;
+}
+
+.model-intelligence-page .mi-transparency-card > p {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.model-intelligence-page .mi-transparency-points {
+  gap: 8px;
+  margin-top: 10px;
+  margin-bottom: 14px;
+}
+
+.model-intelligence-page .mi-transparency-detail-grid {
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.model-intelligence-page .mi-transparency-detail {
+  padding: 12px 14px;
+}
+
+.model-intelligence-page .mi-transparency-detail strong {
+  margin-top: 5px;
+}
+
+.model-intelligence-page .mi-transparency-detail small {
+  margin-top: 4px;
+}
+
+@media (max-width: 650px) {
+  .model-intelligence-page .mi-transparency-card {
+    padding: 12px;
+  }
+
+  .model-intelligence-page .mi-transparency-points {
+    gap: 7px;
+    margin-bottom: 12px;
+  }
+
+  .model-intelligence-page .mi-transparency-detail {
+    padding: 10px;
+  }
+}

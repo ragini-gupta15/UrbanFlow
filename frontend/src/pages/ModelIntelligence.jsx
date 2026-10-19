@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   BrainCircuit,
   CheckCircle2,
@@ -9,16 +9,17 @@ import {
   ShieldCheck,
   TrendingDown,
   TrendingUp,
+  X,
 } from "lucide-react";
 import { average, horizonValues } from "../data";
 
 const HORIZONS = [15, 30, 45, 60];
 
 const TEST_METRICS = [
-  { horizon: 15, mae: 3.4828, rmse: 6.3331 },
-  { horizon: 30, mae: 3.9262, rmse: 7.2986 },
-  { horizon: 45, mae: 4.3006, rmse: 8.0625 },
-  { horizon: 60, mae: 4.6240, rmse: 8.6722 },
+  { horizon: 15, mae: 3.7314, rmse: 6.5828 },
+  { horizon: 30, mae: 4.2100, rmse: 7.5942 },
+  { horizon: 45, mae: 4.6255, rmse: 8.4162 },
+  { horizon: 60, mae: 4.9884, rmse: 9.0749 },
 ];
 
 function metricFor(horizon) {
@@ -39,6 +40,18 @@ function directionClass(change) {
 
 export default function ModelIntelligence({ predictions, weather, loading }) {
   const [horizon, setHorizon] = useState(30);
+  const [architectureFocus, setArchitectureFocus] = useState("transformer");
+  const [analysisTab, setAnalysisTab] = useState("forecast");
+  const [architectureDrawerOpen, setArchitectureDrawerOpen] = useState(false);
+
+  useEffect(() => {
+    if (!architectureDrawerOpen) return undefined;
+    const handleEscape = (event) => {
+      if (event.key === "Escape") setArchitectureDrawerOpen(false);
+    };
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [architectureDrawerOpen]);
 
   const forecast = useMemo(
     () =>
@@ -152,7 +165,7 @@ export default function ModelIntelligence({ predictions, weather, loading }) {
 
         <div className="mi-fusion-panel">
           <div className="mi-fusion-inputs">
-            <div className="mi-fusion-node">
+            <div role="button" tabIndex={0} aria-pressed={architectureFocus === "graph"} className={`mi-fusion-node mi-fusion-node--interactive ${architectureFocus === "graph" ? "is-active" : ""}`} onClick={() => { setArchitectureFocus("graph"); setAnalysisTab("weather"); setArchitectureDrawerOpen(true); }} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); setArchitectureFocus("graph"); setAnalysisTab("weather"); setArchitectureDrawerOpen(true); } }}>
               <div className="mi-fusion-node__icon">
                 <GitBranch size={20} />
               </div>
@@ -164,7 +177,7 @@ export default function ModelIntelligence({ predictions, weather, loading }) {
               </div>
             </div>
 
-            <div className="mi-fusion-node">
+            <div role="button" tabIndex={0} aria-pressed={architectureFocus === "transformer"} className={`mi-fusion-node mi-fusion-node--interactive ${architectureFocus === "transformer" ? "is-active" : ""}`} onClick={() => { setArchitectureFocus("transformer"); setAnalysisTab("weather"); setArchitectureDrawerOpen(true); }} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); setArchitectureFocus("transformer"); setAnalysisTab("weather"); setArchitectureDrawerOpen(true); } }}>
               <div className="mi-fusion-node__icon">
                 <Layers3 size={20} />
               </div>
@@ -176,7 +189,7 @@ export default function ModelIntelligence({ predictions, weather, loading }) {
               </div>
             </div>
 
-            <div className="mi-fusion-node">
+            <div role="button" tabIndex={0} aria-pressed={architectureFocus === "weather"} className={`mi-fusion-node mi-fusion-node--interactive ${architectureFocus === "weather" ? "is-active" : ""}`} onClick={() => { setArchitectureFocus("weather"); setAnalysisTab("weather"); setArchitectureDrawerOpen(true); }} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); setArchitectureFocus("weather"); setAnalysisTab("weather"); setArchitectureDrawerOpen(true); } }}>
               <div className="mi-fusion-node__icon">
                 <CloudSun size={20} />
               </div>
@@ -257,8 +270,27 @@ export default function ModelIntelligence({ predictions, weather, loading }) {
         </div>
       </section>
 
+      <nav className="mi-analysis-tabs" aria-label="Model analysis">
+        {[
+          { id: "forecast", label: "Forecast", hint: "Predicted speeds" },
+          { id: "accuracy", label: "Accuracy", hint: "Held-out test metrics" },
+          { id: "weather", label: "Weather & architecture", hint: "Inputs and components" },
+        ].map((tab) => (
+          <button
+            key={tab.id}
+            type="button"
+            className={analysisTab === tab.id ? "is-active" : ""}
+            aria-pressed={analysisTab === tab.id}
+            onClick={() => setAnalysisTab(tab.id)}
+          >
+            <strong>{tab.label}</strong>
+            <small>{tab.hint}</small>
+          </button>
+        ))}
+      </nav>
 
-      <section className="mi-performance">
+
+      <section className={`mi-performance mi-analysis-panel ${analysisTab === "accuracy" ? "is-visible" : "is-hidden"}`} aria-hidden={analysisTab !== "accuracy"}>
         <div className="mi-section-heading">
           <div>
             <span className="mi-section-label">MODEL PERFORMANCE</span>
@@ -324,7 +356,66 @@ export default function ModelIntelligence({ predictions, weather, loading }) {
         </div>
       </section>
 
-      <section className="mi-output-grid">
+      {analysisTab === "accuracy" && (
+      <details className="mi-compact-panel mi-compact-panel--benchmark">
+        <summary className="mi-compact-panel__summary">
+          <span><small>MODEL EVALUATION</small><strong>Compare against persistence</strong></span>
+          <span className="mi-compact-panel__hint">Expand comparison</span>
+        </summary>
+      <section className="mi-benchmark">
+        <div className="mi-section-heading">
+          <div>
+            <span className="mi-section-label">BASELINE COMPARISON</span>
+            <h2>Does the model outperform persistence?</h2>
+          </div>
+          <span className="mi-test-badge">
+            <ShieldCheck size={15} />
+            30-minute held-out test
+          </span>
+        </div>
+
+        <p className="mi-benchmark-intro">
+          Persistence predicts that each sensor will retain its last observed
+          speed. The blend combines the model and persistence predictions
+          equally, using a weight selected on validation data.
+        </p>
+
+        <div className="mi-benchmark-table">
+          <div className="mi-benchmark-row mi-benchmark-row--head">
+            <span>Method</span>
+            <span>MAE (mph)</span>
+            <span>RMSE (mph)</span>
+          </div>
+          <div className="mi-benchmark-row">
+            <span>Original GNN–Transformer</span>
+            <strong>4.2100</strong>
+            <strong>7.5942</strong>
+          </div>
+          <div className="mi-benchmark-row">
+            <span>Persistence baseline</span>
+            <strong>4.1759</strong>
+            <strong>7.9834</strong>
+          </div>
+          <div className="mi-benchmark-row mi-benchmark-row--highlight">
+            <span>50/50 model–persistence blend</span>
+            <strong>3.9189</strong>
+            <strong>7.3040</strong>
+          </div>
+        </div>
+
+        <p className="mi-benchmark-footnote">
+          Evaluation uses finite, non-zero observed METR-LA test targets;
+          interpolated targets are excluded. The blend results apply only
+          to the 30-minute horizon and do not replace the original-model
+          metrics above.
+        </p>
+      </section>
+      </details>
+      )}
+
+
+
+      <section className={`mi-output-grid mi-analysis-panel ${analysisTab === "forecast" ? "is-visible" : "is-hidden"}`} aria-hidden={analysisTab !== "forecast"}>
         <article className="mi-output-card">
           <div className="mi-section-heading">
             <div>
@@ -417,7 +508,7 @@ export default function ModelIntelligence({ predictions, weather, loading }) {
       </section>
 
       <section className="mi-transparency-grid">
-        <article className="mi-context-card mi-weather-context">
+        <article className={`mi-context-card mi-weather-context mi-analysis-panel ${analysisTab === "weather" ? "is-visible" : "is-hidden"}`} aria-hidden={analysisTab !== "weather"}>
           <div className="mi-context-icon">
             <CloudSun size={20} />
           </div>
@@ -484,7 +575,77 @@ export default function ModelIntelligence({ predictions, weather, loading }) {
           </div>
         </article>
 
-        <article className="mi-transparency-card">
+  
+      {architectureDrawerOpen && (
+      <div
+        className="mi-architecture-drawer-backdrop"
+        onMouseDown={(event) => {
+          if (event.target === event.currentTarget) setArchitectureDrawerOpen(false);
+        }}
+      >
+      <section className="mi-architecture-inspector mi-architecture-drawer"
+        role="dialog" aria-modal="true" aria-label="Explore model architecture">
+        <div className="mi-architecture-inspector__header">
+          <div>
+            <span className="mi-section-label">EXPLORE THE ARCHITECTURE</span>
+            <p>Select a component to understand its role in the forecasting pipeline.</p>
+          </div>
+          <button type="button" className="mi-architecture-drawer__close"
+            aria-label="Close architecture details"
+            onClick={() => setArchitectureDrawerOpen(false)}>
+            <X size={19} />
+          </button>
+        </div>
+
+        <div className="mi-architecture-inspector__tabs" role="group" aria-label="Model components">
+          <button type="button" className={architectureFocus === "graph" ? "is-active" : ""} aria-pressed={architectureFocus === "graph"} onClick={() => setArchitectureFocus("graph")}>Spatial graph</button>
+          <button type="button" className={architectureFocus === "transformer" ? "is-active" : ""} aria-pressed={architectureFocus === "transformer"} onClick={() => setArchitectureFocus("transformer")}>Transformer</button>
+          <button type="button" className={architectureFocus === "weather" ? "is-active" : ""} aria-pressed={architectureFocus === "weather"} onClick={() => setArchitectureFocus("weather")}>Weather fusion</button>
+        </div>
+
+        <div className="mi-architecture-inspector__detail" aria-live="polite">
+          {architectureFocus === "graph" && (
+            <>
+              <span className="mi-section-label">SPATIAL CONTEXT</span>
+              <h3>Graph Neural Network</h3>
+              <p>Uses the sensor graph to represent spatial relationships that can contribute context to traffic forecasting.</p>
+              <div className="mi-architecture-inspector__facts">
+                <div><span>Sensor nodes</span><strong>207</strong></div>
+                <div><span>Model graph links</span><strong>1,722</strong></div>
+                <div><span>Role</span><strong>Spatial context</strong></div>
+              </div>
+            </>
+          )}
+          {architectureFocus === "transformer" && (
+            <>
+              <span className="mi-section-label">TEMPORAL CONTEXT</span>
+              <h3>Transformer encoder</h3>
+              <p>Processes the historical traffic sequence to learn temporal patterns before producing the forecast horizons.</p>
+              <div className="mi-architecture-inspector__facts">
+                <div><span>Input window</span><strong>12 timesteps</strong></div>
+                <div><span>Attention heads</span><strong>4</strong></div>
+                <div><span>Encoder layers</span><strong>2</strong></div>
+              </div>
+            </>
+          )}
+          {architectureFocus === "weather" && (
+            <>
+              <span className="mi-section-label">ENVIRONMENTAL CONTEXT</span>
+              <h3>Weather feature fusion</h3>
+              <p>Provides environmental context through six weather features, alongside traffic and spatial-temporal representations.</p>
+              <div className="mi-architecture-inspector__facts">
+                <div><span>Weather features</span><strong>6</strong></div>
+                <div><span>Examples</span><strong>Wind, humidity</strong></div>
+                <div><span>Role</span><strong>Feature fusion</strong></div>
+              </div>
+            </>
+          )}
+        </div>
+      </section>
+      </div>
+      )}
+
+      <article className="mi-transparency-card">
           <span className="mi-section-label">MODEL TRANSPARENCY</span>
           <h2>
             Interpretation without pretending the model said more than it did.

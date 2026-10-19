@@ -56,6 +56,7 @@ export default function UrbanMap({
   horizon = 15,
   selected = 0,
   onSelect = () => {},
+  trafficFilter = "all",
 }) {
   const mapContainer = useRef(null);
   const mapRef = useRef(null);
@@ -63,6 +64,8 @@ export default function UrbanMap({
   const sensorDataRef = useRef(null);
   const graphDataRef = useRef(null);
   const onSelectRef = useRef(onSelect);
+  const trafficFilterRef = useRef(trafficFilter);
+  trafficFilterRef.current = trafficFilter;
 
   const forecastRef = useRef({
     values,
@@ -96,6 +99,7 @@ export default function UrbanMap({
     });
 
     mapRef.current = map;
+    let activeSensorPopup = null;
 
     const applyForecast = () => {
       const currentMap = mapRef.current;
@@ -153,6 +157,28 @@ export default function UrbanMap({
           };
         }),
       });
+
+      const categoryFilter = (() => {
+        const speed = ["get", "speed"];
+        switch (trafficFilterRef.current) {
+          case "congested":
+            return ["<", speed, 30];
+          case "moderate":
+            return ["all", [">=", speed, 30], ["<", speed, 45]];
+          case "moving":
+            return ["all", [">=", speed, 45], ["<", speed, 55]];
+          case "free":
+            return [">=", speed, 55];
+          default:
+            return null;
+        }
+      })();
+
+      for (const layerId of ["urbanflow-sensors", "urbanflow-sensor-glow"]) {
+        if (currentMap.getLayer(layerId)) {
+          currentMap.setFilter(layerId, categoryFilter);
+        }
+      }
 
       const edgeRecords = graph.features.map((feature) => {
         const fromIndex = feature.properties.fromIndex;
@@ -472,7 +498,12 @@ export default function UrbanMap({
           ],
           "circle-opacity": 1,
           "circle-blur": 0.05,
-          "circle-stroke-color": "#ffffff",
+          "circle-stroke-color": [
+              "case",
+              ["==", ["get", "selected"], true],
+              "#163f38",
+              "#ffffff",
+            ],
           "circle-stroke-width": 1.2,
           "circle-stroke-opacity": 0.9
         }
@@ -537,7 +568,12 @@ export default function UrbanMap({
               2.5,
               1.5,
             ],
-            "circle-stroke-color": "#ffffff",
+            "circle-stroke-color": [
+              "case",
+              ["==", ["get", "selected"], true],
+              "#163f38",
+              "#ffffff",
+            ],
             "circle-opacity": 0.95,
           },
         });
@@ -552,7 +588,8 @@ export default function UrbanMap({
 
           onSelectRef.current(index);
 
-          new Popup({ closeButton: true, offset: 10 })
+          activeSensorPopup?.remove();
+          activeSensorPopup = new maplibregl.Popup({ closeButton: true, offset: 10 })
             .setLngLat(feature.geometry.coordinates)
             .setHTML(
               `<div style="font-family:Inter,Arial,sans-serif;min-width:120px">
@@ -599,7 +636,7 @@ export default function UrbanMap({
     // Runs whenever the selected horizon, forecast values,
     // baseline, or selected sensor changes.
     applyForecastRef.current?.();
-  }, [values, baselineValues, horizon, selected]);
+  }, [values, baselineValues, horizon, selected, trafficFilter]);
 
   return <div ref={mapContainer} className="urban-map" />;
 }

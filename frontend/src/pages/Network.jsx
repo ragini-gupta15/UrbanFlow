@@ -132,6 +132,7 @@ function NetworkGraph({
   values,
   selectedKey,
   onSelect,
+  visibleKeys,
 }) {
   const width = 1000;
   const height = 560;
@@ -283,6 +284,11 @@ function NetworkGraph({
 
         <g className="network-graph__edges">
           {edges.map((edge) => {
+            if (
+              visibleKeys &&
+              (!visibleKeys.has(edge.source) || !visibleKeys.has(edge.target))
+            ) return null;
+
             const connected =
               edge.source === selectedKey ||
               edge.target === selectedKey;
@@ -330,6 +336,7 @@ function NetworkGraph({
 
         <g className="network-graph__nodes">
           {locations.map((location, index) => {
+            if (visibleKeys && !visibleKeys.has(location.key)) return null;
             const point = positions.get(location.key);
             if (!point) return null;
 
@@ -441,6 +448,8 @@ function NetworkGraph({
 export default function Network({ predictions, loading }) {
   const [horizon, setHorizon] = useState(15);
   const [selectedKey, setSelectedKey] = useState("S-001");
+  const [sensorSearch, setSensorSearch] = useState("");
+  const [trafficFilter, setTrafficFilter] = useState("all");
   const [locations, setLocations] = useState([]);
   const [rawEdges, setRawEdges] = useState([]);
   const [dataLoading, setDataLoading] = useState(true);
@@ -483,6 +492,37 @@ export default function Network({ predictions, loading }) {
   }, []);
 
   const values = horizonValues(predictions, horizon);
+
+  const visibleLocations = useMemo(() => {
+    const query = sensorSearch.trim().toLowerCase();
+
+    return locations.filter((location, index) => {
+      const speed = Number(values[index] ?? 0);
+      const matchesSearch =
+        !query ||
+        location.key.toLowerCase().includes(query) ||
+        String(location.sensorId ?? "").toLowerCase().includes(query);
+
+      let matchesTraffic = true;
+      if (trafficFilter === "congested") matchesTraffic = speed < 30;
+      else if (trafficFilter === "moderate") matchesTraffic = speed >= 30 && speed < 45;
+      else if (trafficFilter === "moving") matchesTraffic = speed >= 45 && speed < 55;
+      else if (trafficFilter === "free") matchesTraffic = speed >= 55;
+
+      return matchesSearch && matchesTraffic;
+    });
+  }, [locations, values, sensorSearch, trafficFilter]);
+
+  const visibleKeys = useMemo(
+    () => new Set(visibleLocations.map((location) => location.key)),
+    [visibleLocations]
+  );
+
+  useEffect(() => {
+    if (visibleLocations.length && !visibleKeys.has(selectedKey)) {
+      setSelectedKey(visibleLocations[0].key);
+    }
+  }, [visibleLocations, visibleKeys, selectedKey]);
 
   const graphEdges = useMemo(
     () => buildGraph(locations, rawEdges),
@@ -569,7 +609,7 @@ export default function Network({ predictions, loading }) {
     1
   );
 
-  if (loading || dataLoading) {
+    if (loading || dataLoading) {
     return (
       <section className="page network-page">
         <div className="network-hero">
@@ -579,7 +619,7 @@ export default function Network({ predictions, loading }) {
             </span>
             <h1>Understand the network behind the forecast.</h1>
             <p>Loading UrbanFlow's sensor graph…</p>
-          </div>
+           </div>
         </div>
       </section>
     );
@@ -598,47 +638,38 @@ export default function Network({ predictions, loading }) {
   }
 
   return (
-    <section className="page network-page">
-      <header className="network-hero">
-        <div>
-          <span className="network-kicker">
-            <NetworkIcon size={14} /> Spatial intelligence
+    <section className="page network-page uf-network-redesign">
+      <header className="uf-network-header">
+        <div className="uf-network-heading">
+          <span className="uf-network-eyebrow">
+            <NetworkIcon size={14} /> SPATIAL INTELLIGENCE
           </span>
-
-          <h1>Understand the network behind the forecast.</h1>
-
+          <h1>Network explorer</h1>
           <p>
-            UrbanFlow models traffic as a connected spatial system. Select a
-            sensor to see the neighboring relationships that give the GNN its
-            spatial context.
+            Explore sensor connections and inspect how neighboring traffic
+            conditions provide spatial context for forecasting.
           </p>
         </div>
 
-        <div className="network-hero__metrics">
-          <div className="network-hero__metric">
-            <NetworkIcon size={15} />
+        <div className="uf-network-kpis">
+          <div>
+            <span>Sensor nodes</span>
             <strong>{locations.length}</strong>
-            <span>sensor nodes</span>
           </div>
-
-          <div className="network-hero__metric">
-            <Route size={15} />
+          <div>
+            <span>Model graph links</span>
             <strong>{MODEL_GRAPH_LINKS.toLocaleString()}</strong>
-            <span>model graph links</span>
           </div>
-
-          <div className="network-hero__metric">
-            <GitBranch size={15} />
+          <div>
+            <span>Graph density</span>
             <strong>{MODEL_GRAPH_DENSITY}%</strong>
-            <span>model graph density</span>
           </div>
         </div>
       </header>
 
-      <div className="network-controlbar">
-        <div className="network-controlbar__title">
-          <span>FORECAST LAYER</span>
-
+      <div className="uf-network-toolbar">
+        <div className="uf-network-horizon-control">
+          <span>FORECAST HORIZON</span>
           <div className="network-horizons">
             {HORIZONS.map((item) => (
               <button
@@ -652,40 +683,60 @@ export default function Network({ predictions, loading }) {
           </div>
         </div>
 
-        <div className="network-controlbar__context">
-          <div>
-            <span>NETWORK VIEW</span>
-            <b>{locations.length} sensors</b>
-          </div>
-
-          <div>
-            <span>VISIBLE LINKS</span>
-            <b>{graphEdges.length.toLocaleString()}</b>
-          </div>
-
-          <div>
-            <span>AVG. VISIBLE DEGREE</span>
-            <b>{averageVisibleLinks}</b>
-          </div>
+        <div className="uf-network-live-stats">
+          <span><i /> {graphEdges.length.toLocaleString()} rendered links</span>
+          <span>{locations.length} sensors</span>
+          <span>Avg. visible degree {averageVisibleLinks}</span>
         </div>
       </div>
 
-      <div className="network-main">
-        <div className="network-graph-card">
-          <div className="network-graph-card__head">
+      <div className="uf-network-explorer-controls">
+        <label className="uf-network-search">
+          <span>SEARCH SENSOR</span>
+          <input
+            type="search"
+            value={sensorSearch}
+            onChange={(event) => setSensorSearch(event.target.value)}
+            placeholder="Search S-001 or sensor ID…"
+            aria-label="Search by sensor ID"
+          />
+        </label>
+
+        <div className="uf-network-traffic-filters" role="group" aria-label="Filter sensors by forecast speed">
+          <span>TRAFFIC STATE</span>
+          {[
+            { id: "all", label: "All" },
+            { id: "congested", label: "Congested" },
+            { id: "moderate", label: "Moderate" },
+            { id: "moving", label: "Moving" },
+            { id: "free", label: "Free flow" },
+          ].map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              className={trafficFilter === item.id ? "is-active" : ""}
+              aria-pressed={trafficFilter === item.id}
+              onClick={() => setTrafficFilter(item.id)}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="uf-network-filter-count" aria-live="polite">
+          <strong>{visibleLocations.length}</strong> of {locations.length} sensors
+        </div>
+      </div>
+
+      <div className="uf-network-workspace">
+        <section className="uf-network-graph-panel">
+          <div className="uf-network-panel-heading">
             <div>
               <span>SPATIAL GRAPH</span>
               <h2>Sensor relationships</h2>
+              <p>Select a node to inspect its local neighborhood.</p>
             </div>
-
-            <div className="network-graph-card__meta">
-              <span>
-                <i /> {graphEdges.length.toLocaleString()} rendered links
-              </span>
-              <small>
-                {horizon} min traffic layer
-              </small>
-            </div>
+            <span className="uf-network-layer">+{horizon} min layer</span>
           </div>
 
           <NetworkGraph
@@ -694,40 +745,56 @@ export default function Network({ predictions, loading }) {
             values={values}
             selectedKey={selectedKey}
             onSelect={setSelectedKey}
+            visibleKeys={visibleKeys}
           />
-        </div>
 
-        <aside className="network-inspector">
-          <div className="network-inspector__top">
-            <div className="network-inspector__icon">
-              <MapPin size={18} />
+          {visibleLocations.length === 0 && (
+            <div className="uf-network-filter-empty" role="status">
+              <strong>No sensors match these filters.</strong>
+              <span>Try a different traffic state or search term.</span>
+              <button
+                type="button"
+                onClick={() => {
+                  setSensorSearch("");
+                  setTrafficFilter("all");
+                }}
+              >
+                Clear filters
+              </button>
             </div>
+          )}
 
-            <span>SELECTED SENSOR</span>
+          <div className="uf-network-graph-footnote">
+            <span><i /> Rendered visualization</span>
+            <span>
+              The displayed links are filtered for readability; the model
+              retains its full graph.
+            </span>
           </div>
+        </section>
 
-          <div className="network-inspector__identity">
-            <h2>{selectedKey}</h2>
-
+        <aside className="uf-network-inspector">
+          <div className="uf-network-inspector-heading">
+            <div>
+              <span>SELECTED SENSOR</span>
+              <h2>{selectedKey}</h2>
+            </div>
             <span className={`network-state is-${selectedState.tone}`}>
               {selectedState.label}
             </span>
           </div>
 
-          <div className="network-inspector__speed">
+          <div className="uf-network-speed">
             <strong>{selectedSpeed.toFixed(1)}</strong>
-            <span>mph at +{horizon} min</span>
+            <span>mph</span>
+            <small>Forecast at +{horizon} minutes</small>
           </div>
 
-          <div className="network-trajectory">
-            <div className="network-trajectory__head">
-              <span>FORECAST TRAJECTORY</span>
-              <b>
-                {selectedTrajectory[0]?.speed.toFixed(1)} →{" "}
-                {selectedTrajectory[selectedTrajectory.length - 1]?.speed.toFixed(1)} mph
-              </b>
+          <div className="uf-network-trajectory">
+            <div className="uf-network-section-heading">
+              <span>Forecast trajectory</span>
+              <small>mph</small>
             </div>
-
             <div className="network-trajectory__bars">
               {selectedTrajectory.map((item) => {
                 const height =
@@ -747,39 +814,34 @@ export default function Network({ predictions, loading }) {
             </div>
           </div>
 
-          <div className="network-inspector__section">
-            <span className="network-section-label">
-              <Link2 size={14} /> NEARBY SENSORS
-            </span>
+          <div className="uf-network-neighbor-heading">
+            <div>
+              <span>LOCAL NEIGHBORHOOD</span>
+              <h3>Connected sensors</h3>
+            </div>
+            <span>{neighbors.length}</span>
           </div>
 
           <div className="network-neighbors">
             {neighbors.length ? (
               neighbors.map((neighbor, index) => {
-                const neighborSpeed = Number(
-                  values[neighbor.index] || 0
-                );
+                const neighborSpeed = Number(values[neighbor.index] || 0);
                 const neighborState = trafficState(neighborSpeed);
 
                 return (
                   <button
                     key={neighbor.key}
+                    className={neighbor.key === selectedKey ? "is-selected" : ""}
                     onClick={() => setSelectedKey(neighbor.key)}
                   >
                     <span className="network-neighbor-rank">
-                      0{index + 1}
+                      {String(index + 1).padStart(2, "0")}
                     </span>
-
                     <span className="network-neighbor-id">
                       <b>{neighbor.key}</b>
-                      <small>
-                        {neighbor.weight.toFixed(2)} relationship
-                      </small>
+                      <small>Relationship {neighbor.weight.toFixed(2)}</small>
                     </span>
-
-                    <span
-                      className={`network-neighbor-speed is-${neighborState.tone}`}
-                    >
+                    <span className={`network-neighbor-speed is-${neighborState.tone}`}>
                       {neighborSpeed.toFixed(1)}
                     </span>
                   </button>
@@ -787,55 +849,32 @@ export default function Network({ predictions, loading }) {
               })
             ) : (
               <div className="network-neighbors__empty">
-                Select another node to inspect its local relationships.
+                Select a node to inspect its local relationships.
               </div>
             )}
-          </div><div className="network-inspector__footer">
-            <Sparkles size={15} />
-            <span>
-              The GNN uses surrounding sensor relationships as spatial context
-              before producing the forecast.
-            </span>
+          </div>
+
+          <div className="uf-network-insight">
+            <Sparkles size={16} />
+            <p>
+              Neighboring sensor relationships provide spatial context to
+              the GNN. They do not imply that every displayed link is a
+              physical road connection.
+            </p>
           </div>
         </aside>
       </div>
 
-      <div className="network-structure">
-        <div className="network-structure__intro">
-          <span>NETWORK STRUCTURE</span>
-          <h2>The spatial graph behind UrbanFlow</h2>
-          <p>
-            The network is not just a collection of independent sensors.
-            Connections let the model reason about nearby traffic conditions.
-          </p>
+      <footer className="uf-network-model-note">
+        <div>
+          <span>MODEL GRAPH</span>
+          <strong>{MODEL_GRAPH_LINKS.toLocaleString()} links · {locations.length} sensors</strong>
         </div>
-
-        <div className="network-structure__stats">
-          <div>
-            <NetworkIcon size={18} />
-            <strong>{locations.length}</strong>
-            <span>sensor nodes</span>
-          </div>
-
-          <div>
-            <Route size={18} />
-            <strong>{MODEL_GRAPH_LINKS.toLocaleString()}</strong>
-            <span>model graph links</span>
-          </div>
-
-          <div>
-            <GitBranch size={18} />
-            <strong>{MODEL_GRAPH_DENSITY}%</strong>
-            <span>model graph density</span>
-          </div>
-
-          <div>
-            <Link2 size={18} />
-            <strong>{averageVisibleLinks}</strong>
-            <span>avg. visible links / node</span>
-          </div>
-        </div>
-      </div>
+        <p>
+          Model graph statistics describe the full graph. Rendered-link
+          statistics describe the filtered visualization above.
+        </p>
+      </footer>
     </section>
   );
 }

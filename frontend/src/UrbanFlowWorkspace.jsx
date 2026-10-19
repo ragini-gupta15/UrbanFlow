@@ -32,6 +32,7 @@ export default function UrbanFlowWorkspace() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   
+  
   async function loadReplay(showRefresh = false, selectedIndex = null) {
     if (showRefresh) setRefreshing(true);
     setError("");
@@ -56,15 +57,34 @@ export default function UrbanFlowWorkspace() {
       setWeather(replay.weather);
       setSampleIndex(replay.sample_index);
       setSampleInput(String(replay.sample_index));
+      setError("");
     } catch {
-      setError(
-        "The historical replay API is not reachable. Start the UrbanFlow API to load real model predictions. Evaluation results are available in the project repository."
-      );
+      try {
+        const response = await fetch("/demo-replay.json");
+        if (!response.ok) {
+          throw new Error("Saved demo data could not be loaded.");
+        }
+
+        const replay = await response.json();
+        setPredictions(replay.predictions);
+        setWeather(replay.weather);
+        setSampleIndex(replay.sample_index ?? 0);
+        setSampleInput(String(replay.sample_index ?? 0));
+        setError(
+          "Showing a saved historical demonstration. Live API data is unavailable."
+        );
+      } catch (fallbackError) {
+        setError(
+          fallbackError.message || "Unable to load historical demonstration data."
+        );
+      }
     } finally {
       setLoading(false);
       setRefreshing(false);
     }
   }
+
+  
 
 
   useEffect(() => { loadReplay(); }, []);

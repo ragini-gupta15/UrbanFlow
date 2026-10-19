@@ -161,8 +161,17 @@ export default function UrbanFlowWorkspace() {
           </div>
         </header>
 
-        {error && <div className="uf-error"><strong>Data service unavailable</strong><span>{error}. Check that the UrbanFlow API is running.</span><button onClick={() => loadReplay(true)}>Retry</button></div>}
-
+        {error && (
+  <div className="uf-error">
+    <strong>Historical Demo Mode</strong>
+    <span>
+      Showing saved historical traffic predictions. Live API data is currently unavailable.
+    </span>
+    <button type="button" onClick={() => loadReplay(true)}>
+      Retry live API
+    </button>
+  </div>
+)}
         {page === "Command Center" && (
           <CommandCenter predictions={predictions} weather={weather} sensors={sensors} loading={loading} navigate={navigate} />
         )}

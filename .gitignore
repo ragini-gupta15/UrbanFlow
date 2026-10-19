@@ -47,3 +47,11 @@ models/*_best.pth
 *.egg-info/
 .pytest_cache/
 .mypy_cache/
+
+# Local recovery and editor backup files (preserved locally)
+*.bak
+*.before_*
+*.before-*
+*.pre_recovery_copy
+.git-damaged-preserved/
+urbanflow-frontend-backup-*/

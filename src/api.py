@@ -4,8 +4,9 @@ import numpy as np
 
 
 
-from inference import UrbanFlowPredictor
+from src.inference import UrbanFlowPredictor
 from fastapi.middleware.cors import CORSMiddleware
+import os
 
 
 
@@ -16,7 +17,14 @@ app = FastAPI(
 )
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173","http://localhost:5174"],
+    allow_origins=[
+        origin.strip()
+        for origin in os.getenv(
+            "URBANFLOW_ALLOWED_ORIGINS",
+            "http://localhost:5173,http://localhost:5174,http://127.0.0.1:4173",
+        ).split(",")
+        if origin.strip()
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -48,12 +56,14 @@ def health():
     }
 @app.get("/demo-input")
 def demo_input():
+    project_root = predictor.project_root
+
     traffic_data = np.load(
-        "data/processed/test_sequences.npz"
+        os.path.join(project_root, "data", "processed", "test_sequences.npz")
     )["X"]
 
     weather_data = np.load(
-        "data/processed/weather_test_sequences.npy"
+        os.path.join(project_root, "data", "processed", "weather_test_sequences.npy")
     )
 
     return {
@@ -71,12 +81,14 @@ def demo_predict():
     if _demo_predictions is not None:
         return _demo_predictions
 
+    project_root = predictor.project_root
+
     traffic_data = np.load(
-        "data/processed/test_sequences.npz"
+        os.path.join(project_root, "data", "processed", "test_sequences.npz")
     )["X"]
 
     weather_data = np.load(
-        "data/processed/weather_test_sequences.npy"
+        os.path.join(project_root, "data", "processed", "weather_test_sequences.npy")
     )
 
     traffic = traffic_data[0].astype(np.float32)
@@ -97,8 +109,15 @@ def demo_predict():
     return _demo_predictions
 @app.get("/weather-data")
 def weather_data():
+    project_root = predictor.project_root
+
     weather_data = np.load(
-        "data/processed/weather_test_sequences.npy"
+        os.path.join(
+            project_root,
+            "data",
+            "processed",
+            "weather_test_sequences.npy",
+        )
     )
 
     sample = weather_data[0, -1]
@@ -109,7 +128,7 @@ def weather_data():
         "precipitation": float(sample[2]),
         "wind_speed": float(sample[3]),
         "pressure": float(sample[4]),
-        "cloud_cover": float(sample[5])
+        "cloud_cover": float(sample[5]),
     }
 
 
@@ -149,3 +168,49 @@ def predict(request: PredictionRequest):
         "45_min": predictions[45].tolist(),
         "60_min": predictions[60].tolist()
     }
+
+@app.get("/demo-replay")
+def demo_replay(sample_index: int = 0):
+    """Run the trained model on a held-out traffic/weather sample."""
+    project_root = predictor.project_root
+
+    traffic_data = np.load(
+        os.path.join(project_root, "data", "processed", "test_sequences.npz")
+    )["X"]
+
+    weather_sequences = np.load(
+        os.path.join(project_root, "data", "processed", "weather_test_sequences.npy")
+    )
+    sample_count = min(len(traffic_data), len(weather_sequences))
+    if sample_count < 1:
+        raise HTTPException(status_code=500, detail="Historical replay dataset is empty")
+
+    index = sample_index % sample_count
+    traffic = traffic_data[index].astype(np.float32)
+    weather_sequence = weather_sequences[index].astype(np.float32)
+
+    if traffic.shape != (12, 207) or weather_sequence.shape != (12, 6):
+        raise HTTPException(status_code=500, detail="Unexpected replay sample shape")
+
+    predictions = predictor.predict(traffic, weather_sequence)
+    weather_sample = weather_sequence[-1]
+
+    return {
+        "sample_index": int(index),
+        "sample_count": int(sample_count),
+        "predictions": {
+            "15_min": predictions[15].tolist(),
+            "30_min": predictions[30].tolist(),
+            "45_min": predictions[45].tolist(),
+            "60_min": predictions[60].tolist()
+        },
+        "weather": {
+            "temperature": float(weather_sample[0]),
+            "humidity": float(weather_sample[1]),
+            "precipitation": float(weather_sample[2]),
+            "wind_speed": float(weather_sample[3]),
+            "pressure": float(weather_sample[4]),
+            "cloud_cover": float(weather_sample[5])
+        }
+    }
+

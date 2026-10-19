@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: urbanflow-api
+    runtime: python
+    buildCommand: pip install -r requirements-deploy.txt
+    startCommand: uvicorn src.api:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.7
+      - key: URBANFLOW_ALLOWED_ORIGINS
+        sync: false

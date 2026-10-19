@@ -1,0 +1,61 @@
+{
+  "experiment": "controlled_weather_ablation_traffic_only",
+  "status": "trained_validation_evaluated",
+  "device": "mps",
+  "best_epoch": 5,
+  "best_validation_mae_30": 0.3807776868343353,
+  "parameters": 332036,
+  "training_config": {
+    "seed": 42,
+    "batch_size": 64,
+    "max_epochs": 20,
+    "patience": 4,
+    "learning_rate": 0.0005,
+    "loss": "masked_huber_delta_1.0",
+    "gradient_clip_norm": 1.0
+  },
+  "data": {
+    "train_samples": 23961,
+    "validation_samples": 3398,
+    "traffic_train_shape": [
+      23961,
+      12,
+      207
+    ],
+    "traffic_validation_shape": [
+      3398,
+      12,
+      207
+    ],
+    "weather_train_shape_checked_but_not_used_by_model": [
+      23961,
+      12,
+      6
+    ],
+    "weather_validation_shape_checked_but_not_used_by_model": [
+      3398,
+      12,
+      6
+    ],
+    "horizons": [
+      "15min",
+      "30min",
+      "45min",
+      "60min"
+    ],
+    "adjacency_normalization": "row_normalized A/(row_sum+1e-8)"
+  },
+  "test_used_for_selection": false,
+  "test_evaluated": false,
+  "outputs": {
+    "checkpoint": "models/experiments/weather_ablation_traffic_only_best.pth",
+    "training_history": "results/experiments/weather_ablation_traffic_only_training.csv",
+    "validation_metrics": "results/experiments/weather_ablation_traffic_only_validation.csv"
+  },
+  "notes": [
+    "Existing notebook, main checkpoint, weather-model checkpoint, and input arrays were not modified.",
+    "Traffic-only model has no weather encoder or weather contribution to fusion.",
+    "Architecture parameter count differs because the weather branch is removed.",
+    "Held-out test evaluation is intentionally a separate next step after reviewing validation output."
+  ]
+}

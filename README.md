@@ -92,22 +92,35 @@ The verified evaluation scores predictions against raw METR-LA observations that
 
 The raw model beats persistence by MAE at 45 and 60 minutes, but not at 15 and 30 minutes. This distinction matters: model error should not be presented without the baseline comparison.
 
-### 30-minute validation-selected blend — held-out test
+### Validation-selected model–persistence blend — held-out test
 
-| Method | MAE (mph) | RMSE (mph) |
-|---|---:|---:|
-| Raw model | 4.210 | 7.594 |
-| Persistence baseline | 4.176 | 7.983 |
-| **50/50 model–persistence blend** | **3.919** | **7.304** |
+The following blend weights were selected using validation data and then
+held fixed for the held-out test evaluation. For each horizon, the prediction
+is `alpha × model + (1 − alpha) × persistence`. MAE and RMSE are in mph;
+lower is better.
 
-The 50/50 blend reduces 30-minute test MAE by **6.15% relative to persistence**. Its weights were selected on validation data only and then evaluated on the held-out test split. This is a separate evaluation from the raw-model multi-horizon results above.
+| Horizon | Model weight | Persistence weight | Model MAE | Persistence MAE | Blend MAE | Blend RMSE |
+|---:|---:|---:|---:|---:|---:|---:|
+| 15 minutes | 0.35 | 0.65 | 3.731 | 3.484 | **3.305** | **5.974** |
+| 30 minutes | 0.45 | 0.55 | 4.210 | 4.176 | **3.916** | **7.330** |
+| 45 minutes | 0.55 | 0.45 | 4.625 | 4.779 | **4.416** | **8.258** |
+| 60 minutes | 0.60 | 0.40 | 4.988 | 5.332 | **4.841** | **8.970** |
+
+The blend improves MAE and RMSE over both standalone baselines on this
+particular held-out test split at all four reported horizons. The test set
+was not used to select the weights. These historical results do not guarantee
+performance on live traffic or other datasets.
 
 **Evaluation artifacts**
 
-- `results/urbanflow_verified_test_results.csv`
-- `results/urbanflow_verified_test_audit.json`
-- `results/urbanflow_test_30min_blend_once.csv`
-- `results/urbanflow_test_30min_blend_once_audit.json`
+- Original raw-model benchmark: `results/urbanflow_verified_test_results.csv`
+- Original benchmark audit: `results/urbanflow_verified_test_audit.json`
+- Validation weight grid: `results/urbanflow_validation_blend_all_horizons.csv`
+- Validation audit: `results/urbanflow_validation_blend_all_horizons_audit.json`
+- Held-out blend results: `results/urbanflow_blend_all_horizons_test.csv`
+- Held-out blend audit: `results/urbanflow_blend_all_horizons_test_audit.json`
+- Evaluators: `scripts/evaluate_validation_blend_all_horizons.py` and
+  `scripts/evaluate_test_blend_all_horizons.py`
 
 Historical benchmark files may use different evaluation masks or procedures. Do not compare them as though they are directly equivalent. These evaluations also do not, by themselves, prove that weather features improve accuracy; that claim requires a controlled ablation study.
 

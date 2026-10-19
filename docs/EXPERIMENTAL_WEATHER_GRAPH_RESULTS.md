@@ -14,6 +14,10 @@ This document reports a separate graph-aware, weather-aware multi-horizon model 
 
 Source: `results/experiments/weather_graph_aware_test_comparison.csv`.
 
+## Corrected matched-test evaluation
+
+For the corrected evaluation across all four horizons, including the weather-versus-traffic-only comparison and matched observation counts, see [the corrected matched-test report](EXPERIMENTAL_WEATHER_GRAPH_MATCHED_TEST_RESULTS.md).
+
 ## Test results
 
 | Horizon | Experimental MAE (mph) | Persistence MAE (mph) | MAE improvement | RMSE improvement |

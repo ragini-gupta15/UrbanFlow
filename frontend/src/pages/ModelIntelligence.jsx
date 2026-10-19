@@ -12,6 +12,7 @@ import {
   X,
 } from "lucide-react";
 import { average, horizonValues } from "../data";
+import ModelPerformanceLab from "../components/ModelPerformanceLab";
 
 const HORIZONS = [15, 30, 45, 60];
 
@@ -413,7 +414,9 @@ export default function ModelIntelligence({ predictions, weather, loading }) {
       </details>
       )}
 
-
+      {analysisTab === "accuracy" && (
+        <ModelPerformanceLab horizon={horizon} />
+      )}
 
       <section className={`mi-output-grid mi-analysis-panel ${analysisTab === "forecast" ? "is-visible" : "is-hidden"}`} aria-hidden={analysisTab !== "forecast"}>
         <article className="mi-output-card">

@@ -1,0 +1,58 @@
+{
+  "created_utc": "2026-10-19T23:11:32.201586+00:00",
+  "split": "held-out test",
+  "model_checkpoint": "models/urbanflow_final_gnn_transformer_weather_multihorizon.pth",
+  "model_checkpoint_sha256": "53bf6aa3cbd96402461d098ceebdfa3deb47d61cc9c8f26556d1ee0776b2f038",
+  "validation_weight_source": "results/urbanflow_validation_blend_all_horizons.csv",
+  "fixed_validation_selected_model_weights": {
+    "15": 0.35,
+    "30": 0.45,
+    "45": 0.55,
+    "60": 0.6
+  },
+  "test_used_for_weight_selection": false,
+  "target_mask": "finite and nonzero raw METR-LA values in model sensor order",
+  "test_start_index": 27417,
+  "input_shape": [
+    6838,
+    12,
+    207
+  ],
+  "weather_shape": [
+    6838,
+    12,
+    6
+  ],
+  "alignment_checks": [
+    {
+      "horizon_min": 15,
+      "target_rows": 6835,
+      "evaluated_rows": 6835,
+      "verified_prefix_rows": 6835,
+      "max_abs_scaled_difference": 0.0
+    },
+    {
+      "horizon_min": 30,
+      "target_rows": 6838,
+      "evaluated_rows": 6838,
+      "verified_prefix_rows": 6832,
+      "max_abs_scaled_difference": 0.0
+    },
+    {
+      "horizon_min": 45,
+      "target_rows": 6829,
+      "evaluated_rows": 6829,
+      "verified_prefix_rows": 6829,
+      "max_abs_scaled_difference": 0.0
+    },
+    {
+      "horizon_min": 60,
+      "target_rows": 6826,
+      "evaluated_rows": 6826,
+      "verified_prefix_rows": 6826,
+      "max_abs_scaled_difference": 0.0
+    }
+  ],
+  "output_csv": "results/urbanflow_blend_all_horizons_test.csv",
+  "original_verified_benchmark_modified": false
+}

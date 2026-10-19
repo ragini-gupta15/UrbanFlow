@@ -1,0 +1,68 @@
+{
+  "evaluation": "matched_test_weather_vs_traffic_only",
+  "device": "mps",
+  "checkpoints": {
+    "weather_graph_aware": {
+      "path": "models/weather_graph_aware_multi_horizon_best.pth",
+      "architecture": "WeatherGraphAwareUrbanFlow",
+      "best_epoch": 6,
+      "best_val_mae_30": 0.39642110581641976,
+      "positional_encoding_length": 500
+    },
+    "traffic_only": {
+      "path": "models/experiments/weather_ablation_traffic_only_best.pth",
+      "architecture": "WeatherGraphAwareUrbanFlowTrafficOnly",
+      "best_epoch": 5,
+      "best_val_mae_30": 0.3807776868343353,
+      "positional_encoding_length": 128
+    }
+  },
+  "n_test_input_samples": 6838,
+  "n_weather_samples": 6838,
+  "n_sensors": 207,
+  "input_steps": 12,
+  "sample_interval_minutes": 5,
+  "test_start_raw_row": 27417,
+  "target_alignment_tolerance_scaled": 1e-05,
+  "alignment_checks": [
+    {
+      "horizon_min": 15,
+      "target_rows": 6835,
+      "evaluated_rows": 6835,
+      "verified_prefix_rows": 6835,
+      "max_abs_scaled_difference": 0.0
+    },
+    {
+      "horizon_min": 30,
+      "target_rows": 6838,
+      "evaluated_rows": 6838,
+      "verified_prefix_rows": 6832,
+      "max_abs_scaled_difference": 0.0
+    },
+    {
+      "horizon_min": 45,
+      "target_rows": 6829,
+      "evaluated_rows": 6829,
+      "verified_prefix_rows": 6829,
+      "max_abs_scaled_difference": 0.0
+    },
+    {
+      "horizon_min": 60,
+      "target_rows": 6826,
+      "evaluated_rows": 6826,
+      "verified_prefix_rows": 6826,
+      "max_abs_scaled_difference": 0.0
+    }
+  ],
+  "mask_definition": "finite and non-zero raw METR-LA observations, aligned by sensor IDs",
+  "metrics_units": "mph",
+  "notes": [
+    "No training was performed.",
+    "Both checkpoint state dictionaries loaded with strict=True.",
+    "Each horizon used n=min(len(X), len(W), len(Y)) and its saved target prefix.",
+    "Targets were checked against X[steps:steps+check_n, -1, :] before metrics.",
+    "Weather-aware and traffic-only models were evaluated on identical samples and masks within each horizon.",
+    "Persistence predicts the last observed input frame.",
+    "A model comparison alone does not isolate weather causality from differences in training runs or checkpoint selection."
+  ]
+}

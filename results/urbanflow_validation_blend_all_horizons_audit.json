@@ -1,0 +1,118 @@
+{
+  "experiment": "validation-only model/persistence blend sweep",
+  "split": "validation only; test data not loaded",
+  "device": "mps",
+  "checkpoint": "models/urbanflow_final_gnn_transformer_weather_multihorizon.pth",
+  "checkpoint_sha256": "53bf6aa3cbd96402461d098ceebdfa3deb47d61cc9c8f26556d1ee0776b2f038",
+  "checkpoint_best_epoch": 20,
+  "validation_sequence_start_raw_row": 23990,
+  "input_steps": 12,
+  "grid_alpha_model": [
+    0.0,
+    0.05,
+    0.1,
+    0.15,
+    0.2,
+    0.25,
+    0.3,
+    0.35,
+    0.4,
+    0.45,
+    0.5,
+    0.55,
+    0.6,
+    0.65,
+    0.7,
+    0.75,
+    0.8,
+    0.85,
+    0.9,
+    0.95,
+    1.0
+  ],
+  "selection": "Select alpha separately per horizon using validation MAE; report RMSE optimum separately.",
+  "horizons": {
+    "15": {
+      "target_rows": 3407,
+      "observed_sensor_targets": 655917,
+      "alignment_prefix_rows": 3407,
+      "alignment_max_abs_scaled_diff": 0.0,
+      "target_raw_max_abs_error_mph": 7.62939453125e-06,
+      "model_only": {
+        "MAE_mph": 3.4246201515197754,
+        "RMSE_mph": 6.1371169090271
+      },
+      "persistence_only": {
+        "MAE_mph": 3.204343318939209,
+        "RMSE_mph": 5.97239875793457
+      },
+      "best_grid_alpha_by_MAE": 0.35,
+      "best_grid_alpha_by_RMSE": 0.45,
+      "raw_mask": "finite, non-zero METR-LA observations in model sensor order"
+    },
+    "30": {
+      "target_rows": 3410,
+      "observed_sensor_targets": 656538,
+      "alignment_prefix_rows": 3404,
+      "alignment_max_abs_scaled_diff": 0.0,
+      "target_raw_max_abs_error_mph": 7.62939453125e-06,
+      "model_only": {
+        "MAE_mph": 3.81939959526062,
+        "RMSE_mph": 7.036845684051514
+      },
+      "persistence_only": {
+        "MAE_mph": 3.797450065612793,
+        "RMSE_mph": 7.464542388916016
+      },
+      "best_grid_alpha_by_MAE": 0.45,
+      "best_grid_alpha_by_RMSE": 0.6,
+      "raw_mask": "finite, non-zero METR-LA observations in model sensor order"
+    },
+    "45": {
+      "target_rows": 3401,
+      "observed_sensor_targets": 654701,
+      "alignment_prefix_rows": 3401,
+      "alignment_max_abs_scaled_diff": 0.0,
+      "target_raw_max_abs_error_mph": 7.62939453125e-06,
+      "model_only": {
+        "MAE_mph": 4.162075042724609,
+        "RMSE_mph": 7.772214412689209
+      },
+      "persistence_only": {
+        "MAE_mph": 4.306742191314697,
+        "RMSE_mph": 8.616507530212402
+      },
+      "best_grid_alpha_by_MAE": 0.55,
+      "best_grid_alpha_by_RMSE": 0.7,
+      "raw_mask": "finite, non-zero METR-LA observations in model sensor order"
+    },
+    "60": {
+      "target_rows": 3398,
+      "observed_sensor_targets": 654091,
+      "alignment_prefix_rows": 3398,
+      "alignment_max_abs_scaled_diff": 0.0,
+      "target_raw_max_abs_error_mph": 7.62939453125e-06,
+      "model_only": {
+        "MAE_mph": 4.460705757141113,
+        "RMSE_mph": 8.363969802856445
+      },
+      "persistence_only": {
+        "MAE_mph": 4.764944553375244,
+        "RMSE_mph": 9.555962562561035
+      },
+      "best_grid_alpha_by_MAE": 0.6,
+      "best_grid_alpha_by_RMSE": 0.75,
+      "raw_mask": "finite, non-zero METR-LA observations in model sensor order"
+    }
+  },
+  "outputs": {
+    "csv": "results/urbanflow_validation_blend_all_horizons.csv",
+    "audit": "results/urbanflow_validation_blend_all_horizons_audit.json"
+  },
+  "notes": [
+    "No training or optimizer steps performed.",
+    "Raw observation masks used for scoring; saved mask files left untouched.",
+    "Existing benchmarks and checkpoints were not modified.",
+    "Weights must be fixed before any held-out test evaluation."
+  ]
+}

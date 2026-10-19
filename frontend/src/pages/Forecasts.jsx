@@ -769,6 +769,7 @@ export default function Forecasts({ predictions, loading }) {
 
       </div>
 
+
       <div className="forecast-explanation">
         <div className="forecast-explanation__icon">
           <Activity size={18} />

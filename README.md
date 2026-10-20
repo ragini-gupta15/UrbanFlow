@@ -17,6 +17,35 @@
 >
 > **Important limitation:** The public demo uses saved historical model forecasts when the API is unavailable. It is not a live traffic feed, and the FastAPI inference service currently runs locally rather than on a public backend.
 
+## Dashboard preview
+
+Explore the deployed interface through these representative views. The public demo uses historical replay samples, not a live traffic feed.
+
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <strong>Command Center</strong><br>
+      <a href="docs/images/urbanflow-command-center.png">
+        <img src="docs/images/urbanflow-command-center.png" alt="UrbanFlow Command Center showing traffic KPIs and the 207-sensor Los Angeles network" width="100%">
+      </a>
+    </td>
+    <td align="center" width="50%">
+      <strong>Multi-Horizon Forecasts</strong><br>
+      <a href="docs/images/urbanflow-forecasts.png">
+        <img src="docs/images/urbanflow-forecasts.png" alt="UrbanFlow forecasting page with selectable prediction horizons and sensor speed visualization" width="100%">
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" colspan="2">
+      <strong>Model Intelligence</strong><br>
+      <a href="docs/images/urbanflow-model-intelligence.png">
+        <img src="docs/images/urbanflow-model-intelligence.png" alt="UrbanFlow model intelligence view illustrating graph, Transformer, and weather feature fusion" width="85%">
+      </a>
+    </td>
+  </tr>
+</table>
+
 ---
 
 ## At a glance
@@ -46,7 +75,6 @@ The public dashboard provides traffic-network visualization, multi-horizon forec
 
 The historical replay contains 12 saved samples collected from the existing model API. Use **Next Sample** to explore different saved forecasts. When the local API is unavailable, the frontend falls back to these saved samples. Displayed forecasts should be interpreted as historical demonstrations, not current traffic conditions.
 
-Screenshots of the deployed interface can be added under `docs/images/` to illustrate the actual user experience.
 
 ## Architecture
 

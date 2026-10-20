@@ -171,46 +171,81 @@ def predict(request: PredictionRequest):
 
 @app.get("/demo-replay")
 def demo_replay(sample_index: int = 0):
-    """Run the trained model on a held-out traffic/weather sample."""
+    """Use model inference when datasets exist; otherwise serve historical replay."""
     project_root = predictor.project_root
 
-    traffic_data = np.load(
-        os.path.join(project_root, "data", "processed", "test_sequences.npz")
-    )["X"]
-
-    weather_sequences = np.load(
-        os.path.join(project_root, "data", "processed", "weather_test_sequences.npy")
+    traffic_path = os.path.join(
+        project_root, "data", "processed", "test_sequences.npz"
     )
-    sample_count = min(len(traffic_data), len(weather_sequences))
-    if sample_count < 1:
-        raise HTTPException(status_code=500, detail="Historical replay dataset is empty")
+    weather_path = os.path.join(
+        project_root, "data", "processed", "weather_test_sequences.npy"
+    )
 
-    index = sample_index % sample_count
-    traffic = traffic_data[index].astype(np.float32)
-    weather_sequence = weather_sequences[index].astype(np.float32)
+    if os.path.isfile(traffic_path) and os.path.isfile(weather_path):
+        traffic_data = np.load(traffic_path)["X"]
+        weather_sequences = np.load(weather_path)
+        sample_count = min(len(traffic_data), len(weather_sequences))
 
-    if traffic.shape != (12, 207) or weather_sequence.shape != (12, 6):
-        raise HTTPException(status_code=500, detail="Unexpected replay sample shape")
+        if sample_count < 1:
+            raise HTTPException(
+                status_code=500, detail="Historical replay dataset is empty"
+            )
 
-    predictions = predictor.predict(traffic, weather_sequence)
-    weather_sample = weather_sequence[-1]
+        index = sample_index % sample_count
+        traffic = traffic_data[index].astype(np.float32)
+        weather_sequence = weather_sequences[index].astype(np.float32)
 
-    return {
-        "sample_index": int(index),
-        "sample_count": int(sample_count),
-        "predictions": {
-            "15_min": predictions[15].tolist(),
-            "30_min": predictions[30].tolist(),
-            "45_min": predictions[45].tolist(),
-            "60_min": predictions[60].tolist()
-        },
-        "weather": {
-            "temperature": float(weather_sample[0]),
-            "humidity": float(weather_sample[1]),
-            "precipitation": float(weather_sample[2]),
-            "wind_speed": float(weather_sample[3]),
-            "pressure": float(weather_sample[4]),
-            "cloud_cover": float(weather_sample[5])
+        if traffic.shape != (12, 207) or weather_sequence.shape != (12, 6):
+            raise HTTPException(
+                status_code=500, detail="Unexpected replay sample shape"
+            )
+
+        predictions = predictor.predict(traffic, weather_sequence)
+        weather_sample = weather_sequence[-1]
+
+        return {
+            "sample_index": int(index),
+            "sample_count": int(sample_count),
+            "predictions": {
+                "15_min": predictions[15].tolist(),
+                "30_min": predictions[30].tolist(),
+                "45_min": predictions[45].tolist(),
+                "60_min": predictions[60].tolist(),
+            },
+            "weather": {
+                "temperature": float(weather_sample[0]),
+                "humidity": float(weather_sample[1]),
+                "precipitation": float(weather_sample[2]),
+                "wind_speed": float(weather_sample[3]),
+                "pressure": float(weather_sample[4]),
+                "cloud_cover": float(weather_sample[5]),
+            },
         }
-    }
 
+    replay_path = os.path.join(
+        project_root, "frontend", "public", "demo-replay-samples.json"
+    )
+    if not os.path.isfile(replay_path):
+        raise HTTPException(
+            status_code=503,
+            detail="Replay datasets and historical fallback are unavailable",
+        )
+
+    import json
+
+    with open(replay_path, "r", encoding="utf-8") as replay_file:
+        replay_data = json.load(replay_file)
+
+    samples = replay_data.get("samples", [])
+    if not samples:
+        raise HTTPException(
+            status_code=500, detail="Historical replay samples are empty"
+        )
+
+    sample = samples[sample_index % len(samples)]
+    return {
+        "sample_index": sample["sample_index"],
+        "sample_count": sample["sample_count"],
+        "predictions": sample["predictions"],
+        "weather": sample["weather"],
+    }

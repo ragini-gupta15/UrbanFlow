@@ -71,6 +71,7 @@ def demo_input():
         "weather": weather_data[0].tolist()
     }
 
+
 _demo_predictions = None
 
 
@@ -82,31 +83,55 @@ def demo_predict():
         return _demo_predictions
 
     project_root = predictor.project_root
-
-    traffic_data = np.load(
-        os.path.join(project_root, "data", "processed", "test_sequences.npz")
-    )["X"]
-
-    weather_data = np.load(
-        os.path.join(project_root, "data", "processed", "weather_test_sequences.npy")
+    traffic_path = os.path.join(
+        project_root, "data", "processed", "test_sequences.npz"
+    )
+    weather_path = os.path.join(
+        project_root, "data", "processed", "weather_test_sequences.npy"
     )
 
-    traffic = traffic_data[0].astype(np.float32)
-    weather = weather_data[0].astype(np.float32)
+    if os.path.isfile(traffic_path) and os.path.isfile(weather_path):
+        traffic_data = np.load(traffic_path)["X"]
+        weather_data = np.load(weather_path)
 
-    predictions = predictor.predict(
-        traffic,
-        weather
+        predictions = predictor.predict(
+            traffic_data[0].astype(np.float32),
+            weather_data[0].astype(np.float32),
+        )
+
+        _demo_predictions = {
+            "15_min": predictions[15].tolist(),
+            "30_min": predictions[30].tolist(),
+            "45_min": predictions[45].tolist(),
+            "60_min": predictions[60].tolist(),
+        }
+        return _demo_predictions
+
+    replay_path = os.path.join(
+        project_root, "frontend", "public", "demo-replay-samples.json"
     )
 
-    _demo_predictions = {
-        "15_min": predictions[15].tolist(),
-        "30_min": predictions[30].tolist(),
-        "45_min": predictions[45].tolist(),
-        "60_min": predictions[60].tolist()
-    }
+    if not os.path.isfile(replay_path):
+        raise HTTPException(
+            status_code=503,
+            detail="Test datasets and saved demo predictions are unavailable",
+        )
 
+    import json
+
+    with open(replay_path, "r", encoding="utf-8") as replay_file:
+        replay_data = json.load(replay_file)
+
+    samples = replay_data.get("samples", [])
+    if not samples:
+        raise HTTPException(
+            status_code=500,
+            detail="Saved demo predictions are empty",
+        )
+
+    _demo_predictions = samples[0]["predictions"]
     return _demo_predictions
+
 @app.get("/weather-data")
 def weather_data():
     project_root = predictor.project_root

@@ -13,9 +13,9 @@
 
 </div>
 
-> **Live demo:** [Open UrbanFlow Dashboard](https://urban-flow-sand.vercel.app/). The frontend is publicly deployed on Vercel and includes an interactive historical replay with 207 sensors, four forecast horizons (15, 30, 45, and 60 minutes), and 12 saved demonstration samples.
+> **Live demo:** [Open UrbanFlow Dashboard](https://urban-flow-sand.vercel.app/). The frontend is publicly deployed on Vercel and uses a publicly deployed FastAPI service on Render. The interactive historical replay displays 207 sensors, four forecast horizons (15, 30, 45, and 60 minutes), and 12 saved demonstration samples.
 >
-> **Important limitation:** The public demo uses saved historical model forecasts when the API is unavailable. It is not a live traffic feed, and the FastAPI inference service currently runs locally rather than on a public backend.
+> **Important limitation:** The public demo uses saved historical model forecasts for its replay experience. The Render API has been verified to return all four forecast horizons for 207 sensors. This is not a live traffic feed.
 
 ## Dashboard preview
 
@@ -210,7 +210,7 @@ npm run dev
 
 Open the local address printed by Vite. Keep the API running in the first terminal.
 
-The frontend currently defaults to `http://127.0.0.1:8000` for API requests. That address is suitable only for local development; it will not work for visitors to a publicly hosted frontend.
+The frontend reads its API base URL from `VITE_API_URL` and defaults to `http://127.0.0.1:8000` for local development. The deployed frontend is configured separately to use the public API.
 
 ### 3. Important setup notes
 
@@ -225,7 +225,7 @@ The frontend currently defaults to `http://127.0.0.1:8000` for API requests. Tha
 | Endpoint | Purpose |
 |---|---|
 | `GET /health` | API/model health |
-| `GET /weather-data` | Weather payload used by the application |
+| `GET /weather-data` | Weather payload (requires the corresponding weather test data) |
 | `GET /demo-replay?sample_index=0` | Historical replay sample and multi-horizon predictions |
 
 The replay endpoint uses historical inputs. It should not be described as a real-time traffic endpoint. See `src/api.py` for the implementation and response structure.
@@ -260,7 +260,7 @@ Consult each audit JSON when reporting a metric. Evaluation procedures and masks
 - [x] Deploy the React frontend publicly on Vercel.
 - [x] Add a historical replay fallback with 12 saved model-generated samples.
 - [x] Document verified multi-horizon evaluation and persistence-baseline comparisons.
-- [ ] Find a suitable no-cost public backend for FastAPI/PyTorch inference.
+- [x] Deploy the FastAPI service publicly on Render and verify the replay endpoint.
 - [ ] Complete a controlled weather-feature ablation study.
 - [ ] Document clean environment installation and data/model acquisition.
 - [ ] Capture and review genuine screenshots of the deployed interface.
@@ -273,7 +273,7 @@ UrbanFlow reports raw-model and blended results separately, uses a persistence b
 
 ---
 
-**Status:** The React frontend is publicly deployed on Vercel. The public dashboard supports a 12-sample historical replay with four forecast horizons and 207 sensors. The FastAPI inference service currently runs locally; public backend hosting has not been completed. Repository documentation and evaluation artifacts are available for review, with further cleanup and reproducibility work remaining.
+**Status:** The React frontend is deployed on Vercel and the FastAPI service is deployed on Render. The live replay endpoint has been verified to return predictions for 207 sensors at four horizons. The dashboard's replay experience uses 12 saved demonstration samples and is not a live traffic feed. Clean-machine reproducibility, controlled weather ablation, dataset attribution, licensing, and repository review remain future tasks.
 
 ---
 
@@ -373,3 +373,10 @@ UrbanFlow presents model outputs as forecasts, not as confirmed incidents or gua
 ![UrbanFlow Model Transparency](docs/images/urbanflow-model-transparency.png)
 
 > **Evaluation note:** The screenshots show the local historical-replay interface. They do not represent live traffic or prove that weather features independently improve predictive accuracy.
+
+
+### Model Intelligence — Experimental Model Comparison
+
+Comparison of traffic-only, weather-aware graph models, and the persistence baseline at the selected forecast horizon. These are historical experimental results, not live traffic performance.
+
+![UrbanFlow experimental model comparison](docs/images/urbanflow-model-intelligence-comparison.png)

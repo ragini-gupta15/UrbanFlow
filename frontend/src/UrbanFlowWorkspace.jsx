@@ -75,14 +75,23 @@ async function loadReplay(showRefresh = false, selectedIndex = null) {
       }
 
       // Match the requested index to a saved historical sample.
+            // Cycle through the saved samples in order.
       let position;
 
       if (selectedIndex !== null) {
-        position = samples.reduce((best, sample, i) =>
-          Math.abs(sample.sample_index - requestedIndex) <
-          Math.abs(samples[best].sample_index - requestedIndex)
-            ? i
-            : best, 0);
+        const requested = Number(selectedIndex);
+        position = samples.findIndex(
+          sample => sample.sample_index === requested
+        );
+
+        // If the requested index is not saved, choose the nearest sample.
+        if (position < 0) {
+          position = samples.reduce((best, sample, i) =>
+            Math.abs(sample.sample_index - requested) <
+            Math.abs(samples[best].sample_index - requested)
+              ? i
+              : best, 0);
+        }
       } else if (showRefresh) {
         const currentPosition = samples.findIndex(
           sample => sample.sample_index === sampleIndex

@@ -117,9 +117,9 @@ async function loadReplay(showRefresh = false, selectedIndex = null) {
       setWeather(replay.weather);
       setSampleIndex(replay.sample_index);
       setSampleInput(String(replay.sample_index));
-      setError(
-        "Historical Demo Mode: showing saved forecasts. Live API data is unavailable."
-      );
+      // Saved samples loaded successfully; keep the dashboard usable
+      // without showing an error banner for normal sample navigation.
+      setError("");
     } catch (fallbackError) {
       setError(
         fallbackError.message ||

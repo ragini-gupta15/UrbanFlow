@@ -54,6 +54,13 @@ async function loadReplay(showRefresh = false, selectedIndex = null) {
     }
 
     const replay = await response.json();
+
+    // If the API maps a requested index to a saved sample,
+    // use the local fallback to advance through samples correctly.
+    if (Number(replay.sample_index) !== requestedIndex) {
+      throw new Error("API returned a mapped historical sample.");
+    }
+
     setPredictions(replay.predictions);
     setWeather(replay.weather);
     setSampleIndex(replay.sample_index);
